@@ -36,6 +36,17 @@ namespace Jengine {
         return glfwGetKey(_window, code) == GLFW_PRESS;
     }
 
+    const Vertex2& Display::mousePosition() {
+        double x, y;
+        glfwGetCursorPos(_window, &x, &y);
+        Vertex2Ptr vec = std::make_shared<Vertex2>(float(x), float(y));
+        return *vec.get();
+    }
+
+    bool Display::mousePressed(int button) {
+        return glfwGetMouseButton(_window, button) == GLFW_PRESS;
+    }
+
     void Display::run(std::function<void()> renderfn, std::function<void(float)> updatefn) {
         while (!glfwWindowShouldClose(_window)) {
             updatefn(1.0f);
