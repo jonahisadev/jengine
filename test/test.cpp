@@ -17,6 +17,9 @@ int main(int argc, char** argv) {
     };
 
     auto update = [&](float delta) {
+		if (window.key(256))
+			window.close();
+
         const Vertex2& pos = window.mousePosition();
         std::cout << pos.x() << ", " << pos.y() << std::endl;
     };

@@ -5,6 +5,20 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_library(jengine Display.cpp Display.h OpenGL.h Vertex2.cpp Vertex2.h)
 
+if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+	add_definitions(-DJENGINE_WINDOWS)
+	set(GLFW_DIR "C:\\Users\\Jonah\\Dev\\LIBS\\GLFW")
+	set(GLEW_DIR "C:\\Users\\Jonah\\Dev\\LIBS\\GLEW")
+
+	target_include_directories(jengine PUBLIC "${GLFW_DIR}\\include")
+	target_include_directories(jengine PUBLIC "${GLEW_DIR}\\include")
+
+	target_link_directories(jengine PUBLIC "${GLFW_DIR}\\lib")
+	target_link_directories(jengine PUBLIC "${GLEW_DIR}\\lib")
+
+	target_link_libraries(jengine glew3.lib glew32.lib opengl32.lib)
+endif()
+
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     add_definitions(-DJENGINE_MACOS)
 
