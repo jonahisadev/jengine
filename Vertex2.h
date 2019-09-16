@@ -2,7 +2,7 @@
 
 #include <memory>
 
-namespace Jengine {
+namespace JEngine {
 
     class Vertex2 {
     private:

@@ -1,6 +1,6 @@
 #include "Display.h"
 
-namespace Jengine {
+namespace JEngine {
 
     Display::Display(int width, int height, const char *title, bool resizable) 
     : _width(width), _height(height)
@@ -67,3 +67,4 @@ namespace Jengine {
     }
 
 }
+#pragma clang diagnostic pop

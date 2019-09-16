@@ -7,7 +7,7 @@
 
 #include <functional>
 
-namespace Jengine {
+namespace JEngine {
 
     class Display {
     private:
