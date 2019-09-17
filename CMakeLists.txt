@@ -3,7 +3,7 @@ project(jengine)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_library(jengine Display.cpp Display.h OpenGL.h Vertex2.cpp Vertex2.h Mesh.cpp Mesh.h JEngine.h)
+add_library(jengine Display.cpp Display.h OpenGL.h Vertex2.cpp Vertex2.h Mesh.cpp Mesh.h JEngine.h Quad.cpp Quad.h)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 	add_definitions(-DJENGINE_WINDOWS)

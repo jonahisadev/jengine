@@ -48,12 +48,19 @@ namespace JEngine {
     }
 
     void Display::run(std::function<void()> renderfn, std::function<void(float)> updatefn) {
+        float delta = 1.0f;
+        
         while (!glfwWindowShouldClose(_window)) {
-            updatefn(1.0f);
+            double last = glfwGetTime();
+            
+            updatefn(delta);
             renderfn();
             
             glfwSwapBuffers(_window);
             glfwPollEvents();
+            
+            double now = glfwGetTime();
+            delta = float(now - last) * 10.0f;
         }
     }
 
@@ -67,4 +74,3 @@ namespace JEngine {
     }
 
 }
-#pragma clang diagnostic pop

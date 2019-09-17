@@ -1,6 +1,6 @@
 #include "../JEngine.h"
 #include "../Display.h"
-#include "../Mesh.h"
+#include "../Quad.h"
 #include <iostream>
 
 int main(int argc, char** argv) {
@@ -8,33 +8,23 @@ int main(int argc, char** argv) {
 
     Display window(800, 600, "Jengine Test 0.1", false);
 
-    float pos[] = {
-        100, 100,
-        200, 100,
-        200, 200,
-        100, 200
-    };
-
-    float color[] = {
-        1, 0, 0,
-        0, 1, 0,
-        0, 0, 1,
-        1, 1, 1
-    };
-
-    int els[] = {
-        0, 1, 2,
-        0, 3, 2
-    };
-
-    Mesh mesh(pos, color, els, 4, 6);
+    Quad square(100, 100, 100, 100);
 
     auto render = [&]() {
         window.clear(0, 128, 255);
-        mesh.render();
+        square.render();
     };
 
-    auto update = [&](float delta) {};
+    auto update = [&](float delta) {
+        if (window.key('D'))
+            square.translate(20 * delta, 0);
+        if (window.key('A'))
+            square.translate(-20 * delta, 0);
+        if (window.key('S'))
+            square.translate(0, 20 * delta);
+        if (window.key('W'))
+            square.translate(0, -20 * delta);
+    };
 
     window.run(render, update);
     return 0;

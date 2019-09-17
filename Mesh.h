@@ -1,6 +1,7 @@
 #pragma once
 
 #include "OpenGL.h"
+#include <memory>
 
 namespace JEngine {
 
@@ -30,5 +31,7 @@ namespace JEngine {
         
         void render();
     };
+    
+    typedef std::shared_ptr<Mesh> MeshPtr;
     
 }
