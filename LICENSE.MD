@@ -19,3 +19,23 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+The OpenGL Extension Wrangler Library
+
+Copyright (C) 2008-2016, Nigel Stewart <nigels[]users sourceforge net>
+
+Copyright (C) 2002-2008, Milan Ikits <milan ikits[]ieee org>
+
+Copyright (C) 2002-2008, Marcelo E. Magallon <mmagallo[]debian org>
+
+Copyright (C) 2002, Lev Povalahev
+
+All rights reserved.
+
+GLFW
+
+Copyright © 2002-2006 Marcus Geelnard
+
+Copyright © 2006-2019 Camilla Löwy
+
+This software is provided ‘as-is’, without any express or implied warranty. In no event will the authors be held liable for any damages arising from the use of this software.

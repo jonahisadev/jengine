@@ -3,7 +3,7 @@
 #include "OpenGL.h"
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
-#include "Vertex2.h"
+#include "../Math/Vector2.h"
 
 #include <iostream>
 #include <functional>
@@ -20,7 +20,7 @@ namespace JEngine {
         virtual ~Display();
         
         bool key(int code);
-        const Vertex2& mousePosition();
+        const Vector2f& mousePosition();
         bool mousePressed(int button);
         
         void run(std::function<void()> renderfn, std::function<void(float)> updatefn);
