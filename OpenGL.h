@@ -5,6 +5,7 @@
 #pragma once
 
 #if defined(JENGINE_WINDOWS)
+    #define GLEW_STATIC
     #include <GL/glew.h>
 #elif defined(JENGINE_MACOS)
     #include <OpenGL/gl.h>
