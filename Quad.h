@@ -5,7 +5,7 @@
 namespace JEngine {
 
     class Quad {
-    private:
+    protected:
         float _x, _y, _width, _height;
         MeshPtr _mesh;
         

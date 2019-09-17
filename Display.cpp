@@ -16,15 +16,24 @@ namespace JEngine {
             throw "Could not create GLFW window";
         }
         
-        // TODO: GLEW stuff for windows here
-        
         glfwMakeContextCurrent(_window);
+
+#ifdef JENGINE_WINDOWS
+        if (glewInit() != GLEW_OK) {
+            std::cerr << "Could not initialize GLEW" << std::endl;
+            throw;
+        }  
+#endif
         
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         glOrtho(0, width, height, 0, -1, 1);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
+        
+        glEnable(GL_TEXTURE_2D);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glEnable(GL_BLEND);
     }
 
     Display::~Display() {

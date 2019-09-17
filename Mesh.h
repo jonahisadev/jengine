@@ -17,10 +17,11 @@ namespace JEngine {
             BufferCount
         };
         
-    private:
+    protected:
         GLuint _buffers[BufferCount];
         int _vertex_count;
         int _list_count;
+        bool _textured = false;
         
     public:
         Mesh(float* pos, float* color, int* els, int vCount, int lCount);

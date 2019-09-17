@@ -5,6 +5,7 @@
 #include <GLFW/glfw3.h>
 #include "Vertex2.h"
 
+#include <iostream>
 #include <functional>
 
 namespace JEngine {

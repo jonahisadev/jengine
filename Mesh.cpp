@@ -40,6 +40,14 @@ namespace JEngine {
         glColorPointer(3, GL_FLOAT, 0, 0);
         glEnableClientState(GL_COLOR_ARRAY);
         
+        // Textures
+        if (_textured) {
+            glBindTexture(GL_TEXTURE_2D, _buffers[BufferTexture]);
+            glBindBuffer(GL_ARRAY_BUFFER, _buffers[BufferCoords]);
+            glTexCoordPointer(2, GL_FLOAT, 0, 0);
+            glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        }
+        
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffers[BufferIndex]);
         glDrawElements(GL_TRIANGLES, _list_count, GL_UNSIGNED_INT, 0);
         
