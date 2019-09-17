@@ -3,7 +3,7 @@
 namespace JEngine {
 
     Display::Display(int width, int height, const char *title, bool resizable) 
-    : _width(width), _height(height)
+    : _width(width), _height(height), _fps(0)
     {
         if (!glfwInit())
             throw "Could not initialize GLFW";
@@ -58,6 +58,8 @@ namespace JEngine {
 
     void Display::run(std::function<void()> renderfn, std::function<void(float)> updatefn) {
         float delta = 1.0f;
+        int frames = 0;
+        double fps_time = glfwGetTime();
         
         while (!glfwWindowShouldClose(_window)) {
             double last = glfwGetTime();
@@ -70,6 +72,14 @@ namespace JEngine {
             
             double now = glfwGetTime();
             delta = float(now - last) * 10.0f;
+
+            // FPS calculator
+            frames++;
+            if (now - fps_time >= 1.0) {
+                _fps = frames;
+                frames = 0;
+                fps_time = now;
+            }
         }
     }
 

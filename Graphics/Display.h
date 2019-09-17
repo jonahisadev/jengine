@@ -14,6 +14,7 @@ namespace JEngine {
     private:
         GLFWwindow* _window;
         int _width, _height;
+        int _fps;
         
     public:
         Display(int width, int height, const char* title, bool resizable);
@@ -22,6 +23,7 @@ namespace JEngine {
         bool key(int code);
         const Vector2f& mousePosition();
         bool mousePressed(int button);
+        inline int getFPS() const { return _fps; }
         
         void run(std::function<void()> renderfn, std::function<void(float)> updatefn);
         void clear(int r, int g, int b);

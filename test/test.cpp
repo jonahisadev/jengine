@@ -29,6 +29,8 @@ int main(int argc, char** argv) {
             gradient.translate(0, 15 * delta);
         if (window.key('W'))
             gradient.translate(0, -15 * delta);
+
+        std::cout << "FPS: " << window.getFPS() << std::endl;
     };
 
     window.run(render, update);
