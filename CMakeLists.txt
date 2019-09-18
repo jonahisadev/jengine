@@ -30,8 +30,8 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     find_package(PkgConfig REQUIRED)
     pkg_check_modules(GLFW REQUIRED glfw3)
 
-    target_include_directories(jengine PUBLIC ${GLFW_INCLUDE_DIRS})
-    target_link_libraries(jengine ${GL} ${GLFW_LIBRARIES})
+    target_include_directories(jengine PUBLIC ${GLFW_INCLUDE_DIRS} /usr/local/include/freetype2)
+    target_link_libraries(jengine ${GL} ${GLFW_LIBRARIES} SOIL freetype)
     target_compile_options(jengine PUBLIC ${GLFW_CFLAGS_OTHER})
 endif()
 
