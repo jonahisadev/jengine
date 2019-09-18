@@ -10,16 +10,19 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     set(GLFW_DIR "C:\\Users\\Jonah\\Dev\\LIBS\\GLFW")
     set(GLEW_DIR "C:\\Users\\Jonah\\Dev\\LIBS\\GLEW")
     set(SOIL_DIR "C:\\Users\\Jonah\\Dev\\LIBS\\SOIL")
+    set(FT_DIR "C:\\Users\\Jonah\\Dev\\LIBS\\freetype2")
     
     target_include_directories(jengine PUBLIC "${GLFW_DIR}\\include")
     target_include_directories(jengine PUBLIC "${GLEW_DIR}\\include")
     target_include_directories(jengine PUBLIC "${SOIL_DIR}\\include")
+    target_include_directories(jengine PUBLIC "${FT_DIR}\\include")
     
     target_link_directories(jengine PUBLIC "${GLFW_DIR}\\lib")
     target_link_directories(jengine PUBLIC "${GLEW_DIR}\\lib")
     target_link_directories(jengine PUBLIC "${SOIL_DIR}\\lib")
+    target_link_directories(jengine PUBLIC "${FT_DIR}\\lib")
     
-    target_link_libraries(jengine glfw3.lib glew32s.lib SOIL.lib opengl32.lib)
+    target_link_libraries(jengine glfw3.lib glew32s.lib SOIL.lib opengl32.lib freetype.lib)
 endif()
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")

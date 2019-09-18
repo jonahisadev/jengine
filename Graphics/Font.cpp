@@ -100,7 +100,7 @@ namespace JEngine {
             
             FT_Bitmap bitmap = _face->glyph->bitmap;
             unsigned int bitmap_size = bitmap.width * bitmap.rows;
-            unsigned char data[bitmap_size * 4];
+            auto data = new unsigned char[bitmap_size * 4];
             
             for (unsigned int i = 0; i < bitmap_size; i++) {
                 data[(i * 4) + 0] = 255;
@@ -137,6 +137,8 @@ namespace JEngine {
                 static_cast<GLuint>(_face->glyph->advance.x)
             };
             _chars.insert(std::pair<GLchar, Character>(c, character));
+            
+            delete[] data;
         }
     }
 
@@ -151,8 +153,8 @@ namespace JEngine {
             
             float xpos = x + ch.bearing.x();
             float ypos = y - ch.bearing.y();
-            float width = ch.size.x();
-            float height = ch.size.y();
+            float width = (float)ch.size.x();
+            float height = (float)ch.size.y();
             
 //            std::cout << c << " @ (" << xpos << " , " << ypos << ")" << std::endl;
             
