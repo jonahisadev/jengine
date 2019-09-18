@@ -15,17 +15,20 @@ int main(int argc, char** argv) {
 
     const char* center_str = "Centered!";
     float center_width = text.width(center_str);
+    
+    Vector3f white = {1, 1, 1};
+    Vector3f black = {0, 0, 0};
 
     auto render = [&]() {
         window.clear(0, 128, 128);
 
-        // text.render(400 - (center_width / 2), 300, center_str, {0, 0, 0});
+        text.render(400 - (center_width / 2), 300, center_str, black);
 
         gradient.render();
 
-        // text.render(2, 20, "JEngine v0.2", {1, 1, 1});
-        // std::string fps = std::string("FPS: ") + std::to_string(window.getFPS());
-        // text.render(2, 42, fps, {1, 1, 1});
+        text.render(2, 20, "JEngine v0.2", white);
+        std::string fps = std::string("FPS: ") + std::to_string(window.getFPS());
+        text.render(2, 42, fps, white);
     };
 
     auto update = [&](float delta) {

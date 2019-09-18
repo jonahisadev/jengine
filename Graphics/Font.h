@@ -18,6 +18,7 @@ namespace JEngine {
         
     public:
         FontMesh(float* pos, float* color, int* els, int vCount, int lCount, GLuint tex);
+        virtual ~FontMesh();
     };
     
     class Font {

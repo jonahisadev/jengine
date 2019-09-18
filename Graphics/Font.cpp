@@ -21,6 +21,10 @@ namespace JEngine {
         _textured = true;
     }
 
+    FontMesh::~FontMesh() {
+        glDeleteBuffers(BufferCount, _buffers);
+    }
+
     Font::Font(const char* path, int size) {
         if (!_lib) {
             if (FT_Init_FreeType(&_lib)) {
