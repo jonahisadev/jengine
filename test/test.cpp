@@ -10,8 +10,8 @@ int main(int argc, char** argv) {
     using namespace JEngine;
     Display window(800, 600, "JEngine Test v0.2", false);
 
-    Font text("Roboto-Regular.ttf", 24);
-    TexturedQuad gradient(100, 100, 64, 64, "gradient.png");
+    Font text("/Users/jonah/Dev/jengine/test/Roboto-Regular.ttf", 24);
+    TexturedQuad gradient(100, 100, 64, 64, "/Users/jonah/Dev/jengine/test/gradient.png");
 
     const char* center_str = "Centered!";
     float center_width = text.width(center_str);

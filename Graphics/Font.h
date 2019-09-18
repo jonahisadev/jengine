@@ -14,11 +14,19 @@
 
 namespace JEngine {
  
-    class FontMesh : public Mesh {
-        
+    class FontMesh {
+    protected:
+        GLuint _buffers[Mesh::BufferCount];
+        GLuint _tex;
+
     public:
-        FontMesh(float* pos, float* color, int* els, int vCount, int lCount, GLuint tex);
-        virtual ~FontMesh();
+        FontMesh();
+        ~FontMesh();
+
+        inline void setTextureID(GLuint tex) { _tex = tex; };
+        void render();
+        void setPosition(float* pos);
+        void setColor(float* color);
     };
     
     class Font {
@@ -34,6 +42,7 @@ namespace JEngine {
         static FT_Library _lib;
         FT_Face _face;
         CharMap _chars;
+        FontMesh _mesh;
     public:
         Font(const char* path, int size);
         virtual ~Font();

@@ -4,25 +4,77 @@ namespace JEngine {
     
     FT_Library Font::_lib = nullptr;
 
-    FontMesh::FontMesh(float *pos, float *color, int *els, int vCount, int lCount, GLuint tex)
-    : Mesh(pos, color, els, vCount, lCount)
-    {
+    FontMesh::FontMesh() {
+        glGenBuffers(Mesh::BufferCount, _buffers);
+
+        glBindBuffer(GL_ARRAY_BUFFER, _buffers[Mesh::BufferPosition]);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * 4, nullptr, GL_DYNAMIC_DRAW);
+
+        glBindBuffer(GL_ARRAY_BUFFER, _buffers[Mesh::BufferColor]);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * 4, nullptr, GL_DYNAMIC_DRAW);
+
         float uv[] = {
             0, 0,
             1, 0,
             1, 1,
             0, 1
         };
-        glBindBuffer(GL_ARRAY_BUFFER, _buffers[BufferCoords]);
+
+        glBindBuffer(GL_ARRAY_BUFFER, _buffers[Mesh::BufferCoords]);
         glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * 4, uv, GL_STATIC_DRAW);
+
+        int els[] = {
+            0, 1, 2,
+            0, 3, 2
+        };
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffers[Mesh::BufferIndex]);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * 6, els, GL_STATIC_DRAW);
+
         glBindBuffer(GL_ARRAY_BUFFER, 0);
-        
-        _buffers[BufferTexture] = tex;
-        _textured = true;
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
     FontMesh::~FontMesh() {
-        glDeleteBuffers(BufferCount, _buffers);
+        glDeleteBuffers(Mesh::BufferCount, _buffers);
+    }
+
+    void FontMesh::render() {
+        glBindBuffer(GL_ARRAY_BUFFER, _buffers[Mesh::BufferPosition]);
+        glVertexPointer(2, GL_FLOAT, 0, 0);
+        glEnableClientState(GL_VERTEX_ARRAY);
+
+        glBindBuffer(GL_ARRAY_BUFFER, _buffers[Mesh::BufferColor]);
+        glColorPointer(3, GL_FLOAT, 0, 0);
+        glEnableClientState(GL_COLOR_ARRAY);
+
+        glBindTexture(GL_TEXTURE_2D, _tex);
+        glBindBuffer(GL_ARRAY_BUFFER, _buffers[Mesh::BufferCoords]);
+        glTexCoordPointer(2, GL_FLOAT, 0, 0);
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffers[Mesh::BufferIndex]);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+        glDisableClientState(GL_VERTEX_ARRAY);
+        glDisableClientState(GL_COLOR_ARRAY);
+        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+        glBindTexture(GL_TEXTURE_2D, 0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    }
+
+    void FontMesh::setPosition(float *pos) {
+        glBindBuffer(GL_ARRAY_BUFFER, _buffers[Mesh::BufferPosition]);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float) * 2 * 4, pos);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+    }
+
+    void FontMesh::setColor(float *color) {
+        glBindBuffer(GL_ARRAY_BUFFER, _buffers[Mesh::BufferColor]);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float) * 3 * 4, color);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
     Font::Font(const char* path, int size) {
@@ -39,8 +91,6 @@ namespace JEngine {
         }
         
         FT_Set_Pixel_Sizes(_face, 0, size);
-        
-        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         
         for (GLubyte c = 0; c < 128; c++) {
             if (FT_Load_Char(_face, c, FT_LOAD_RENDER)) {
@@ -119,14 +169,12 @@ namespace JEngine {
                 color.r(), color.g(), color.b(),
                 color.r(), color.g(), color.b(),
             };
-            
-            int els[] = {
-                0, 1, 2,
-                0, 3, 2
-            };
-            
-            FontMesh mesh(pos, col, els, 4, 6, ch.tex_id);
-            mesh.render();
+
+            _mesh.setTextureID(ch.tex_id);
+            _mesh.setPosition(pos);
+            _mesh.setColor(col);
+            _mesh.render();
+
             x += (ch.advance >> 6);
         }
     }
