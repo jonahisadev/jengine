@@ -3,23 +3,23 @@ project(jengine)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_library(jengine Graphics/Display.cpp Graphics/Display.h Graphics/OpenGL.h Math/Vector2.h Graphics/Mesh.cpp Graphics/Mesh.h JEngine.h Graphics/Quad.cpp Graphics/Quad.h Graphics/TexturedMesh.cpp Graphics/TexturedMesh.h Graphics/TexturedQuad.cpp Graphics/TexturedQuad.h Math/Vector3.h Math/Vector.h)
+add_library(jengine Graphics/Display.cpp Graphics/Display.h Graphics/OpenGL.h Math/Vector2.h Graphics/Mesh.cpp Graphics/Mesh.h JEngine.h Graphics/Quad.cpp Graphics/Quad.h Graphics/TexturedMesh.cpp Graphics/TexturedMesh.h Graphics/TexturedQuad.cpp Graphics/TexturedQuad.h Math/Vector3.h Math/Vector.h Graphics/Font.cpp Graphics/Font.h)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-	add_definitions(-DJENGINE_WINDOWS)
-	set(GLFW_DIR "C:\\Users\\Jonah\\Dev\\LIBS\\GLFW")
-	set(GLEW_DIR "C:\\Users\\Jonah\\Dev\\LIBS\\GLEW")
+    add_definitions(-DJENGINE_WINDOWS)
+    set(GLFW_DIR "C:\\Users\\Jonah\\Dev\\LIBS\\GLFW")
+    set(GLEW_DIR "C:\\Users\\Jonah\\Dev\\LIBS\\GLEW")
     set(SOIL_DIR "C:\\Users\\Jonah\\Dev\\LIBS\\SOIL")
-
-	target_include_directories(jengine PUBLIC "${GLFW_DIR}\\include")
-	target_include_directories(jengine PUBLIC "${GLEW_DIR}\\include")
+    
+    target_include_directories(jengine PUBLIC "${GLFW_DIR}\\include")
+    target_include_directories(jengine PUBLIC "${GLEW_DIR}\\include")
     target_include_directories(jengine PUBLIC "${SOIL_DIR}\\include")
-
-	target_link_directories(jengine PUBLIC "${GLFW_DIR}\\lib")
-	target_link_directories(jengine PUBLIC "${GLEW_DIR}\\lib")
+    
+    target_link_directories(jengine PUBLIC "${GLFW_DIR}\\lib")
+    target_link_directories(jengine PUBLIC "${GLEW_DIR}\\lib")
     target_link_directories(jengine PUBLIC "${SOIL_DIR}\\lib")
-
-	target_link_libraries(jengine glfw3.lib glew32s.lib SOIL.lib opengl32.lib)
+    
+    target_link_libraries(jengine glfw3.lib glew32s.lib SOIL.lib opengl32.lib)
 endif()
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
@@ -41,7 +41,8 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     find_package(PkgConfig REQUIRED)
     pkg_check_modules(GLFW REQUIRED glfw3)
 
-    target_link_libraries(jengine ${GLFW_LIBRARIES} dl GL rt Xrandr Xxf86vm Xi Xinerama X11 Xcursor pthread SOIL)
-    target_include_directories(jengine PUBLIC ${GLFW_INCLUDE_DIRS})
+    target_link_libraries(jengine ${GLFW_LIBRARIES} dl GL rt Xrandr Xxf86vm Xi 
+            Xinerama X11 Xcursor pthread SOIL freetype)
+    target_include_directories(jengine PUBLIC ${GLFW_INCLUDE_DIRS} /usr/local/include/freetype2)
     target_compile_options(jengine PUBLIC ${GLFW_CFLAGS_OTHER})
 endif()

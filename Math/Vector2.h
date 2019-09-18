@@ -17,6 +17,7 @@ namespace JEngine {
         T _y;
 
     public:
+        Vector2() {}
         Vector2(T x, T y) : _x(x), _y(y) {}
 
         T distance(const Vector2& other) const;

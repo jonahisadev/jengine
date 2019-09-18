@@ -1,4 +1,5 @@
 #include "Display.h"
+#include "Font.h"
 
 namespace JEngine {
 
@@ -16,6 +17,7 @@ namespace JEngine {
             throw "Could not create GLFW window";
         }
         
+        glfwSwapInterval(1);
         glfwMakeContextCurrent(_window);
 
 #ifdef JENGINE_WINDOWS
@@ -37,6 +39,7 @@ namespace JEngine {
     }
 
     Display::~Display() {
+        Font::cleanup();
         glfwDestroyWindow(_window);
         glfwTerminate();
     }
