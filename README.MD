@@ -26,12 +26,9 @@ These aren't in any particular order
 * Audio
   * Looping
   * Pause/Play/Stop
-  * Move audio initialization to Game singleton
 * Math
   * More vector operations
   * Vector4
-* More configurations
-  * Game singleton class for options
 
 ### Open Source Libraries
 

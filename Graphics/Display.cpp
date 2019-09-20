@@ -38,16 +38,9 @@ namespace JEngine {
         glEnable(GL_TEXTURE_2D);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_BLEND);
-        
-        // FIXME: Move this audio call
-//        Audio::initialize();
     }
 
     Display::~Display() {
-        Font::cleanup();
-        
-        // FIXME: Move this audio call
-//        Audio::cleanup();
         glfwDestroyWindow(_window);
         glfwTerminate();
     }
@@ -68,6 +61,8 @@ namespace JEngine {
     }
 
     void Display::run(std::function<void()> renderfn, std::function<void(float)> updatefn) {
+        Game::init();
+        
         float delta = 1.0f;
         int frames = 0;
         double fps_time = glfwGetTime();
@@ -94,6 +89,8 @@ namespace JEngine {
                 fps_time = now;
             }
         }
+        
+        Game::cleanup();
     }
 
     void Display::clear(int r, int g, int b) {

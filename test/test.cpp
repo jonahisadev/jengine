@@ -1,24 +1,21 @@
 #include "../JEngine.h"
+#include "../Game/Game.h"
+
 #include "../Graphics/Display.h"
 #include "../Graphics/Font.h"
 #include "../Graphics/TexturedQuad.h"
-#include "../Audio/Audio.h"
-#include "../Audio/Sound.h"
 
 #include <iostream>
 #include <string>
 
 int main(int argc, char** argv) {
     using namespace JEngine;
+
+    Game::flags() << Game::EnableFonts << Game::EnableAudio;
     Display window(800, 600, "JEngine Test v0.3", false);
 
     Font text("Roboto-Regular.ttf", 24);
     TexturedQuad gradient(100, 100, 64, 64, "gradient.png");
-
-    Audio::initialize();
-
-    Sound sound("test.wav");
-    Audio::playSound(sound, 10);
 
     auto render = [&]() {
         window.clear(0, 128, 128);
@@ -41,7 +38,5 @@ int main(int argc, char** argv) {
     };
 
     window.run(render, update);
-
-    Audio::cleanup();
     return 0;
 }

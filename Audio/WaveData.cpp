@@ -42,7 +42,6 @@ namespace JEngine {
     }
 
     WaveData::~WaveData() {
-        std::cout << "WaveData: Deleting WaveData" << std::endl;
         delete _data;
     }
 

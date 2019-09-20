@@ -8,6 +8,8 @@
 #include <iostream>
 #include <functional>
 
+#include "../Game/Game.h"
+
 namespace JEngine {
 
     class Display {
