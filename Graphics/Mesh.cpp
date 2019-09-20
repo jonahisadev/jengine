@@ -6,9 +6,14 @@ namespace JEngine {
     : _vertex_count(vCount), _list_count(lCount)
     {
         glGenBuffers(BufferCount, _buffers);
-        
-        setPosition(pos);
-        setColor(color);
+
+        glBindBuffer(GL_ARRAY_BUFFER, _buffers[BufferPosition]);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * _vertex_count, pos, GL_DYNAMIC_DRAW);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+        glBindBuffer(GL_ARRAY_BUFFER, _buffers[BufferColor]);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * _vertex_count, color, GL_STATIC_DRAW);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
         
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffers[BufferIndex]);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * _list_count, els, GL_STATIC_DRAW);
@@ -21,13 +26,13 @@ namespace JEngine {
 
     void Mesh::setPosition(float *pos) {
         glBindBuffer(GL_ARRAY_BUFFER, _buffers[BufferPosition]);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * _vertex_count, pos, GL_STATIC_DRAW);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float) * 2 * _vertex_count, pos);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
     void Mesh::setColor(float *color) {
         glBindBuffer(GL_ARRAY_BUFFER, _buffers[BufferColor]);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * _vertex_count, color, GL_STATIC_DRAW);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float) * 3 * _vertex_count, color);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 

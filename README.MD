@@ -5,13 +5,20 @@ elements of a game engine for simplicity and versatility.
 
 At the moment, this is mostly for me so I can write games more easily
 
+## Features
+
+* Cross-platform (tested on Windows, Mac and Linux)
+* Easy to get up and running (minimal startup code)
+* Basic quad/texture rendering
+* Font loading and rendering (TTF)
+* WAV loading and playback
+
 ## Todo
 
 These aren't in any particular order
 
 * Graphics
   * Switch to VBO's for faster rendering
-  * Meshes should glBufferSubData on translate
   * Mesh rotation
   * Spritesheets
   * Handle window resizing
