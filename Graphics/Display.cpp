@@ -1,5 +1,6 @@
 #include "Display.h"
 #include "Font.h"
+#include "../Audio/Audio.h"
 
 namespace JEngine {
 
@@ -17,6 +18,7 @@ namespace JEngine {
             throw "Could not create GLFW window";
         }
         
+        // FIXME: Forced vsync, make this an option
         glfwSwapInterval(1);
         glfwMakeContextCurrent(_window);
 
@@ -36,10 +38,16 @@ namespace JEngine {
         glEnable(GL_TEXTURE_2D);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_BLEND);
+        
+        // FIXME: Move this audio call
+//        Audio::initialize();
     }
 
     Display::~Display() {
         Font::cleanup();
+        
+        // FIXME: Move this audio call
+//        Audio::cleanup();
         glfwDestroyWindow(_window);
         glfwTerminate();
     }
@@ -72,6 +80,8 @@ namespace JEngine {
             
             glfwSwapBuffers(_window);
             glfwPollEvents();
+
+            Audio::audioLoop();
             
             double now = glfwGetTime();
             delta = float(now - last) * 10.0f;

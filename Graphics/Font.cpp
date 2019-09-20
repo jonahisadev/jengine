@@ -195,6 +195,25 @@ namespace JEngine {
         return width;
     }
 
+    float Font::height(const char *str) {
+        float height = 0.0f;
+        for (int i = 0; i < strlen(str); i++) {
+            char c = str[i];
+            Character ch = _chars[c];
+            if (height < ch.bearing.y())
+                height = ch.size.y();
+        }
+        return height;
+    }
+
+    float Font::width(const std::string &str) {
+        return width(str.c_str());
+    }
+
+    float Font::height(const std::string &str) {
+        return height(str.c_str());
+    }
+
     void Font::cleanup() {
         if (!_lib)
             FT_Done_FreeType(_lib);

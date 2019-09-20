@@ -51,6 +51,9 @@ namespace JEngine {
         void render(float x, float y, const std::string& str, Vector3f color);
         
         float width(const char* str);
+        float width(const std::string& str);
+        float height(const char* str);
+        float height(const std::string& str);
         
         static void cleanup();
     };
