@@ -11,7 +11,8 @@ namespace JEngine {
             data[2] != 'F' ||
             data[3] != 'F')
         {
-            std::cerr << "WaveData: Incorrect ChunkID" << std::endl;
+//            std::cerr << "WaveData: Incorrect ChunkID" << std::endl;
+            JERROR("(WaveData) Incorrect ChunkID");
             throw;
         }
         
@@ -27,9 +28,6 @@ namespace JEngine {
         // Data size
         _raw_size = data[40] | (data[41] << 8) | (data[42] << 16) | (data[43] << 24);
         
-        std::cout << "OpenAL: Sound loaded = (" << _channels << ", " << _bitrate << ", " << _sample_rate
-                << ", " << _raw_size << ")" << std::endl;
-        
         // Allocate raw data
         _data = new unsigned char[_raw_size];
         
@@ -39,10 +37,12 @@ namespace JEngine {
         }
 
         delete[] data;
+        JINFO("(WaveData) WAV file loaded");
     }
 
     WaveData::~WaveData() {
         delete _data;
+        JINFO("(WaveData) WAV file unloaded");
     }
 
     ALenum WaveData::alFormat() {

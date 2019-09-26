@@ -3,6 +3,8 @@
 #include <iostream>
 #include <cstdio>
 
+#include "../Util/Logger.h"
+
 namespace JEngine {
     
     class File {

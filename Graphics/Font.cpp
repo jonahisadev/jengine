@@ -139,11 +139,14 @@ namespace JEngine {
             _chars.insert(std::pair<GLchar, Character>(c, character));
             
             delete[] data;
+
+            JINFO("(Font) Font library created");
         }
     }
 
     Font::~Font() {
         FT_Done_Face(_face);
+        JINFO("(Font) Font library destroyed");
     }
 
     void Font::render(float x, float y, const char *str, Vector3f color) {

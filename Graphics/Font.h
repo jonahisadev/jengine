@@ -6,6 +6,7 @@
 #include "OpenGL.h"
 #include "Mesh.h"
 #include "../Math/Vector.h"
+#include "../Util/Logger.h"
 
 #include <iostream>
 #include <map>

@@ -9,15 +9,17 @@ namespace JEngine {
     void Audio::initialize() {
         _device = alcOpenDevice(nullptr);
         if (!_device) {
-            std::cerr << "OpenAL: Could not initialize device" << std::endl;
+            JERROR("(OpenAL) Could not initialize device");
             throw;
         }
         
         _context = alcCreateContext(_device, nullptr);
         if (!alcMakeContextCurrent(_context)) {
-            std::cerr << "OpenAL: Could not make audio context current" << std::endl;
+            JERROR("(OpenAL) Could not make audio context current");
             throw;
         }
+
+        JINFO("(OpenAL) Context created");
     }
 
     void Audio::playSound(Sound &sound, int vol) {
@@ -51,6 +53,7 @@ namespace JEngine {
         alcMakeContextCurrent(nullptr);
         alcDestroyContext(_context);
         alcCloseDevice(_device);
+        JINFO("(OpenAL) Context destroyed");
     }
 
 }

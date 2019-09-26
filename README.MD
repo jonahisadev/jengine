@@ -29,6 +29,8 @@ These aren't in any particular order
 * Math
   * More vector operations
   * Vector4
+* Other
+  * Restructure again for vendor and src directories
 
 ### Open Source Libraries
 

@@ -14,3 +14,5 @@
 #ifdef __linux__
 #define JENGINE_LINUX
 #endif
+
+#include "Util/Logger.h"

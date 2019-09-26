@@ -9,6 +9,7 @@
 #include <functional>
 
 #include "../Game/Game.h"
+#include "../Util/Logger.h"
 
 namespace JEngine {
 
@@ -30,6 +31,7 @@ namespace JEngine {
         void run(std::function<void()> renderfn, std::function<void(float)> updatefn);
         void clear(int r, int g, int b);
         void close();
+        void vsync(bool state);
         
         inline int width() const { return _width; }
         inline int height() const { return _height; }

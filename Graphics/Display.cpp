@@ -7,19 +7,20 @@ namespace JEngine {
     Display::Display(int width, int height, const char *title, bool resizable) 
     : _width(width), _height(height), _fps(0)
     {
-        if (!glfwInit())
-            throw "Could not initialize GLFW";
+        if (!glfwInit()) {
+            JERROR("Could not initialize GLFW");
+            throw;
+        }
         
         glfwWindowHint(GLFW_RESIZABLE, resizable);
         
         _window = glfwCreateWindow(width, height, title, nullptr, nullptr);
         if (!_window) {
             glfwTerminate();
-            throw "Could not create GLFW window";
+            JERROR("Could not create GLFW window");
+            throw;
         }
-        
-        // FIXME: Forced vsync, make this an option
-        glfwSwapInterval(1);
+
         glfwMakeContextCurrent(_window);
 
 #ifdef JENGINE_WINDOWS
@@ -100,6 +101,10 @@ namespace JEngine {
 
     void Display::close() {
         glfwSetWindowShouldClose(_window, true);
+    }
+
+    void Display::vsync(bool state) {
+        glfwSwapInterval(state);
     }
 
 }

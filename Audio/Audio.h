@@ -8,6 +8,7 @@
 #include <algorithm>
 
 #include "Sound.h"
+#include "../Util/Logger.h"
 
 namespace JEngine {
 

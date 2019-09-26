@@ -11,8 +11,9 @@
 int main(int argc, char** argv) {
     using namespace JEngine;
 
-    Game::flags() << Game::EnableFonts << Game::EnableAudio;
+    Game::flags() << Game::EnableFonts;
     Display window(800, 600, "JEngine Test v0.3", false);
+    window.vsync(true);
 
     Font text("Roboto-Regular.ttf", 24);
     TexturedQuad gradient(100, 100, 64, 64, "gradient.png");
