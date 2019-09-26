@@ -3,7 +3,7 @@
 namespace JEngine {
 
     Quad::Quad(float x, float y, float width, float height)
-    : _x(x), _y(y), _width(width), _height(height)
+    : _pos(x, y), _size(width, height), _color(1, 1, 1)
     {
         float pos[] = {
             x, y,
@@ -32,32 +32,41 @@ namespace JEngine {
     }
 
     void Quad::translate(float dx, float dy) {
-        _x += dx;
-        _y += dy;
+        _pos.translate(dx, dy);
         
         float pos[] = {
-            _x, _y,
-            _x + _width, _y,
-            _x + _width, _y + _height,
-            _x, _y + _height
+            _pos.x(), _pos.y(),
+            _pos.x() + _size.x(), _pos.y(),
+            _pos.x() + _size.x(), _pos.y() + _size.y(),
+            _pos.x(), _pos.y() + _size.y()
         };
         
         _mesh->setPosition(pos);
     }
 
     void Quad::setColor(int r, int g, int b) {
-        float rr = (float)r/255.0f;
-        float gg = (float)g/255.0f;
-        float bb = (float)b/255.0f;
+        _color.setR(r);
+        _color.setG(g);
+        _color.setB(b);
+        _color.normalize(255);
         
         float color[] = {
-            rr, gg, bb,
-            rr, gg, bb,
-            rr, gg, bb,
-            rr, gg, bb
+            _color.r(), _color.g(), _color.b(),
+            _color.r(), _color.g(), _color.b(),
+            _color.r(), _color.g(), _color.b(),
+            _color.r(), _color.g(), _color.b()
         };
         
         _mesh->setColor(color);
+    }
+
+    bool Quad::intersects(const Quad &other) const {
+        return x() + width() >= other.x() && x() <= other.x() + other.width() &&
+               y() + height() >= other.y() && y() <= other.y() + other.height();
+    }
+
+    bool Quad::intersects(const Quad &a, const Quad &b) {
+        return a.intersects(b);
     }
 
     void Quad::render() {

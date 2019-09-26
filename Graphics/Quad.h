@@ -1,12 +1,15 @@
 #pragma once
 
 #include "Mesh.h"
+#include "../Math/Vector.h"
 
 namespace JEngine {
 
     class Quad {
     protected:
-        float _x, _y, _width, _height;
+        Vector2f _pos;
+        Vector2f _size;
+        Vector3f _color;
         MeshPtr _mesh;
         
     public:
@@ -15,8 +18,16 @@ namespace JEngine {
         
         void translate(float dx, float dy);
         void setColor(int r, int g, int b);
+
+        bool intersects(const Quad& other) const;
+        static bool intersects(const Quad& a, const Quad& b);
         
         void render();
+
+        inline float x() const { return _pos.x(); }
+        inline float y() const { return _pos.y(); }
+        inline float width() const { return _size.x(); }
+        inline float height() const { return _size.y(); }
     };
 
 }

@@ -139,9 +139,9 @@ namespace JEngine {
             _chars.insert(std::pair<GLchar, Character>(c, character));
             
             delete[] data;
-
-            JINFO("(Font) Font library created");
         }
+
+        JINFO("(Font) Font library created");
     }
 
     Font::~Font() {

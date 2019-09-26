@@ -23,8 +23,18 @@ namespace JEngine {
         T distance(const Vector3& other) const;
         static T distance(const Vector3& a, const Vector3& b);
 
+        void translate(T dx, T dy, T dz);
+        const Vector3<T>& normalize(T max);
+
         const Vector3& operator+(const Vector3& other);
         const Vector3& operator+=(const Vector3& other);
+
+        inline void setX(T x) { _x = x; }
+        inline void setY(T y) { _y = y; }
+        inline void setZ(T z) { _z = z; }
+        inline void setR(T r) { _x = r; }
+        inline void setG(T g) { _y = g; }
+        inline void setB(T b) { _z = b; }
 
         inline T x() const { return _x; }
         inline T y() const { return _y; }
@@ -48,6 +58,21 @@ namespace JEngine {
     template<class T>
     T Vector3<T>::distance(const Vector3 &a, const Vector3 &b) {
         return a.distance(b);
+    }
+
+    template<class T>
+    void Vector3<T>::translate(T dx, T dy, T dz) {
+        _x += dx;
+        _y += dy;
+        _z += dz;
+    }
+
+    template<class T>
+    const Vector3<T>& Vector3<T>::normalize(T max) {
+        setX(_x / max);
+        setY(_y / max);
+        setZ(_z / max);
+        return *this;
     }
 
     template<class T>
