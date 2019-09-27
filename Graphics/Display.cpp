@@ -1,6 +1,8 @@
 #include "Display.h"
 #include "Font.h"
 #include "../Audio/Audio.h"
+#define GLFW_INCLUDE_NONE
+#include <GLFW/glfw3.h>
 
 namespace JEngine {
 
@@ -22,6 +24,13 @@ namespace JEngine {
         }
 
         glfwMakeContextCurrent(_window);
+        glfwSetWindowUserPointer(_window, this);
+
+        // Resize callback
+        auto func = [](GLFWwindow* w, int width, int height) {
+            static_cast<Display*>(glfwGetWindowUserPointer(w))->resize_callback(w, width, height);
+        };
+        glfwSetWindowSizeCallback(_window, func);
 
 #ifdef JENGINE_WINDOWS
         if (glewInit() != GLEW_OK) {
@@ -29,12 +38,7 @@ namespace JEngine {
             throw;
         }  
 #endif
-        
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        glOrtho(0, width, height, 0, -1, 1);
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
+        resize_callback(_window, width, height);
         
         glEnable(GL_TEXTURE_2D);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -44,6 +48,18 @@ namespace JEngine {
     Display::~Display() {
         glfwDestroyWindow(_window);
         glfwTerminate();
+    }
+
+    void Display::resize_callback(GLFWwindow *window, int width, int height) {
+        _width = width;
+        _height = height;
+        int fb_width, fb_height;
+        glfwGetFramebufferSize(window, &fb_width, &fb_height);
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        glOrtho(0, width, height, 0, -1, 1);
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
     }
 
     bool Display::key(int code) {

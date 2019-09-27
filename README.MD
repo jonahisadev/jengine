@@ -21,7 +21,6 @@ These aren't in any particular order
   * Switch to VBO's for faster rendering
   * Mesh rotation
   * Spritesheets
-  * Handle window resizing
   * Eventually move to OpenGL 3 and shader support
 * Audio
   * Looping
