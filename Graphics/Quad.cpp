@@ -24,6 +24,7 @@ namespace JEngine {
             0, 3, 2
         };
         
+        _angle = 0;
         _mesh = std::make_shared<Mesh>(pos, color, els, 4, 6);
     }
 
@@ -42,6 +43,25 @@ namespace JEngine {
         };
         
         _mesh->setPosition(pos);
+    }
+
+    void Quad::rotate(float dr) {
+        _angle += dr;
+    }
+
+    void Quad::setPosition(float x, float y) {
+        _pos.setX(x);
+        _pos.setY(y);
+        translate(0, 0);
+    }
+
+    void Quad::setPosition(const Vector2f &pos) {
+        _pos = pos;
+        translate(0, 0);
+    }
+
+    void Quad::setAngle(float angle) {
+        _angle = angle;
     }
 
     void Quad::setColor(int r, int g, int b) {
@@ -70,7 +90,15 @@ namespace JEngine {
     }
 
     void Quad::render() {
+        glPushMatrix();
+        
+        glTranslatef(_pos.x() + (_size.x() / 2), _pos.y() + (_size.y() / 2), 0);
+        glRotatef(_angle, 0, 0, 1);
+        glTranslatef(-(_pos.x() + (_size.x() / 2)), -(_pos.y() + (_size.y() / 2)), 0);
+        
         _mesh->render();
+        
+        glPopMatrix();
     }
 
 }

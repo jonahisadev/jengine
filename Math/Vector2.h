@@ -28,6 +28,7 @@ namespace JEngine {
 
         const Vector2& operator+(const Vector2& other);
         const Vector2& operator+=(const Vector2& other);
+        Vector2& operator=(Vector2 other);
 
         inline void setX(T x) { _x = x; }
         inline void setY(T y) { _y = y; }
@@ -78,5 +79,12 @@ namespace JEngine {
     template<class T>
     const Vector2<T>& Vector2<T>::operator+=(const Vector2 &other) {
         return *this + other;
+    }
+
+    template<class T>
+    Vector2<T>& Vector2<T>::operator=(Vector2 other) {
+        _x = other.x();
+        _y = other.y();
+        return *this;
     }
 }

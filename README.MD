@@ -22,6 +22,7 @@ These aren't in any particular order
   * Mesh rotation
   * Spritesheets
   * Eventually move to OpenGL 3 and shader support
+  * Allow cursor hide / replacement
 * Audio
   * Looping
   * Pause/Play/Stop
