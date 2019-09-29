@@ -2,8 +2,9 @@ cmake_minimum_required(VERSION 3.14)
 project(jengine)
 
 set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_BUILD_TYPE Debug)
 
-add_library(jengine Graphics/Display.cpp Graphics/Display.h Graphics/OpenGL.h Math/Vector2.h Graphics/Mesh.cpp Graphics/Mesh.h JEngine.h Graphics/Quad.cpp Graphics/Quad.h Graphics/TexturedMesh.cpp Graphics/TexturedMesh.h Graphics/TexturedQuad.cpp Graphics/TexturedQuad.h Math/Vector3.h Math/Vector.h Graphics/Font.cpp Graphics/Font.h Audio/Audio.cpp Audio/Audio.h Audio/WaveData.cpp Audio/WaveData.h Util/File.cpp Util/File.h Audio/Sound.cpp Audio/Sound.h Game/Game.cpp Game/Game.h Util/Bitmask.cpp Util/Bitmask.h Util/Logger.cpp Util/Logger.h)
+add_library(jengine Graphics/Display.cpp Graphics/Display.h Graphics/OpenGL.h Math/Vector2.h Graphics/Mesh.cpp Graphics/Mesh.h JEngine.h Graphics/Quad.cpp Graphics/Quad.h Graphics/TexturedMesh.cpp Graphics/TexturedMesh.h Graphics/TexturedQuad.cpp Graphics/TexturedQuad.h Math/Vector3.h Math/Vector.h Graphics/Font.cpp Graphics/Font.h Audio/Audio.cpp Audio/Audio.h Audio/WaveData.cpp Audio/WaveData.h Util/File.cpp Util/File.h Audio/Sound.cpp Audio/Sound.h Game/Game.cpp Game/Game.h Util/Bitmask.cpp Util/Bitmask.h Util/Logger.cpp Util/Logger.h Graphics/Spritesheet.cpp Graphics/Spritesheet.h)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     add_definitions(-DJENGINE_WINDOWS)

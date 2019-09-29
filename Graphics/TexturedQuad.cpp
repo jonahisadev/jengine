@@ -32,4 +32,19 @@ namespace JEngine {
         _mesh.reset();
     }
 
+    void TexturedQuad::setUV(float *uv) {
+        auto mesh = dynamic_cast<TexturedMesh*>(_mesh.get());
+        mesh->setUV(uv);
+    }
+
+    int TexturedQuad::getImageWidth() const {
+        auto mesh = dynamic_cast<TexturedMesh*>(_mesh.get());
+        return mesh->getImageWidth();
+    }
+
+    int TexturedQuad::getImageHeight() const {
+        auto mesh = dynamic_cast<TexturedMesh*>(_mesh.get());
+        return mesh->getImageHeight();
+    }
+
 }

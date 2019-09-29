@@ -4,6 +4,7 @@
 #include "../Graphics/Display.h"
 #include "../Graphics/Font.h"
 #include "../Graphics/TexturedQuad.h"
+#include "../Graphics/Spritesheet.h"
 
 #include <iostream>
 #include <string>
@@ -16,11 +17,14 @@ int main(int argc, char** argv) {
     window.vsync(true);
 
     Font text("Roboto-Regular.ttf", 24);
-    TexturedQuad gradient(100, 100, 64, 64, "gradient.png");
+    // TexturedQuad gradient(100, 100, 64, 64, "spritesheet.png");
+
+    Spritesheet sheet(100, 100, 64, 64, "spritesheet.png", 32);
+    sheet.setGridPosition(1, 1);
 
     auto render = [&]() {
         window.clear(0, 128, 128);
-        gradient.render();
+        sheet.render();
 
         std::string fps = std::to_string(window.getFPS());
         text.render(5, text.height(fps) + 5, fps, {1, 1, 1});
@@ -30,10 +34,10 @@ int main(int argc, char** argv) {
         if (window.mousePressed(0)) {
             Vector2f mouse = window.mousePosition();
             mouse.translate(-32, -32);
-            gradient.setPosition({mouse.x(), mouse.y()});
+            sheet.setPosition({mouse.x(), mouse.y()});
         }
 
-        gradient.rotate(10 * delta);
+        sheet.rotate(10 * delta);
     };
 
     window.run(render, update);

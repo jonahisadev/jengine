@@ -9,6 +9,12 @@ namespace JEngine {
     public:
         TexturedQuad(float x, float y, float width, float height, const char* path);
         virtual ~TexturedQuad();
+        
+    protected:
+        void setUV(float* uv);
+
+        int getImageWidth() const;
+        int getImageHeight() const;
     };
 
 }

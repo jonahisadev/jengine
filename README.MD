@@ -18,10 +18,8 @@ At the moment, this is mostly for me so I can write games more easily
 These aren't in any particular order
 
 * Graphics
-  * Switch to VBO's for faster rendering
-  * Mesh rotation
-  * Spritesheets
-  * Eventually move to OpenGL 3 and shader support
+  * Better spritesheet support
+  * Eventually move to OpenGL 3 and shader/VAO support
   * Allow cursor hide / replacement
 * Audio
   * Looping
