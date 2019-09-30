@@ -85,8 +85,17 @@ namespace JEngine {
                y() + height() >= other.y() && y() <= other.y() + other.height();
     }
 
+    bool Quad::intersects(const Vector2f &vec) const {
+        return vec.x() >= x() && vec.x() <= x() + width() &&
+               vec.y() >= y() && vec.y() <= y() + height();
+    }
+
     bool Quad::intersects(const Quad &a, const Quad &b) {
         return a.intersects(b);
+    }
+
+    bool Quad::intersects(const Quad &quad, const Vector2f &vec) {
+        return quad.intersects(vec);
     }
 
     void Quad::render() {

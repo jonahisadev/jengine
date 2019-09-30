@@ -27,7 +27,9 @@ namespace JEngine {
         void setColor(int r, int g, int b);
 
         bool intersects(const Quad& other) const;
+        bool intersects(const Vector2f& vec) const;
         static bool intersects(const Quad& a, const Quad& b);
+        static bool intersects(const Quad& quad, const Vector2f& vec);
         
         void render();
 

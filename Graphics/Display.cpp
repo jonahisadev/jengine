@@ -123,4 +123,9 @@ namespace JEngine {
         glfwSwapInterval(state);
     }
 
+    void Display::showCursor(bool state) {
+        glfwSetInputMode(_window, GLFW_CURSOR,
+                state ? GLFW_CURSOR_NORMAL : GLFW_CURSOR_HIDDEN);
+    }
+
 }

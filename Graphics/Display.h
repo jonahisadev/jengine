@@ -34,6 +34,7 @@ namespace JEngine {
         void clear(int r, int g, int b);
         void close();
         void vsync(bool state);
+        void showCursor(bool state);
         
         inline int width() const { return _width; }
         inline int height() const { return _height; }
