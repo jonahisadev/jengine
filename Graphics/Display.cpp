@@ -27,10 +27,16 @@ namespace JEngine {
         glfwSetWindowUserPointer(_window, this);
 
         // Resize callback
-        auto func = [](GLFWwindow* w, int width, int height) {
+        auto resize = [](GLFWwindow* w, int width, int height) {
             static_cast<Display*>(glfwGetWindowUserPointer(w))->resize_callback(w, width, height);
         };
-        glfwSetWindowSizeCallback(_window, func);
+        glfwSetWindowSizeCallback(_window, resize);
+        
+        // Mouse position callback
+        auto mouse_pos = [](GLFWwindow* w, double x, double y) {
+            static_cast<Display*>(glfwGetWindowUserPointer(w))->_mouse_pos = {float(x), float(y)};
+        };
+        glfwSetCursorPosCallback(_window, mouse_pos);
 
 #ifdef JENGINE_WINDOWS
         if (glewInit() != GLEW_OK) {
@@ -67,10 +73,7 @@ namespace JEngine {
     }
 
     const Vector2f& Display::mousePosition() {
-        double x, y;
-        glfwGetCursorPos(_window, &x, &y);
-        Vector2f::Ptr vec = std::make_shared<Vector2f>(float(x), float(y));
-        return *vec.get();
+        return _mouse_pos;
     }
 
     bool Display::mousePressed(int button) {

@@ -14,27 +14,6 @@ At the moment, this is mostly for me so I can write games more easily
 * Font loading and rendering (TTF)
 * WAV loading and playback
 
-## Todo
-
-These aren't in any particular order
-
-* Graphics
-  * Better spritesheet support (Sprites?)
-  * Eventually move to OpenGL 3 and shader/VAO support
-  * Allow cursor replacement
-  * Anti-aliasing?
-  * Specify mesh rotation point
-* Audio
-  * Looping
-  * Pause/Play/Stop
-* Math
-  * More vector operations
-  * Vector4
-* Other
-  * Restructure again for vendor and src directories
-  * Mouse and Key macros
-  * Some sort base of UI system?
-
 ### Open Source Libraries
 
 * [SOIL](https://www.lonesock.net/soil.html) (Public Domain)

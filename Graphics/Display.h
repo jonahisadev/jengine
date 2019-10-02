@@ -7,9 +7,11 @@
 
 #include <iostream>
 #include <functional>
+#include <cmath>
 
 #include "../Game/Game.h"
 #include "../Util/Logger.h"
+#include "../Math/Vector.h"
 
 namespace JEngine {
 
@@ -18,6 +20,7 @@ namespace JEngine {
         GLFWwindow* _window;
         int _width, _height;
         int _fps;
+        Vector2f _mouse_pos;
 
         void resize_callback(GLFWwindow* window, int width, int height);
         
