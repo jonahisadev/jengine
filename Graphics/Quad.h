@@ -25,6 +25,7 @@ namespace JEngine {
         void setPosition(const Vector2f& pos);
         void setAngle(float angle);
         void setColor(int r, int g, int b);
+        void setCenter(Vector2f center);
 
         bool intersects(const Quad& other) const;
         bool intersects(const Vector2f& vec) const;

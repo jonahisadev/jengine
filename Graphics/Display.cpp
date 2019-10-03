@@ -15,6 +15,7 @@ namespace JEngine {
         }
         
         glfwWindowHint(GLFW_RESIZABLE, resizable);
+        glfwWindowHint(GLFW_SAMPLES, 4);
         
         _window = glfwCreateWindow(width, height, title, nullptr, nullptr);
         if (!_window) {
@@ -49,6 +50,7 @@ namespace JEngine {
         glEnable(GL_TEXTURE_2D);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_BLEND);
+        glEnable(GL_MULTISAMPLE);
     }
 
     Display::~Display() {

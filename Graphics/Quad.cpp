@@ -80,6 +80,10 @@ namespace JEngine {
         _mesh->setColor(color);
     }
 
+    void Quad::setCenter(Vector2f center) {
+        setPosition(center.x() - (width() / 2), center.y() - (height() / 2));
+    }
+
     bool Quad::intersects(const Quad &other) const {
         return x() + width() >= other.x() && x() <= other.x() + other.width() &&
                y() + height() >= other.y() && y() <= other.y() + other.height();
