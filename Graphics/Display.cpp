@@ -35,7 +35,10 @@ namespace JEngine {
         
         // Mouse position callback
         auto mouse_pos = [](GLFWwindow* w, double x, double y) {
-            static_cast<Display*>(glfwGetWindowUserPointer(w))->_mouse_pos = {float(x), float(y)};
+            Display* d = static_cast<Display*>(glfwGetWindowUserPointer(w));
+            d->_mouse_pos = {float(x), float(y)};
+            if (d->_mouse_tex)
+                d->_mouse_tex->setCenter(d->_mouse_pos);
         };
         glfwSetCursorPosCallback(_window, mouse_pos);
 
@@ -95,6 +98,9 @@ namespace JEngine {
             updatefn(delta);
             renderfn();
             
+            if (_mouse_tex)
+                _mouse_tex->render();
+            
             glfwSwapBuffers(_window);
             glfwPollEvents();
 
@@ -131,6 +137,17 @@ namespace JEngine {
     void Display::showCursor(bool state) {
         glfwSetInputMode(_window, GLFW_CURSOR,
                 state ? GLFW_CURSOR_NORMAL : GLFW_CURSOR_HIDDEN);
+    }
+
+    void Display::setCursorImage(const char *path, int size) {
+        if (!path || size == 0) {
+            _mouse_tex.reset();
+            showCursor(true);
+        } else {
+            _mouse_tex = std::make_shared<TexturedQuad>(0, 0, size, size, path);
+            _mouse_tex->setCenter(_mouse_pos);
+            showCursor(false);
+        }
     }
 
 }

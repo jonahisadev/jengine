@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "Mesh.h"
 #include "../Math/Vector.h"
 
@@ -40,5 +42,7 @@ namespace JEngine {
         inline float height() const { return _size.y(); }
         inline float angle() const { return _angle; }
     };
+    
+    typedef std::shared_ptr<Quad> QuadPtr;
 
 }
