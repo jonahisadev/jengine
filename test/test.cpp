@@ -13,8 +13,9 @@ int main(int argc, char** argv) {
     using namespace JEngine;
 
     Game::flags() << Game::EnableFonts;
-    Display window(800, 600, "JEngine Test v0.4", false);
+    Display window(800, 600, "JEngine Test v0.4", true);
     window.vsync(true);
+    window.fullscreen(true);
 
     Font text("Roboto-Regular.ttf", 24);
     // TexturedQuad gradient(100, 100, 64, 64, "spritesheet.png");
@@ -35,6 +36,11 @@ int main(int argc, char** argv) {
             Vector2f mouse = window.mousePosition();
             mouse.translate(-32, -32);
             sheet.setPosition({mouse.x(), mouse.y()});
+        }
+
+        if (window.key(256)) {
+            window.fullscreen(false);
+            window.resize(800, 600);
         }
 
         sheet.rotate(10 * delta);

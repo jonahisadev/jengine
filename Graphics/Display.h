@@ -34,6 +34,8 @@ namespace JEngine {
         void clear(int r, int g, int b);
         void close();
         void vsync(bool state);
+        void fullscreen(bool state);
+        void resize(int width, int height);
         
         inline int width() const { return _width; }
         inline int height() const { return _height; }

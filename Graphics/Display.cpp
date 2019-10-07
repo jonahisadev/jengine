@@ -34,7 +34,7 @@ namespace JEngine {
 
 #ifdef JENGINE_WINDOWS
         if (glewInit() != GLEW_OK) {
-            std::cerr << "Could not initialize GLEW" << std::endl;
+            JERROR("Could not initialize GLEW");
             throw;
         }  
 #endif
@@ -57,7 +57,8 @@ namespace JEngine {
         glfwGetFramebufferSize(window, &fb_width, &fb_height);
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        glOrtho(0, width, height, 0, -1, 1);
+        glViewport(0, 0, fb_width, fb_height);
+        glOrtho(0, fb_width, fb_height, 0, -1, 1);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
     }
@@ -121,6 +122,19 @@ namespace JEngine {
 
     void Display::vsync(bool state) {
         glfwSwapInterval(state);
+    }
+
+    void Display::fullscreen(bool state) {
+        if (state) {
+            const GLFWvidmode *mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+            glfwSetWindowMonitor(_window, glfwGetPrimaryMonitor(), 0, 0, mode->width, mode->height, GLFW_DONT_CARE);
+        } else {
+            glfwSetWindowMonitor(_window, nullptr, 100, 100, _width, _height, GLFW_DONT_CARE);
+        }
+    }
+
+    void Display::resize(int width, int height) {
+        resize_callback(_window, width, height);
     }
 
 }
