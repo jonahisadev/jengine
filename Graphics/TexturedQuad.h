@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "Quad.h"
 #include "TexturedMesh.h"
 
@@ -16,5 +18,7 @@ namespace JEngine {
         int getImageWidth() const;
         int getImageHeight() const;
     };
+    
+    typedef std::shared_ptr<TexturedQuad> TexturedQuadPtr;
 
 }

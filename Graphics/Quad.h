@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "Mesh.h"
 #include "../Math/Vector.h"
 
@@ -25,9 +27,12 @@ namespace JEngine {
         void setPosition(const Vector2f& pos);
         void setAngle(float angle);
         void setColor(int r, int g, int b);
+        void setCenter(Vector2f center);
 
         bool intersects(const Quad& other) const;
+        bool intersects(const Vector2f& vec) const;
         static bool intersects(const Quad& a, const Quad& b);
+        static bool intersects(const Quad& quad, const Vector2f& vec);
         
         void render();
 
@@ -37,5 +42,7 @@ namespace JEngine {
         inline float height() const { return _size.y(); }
         inline float angle() const { return _angle; }
     };
+    
+    typedef std::shared_ptr<Quad> QuadPtr;
 
 }

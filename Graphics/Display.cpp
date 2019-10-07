@@ -15,6 +15,7 @@ namespace JEngine {
         }
         
         glfwWindowHint(GLFW_RESIZABLE, resizable);
+        glfwWindowHint(GLFW_SAMPLES, 4);
         
         _window = glfwCreateWindow(width, height, title, nullptr, nullptr);
         if (!_window) {
@@ -27,10 +28,19 @@ namespace JEngine {
         glfwSetWindowUserPointer(_window, this);
 
         // Resize callback
-        auto func = [](GLFWwindow* w, int width, int height) {
+        auto resize = [](GLFWwindow* w, int width, int height) {
             static_cast<Display*>(glfwGetWindowUserPointer(w))->resize_callback(w, width, height);
         };
-        glfwSetWindowSizeCallback(_window, func);
+        glfwSetWindowSizeCallback(_window, resize);
+        
+        // Mouse position callback
+        auto mouse_pos = [](GLFWwindow* w, double x, double y) {
+            Display* d = static_cast<Display*>(glfwGetWindowUserPointer(w));
+            d->_mouse_pos = {float(x), float(y)};
+            if (d->_mouse_tex)
+                d->_mouse_tex->setCenter(d->_mouse_pos);
+        };
+        glfwSetCursorPosCallback(_window, mouse_pos);
 
 #ifdef JENGINE_WINDOWS
         if (glewInit() != GLEW_OK) {
@@ -43,6 +53,7 @@ namespace JEngine {
         glEnable(GL_TEXTURE_2D);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_BLEND);
+        glEnable(GL_MULTISAMPLE);
     }
 
     Display::~Display() {
@@ -68,10 +79,7 @@ namespace JEngine {
     }
 
     const Vector2f& Display::mousePosition() {
-        double x, y;
-        glfwGetCursorPos(_window, &x, &y);
-        Vector2f::Ptr vec = std::make_shared<Vector2f>(float(x), float(y));
-        return *vec.get();
+        return _mouse_pos;
     }
 
     bool Display::mousePressed(int button) {
@@ -90,6 +98,9 @@ namespace JEngine {
             
             updatefn(delta);
             renderfn();
+            
+            if (_mouse_tex)
+                _mouse_tex->render();
             
             glfwSwapBuffers(_window);
             glfwPollEvents();
@@ -135,6 +146,22 @@ namespace JEngine {
 
     void Display::resize(int width, int height) {
         resize_callback(_window, width, height);
+    }
+
+    void Display::showCursor(bool state) {
+        glfwSetInputMode(_window, GLFW_CURSOR,
+                state ? GLFW_CURSOR_NORMAL : GLFW_CURSOR_HIDDEN);
+    }
+
+    void Display::setCursorImage(const char *path, int size) {
+        if (!path || size == 0) {
+            _mouse_tex.reset();
+            showCursor(true);
+        } else {
+            _mouse_tex = std::make_shared<TexturedQuad>(0, 0, size, size, path);
+            _mouse_tex->setCenter(_mouse_pos);
+            showCursor(false);
+        }
     }
 
 }

@@ -7,9 +7,12 @@
 
 #include <iostream>
 #include <functional>
+#include <cmath>
 
 #include "../Game/Game.h"
 #include "../Util/Logger.h"
+#include "../Math/Vector.h"
+#include "TexturedQuad.h"
 
 namespace JEngine {
 
@@ -18,6 +21,8 @@ namespace JEngine {
         GLFWwindow* _window;
         int _width, _height;
         int _fps;
+        Vector2f _mouse_pos;
+        TexturedQuadPtr _mouse_tex;
 
         void resize_callback(GLFWwindow* window, int width, int height);
         
@@ -36,6 +41,8 @@ namespace JEngine {
         void vsync(bool state);
         void fullscreen(bool state);
         void resize(int width, int height);
+        void showCursor(bool state);
+        void setCursorImage(const char* path, int size);
         
         inline int width() const { return _width; }
         inline int height() const { return _height; }

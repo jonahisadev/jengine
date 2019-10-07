@@ -10,25 +10,9 @@ At the moment, this is mostly for me so I can write games more easily
 * Cross-platform (tested on Windows, Mac and Linux)
 * Easy to get up and running (minimal startup code)
 * Basic quad/texture rendering
+* Spritesheets
 * Font loading and rendering (TTF)
 * WAV loading and playback
-
-## Todo
-
-These aren't in any particular order
-
-* Graphics
-  * Better spritesheet support
-  * Eventually move to OpenGL 3 and shader/VAO support
-  * Allow cursor hide / replacement
-* Audio
-  * Looping
-  * Pause/Play/Stop
-* Math
-  * More vector operations
-  * Vector4
-* Other
-  * Restructure again for vendor and src directories
 
 ### Open Source Libraries
 

@@ -1,0 +1,22 @@
+Graphics:
+  ☐ Better spritesheet support
+  Do we maybe want to have a Sprite class where we have multiple
+  sprites that all inherit from the same spritesheet?
+  ☐ Eventually move to OpenGL 3
+  ✔ Allow cursor replacement @done(19-10-03 00:43)
+  ✔ Anti-aliasing? @done(19-10-03 00:02)
+  ☐ Specify mesh rotation point
+
+Audio:
+  ☐ Looping
+  ☐ Pause, play, stop
+
+Math:
+  ☐ More vector operations
+  ☐ Vector4
+
+Other:
+  ☐ Restructure again for vendor and src directories
+  ☐ Mouse and Key macros
+  ☐ Some sort of base UI system?
+  We at least need some sort of text input

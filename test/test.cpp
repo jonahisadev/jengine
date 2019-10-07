@@ -33,9 +33,7 @@ int main(int argc, char** argv) {
 
     auto update = [&](float delta) {
         if (window.mousePressed(0)) {
-            Vector2f mouse = window.mousePosition();
-            mouse.translate(-32, -32);
-            sheet.setPosition({mouse.x(), mouse.y()});
+            sheet.setCenter(window.mousePosition());
         }
 
         if (window.key(256)) {
