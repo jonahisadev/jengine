@@ -23,6 +23,8 @@ int main(int argc, char** argv) {
     Spritesheet sheet(100, 100, 64, 64, "spritesheet.png", 32);
     sheet.setGridPosition(1, 1);
 
+    window.setCursorImage("cursor.png", 16);
+
     auto render = [&]() {
         window.clear(0, 128, 128);
         sheet.render();

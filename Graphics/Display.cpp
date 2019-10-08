@@ -69,7 +69,7 @@ namespace JEngine {
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         glViewport(0, 0, fb_width, fb_height);
-        glOrtho(0, fb_width, fb_height, 0, -1, 1);
+        glOrtho(0, width, height, 0, -1, 1);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
     }
@@ -145,7 +145,8 @@ namespace JEngine {
     }
 
     void Display::resize(int width, int height) {
-        resize_callback(_window, width, height);
+        glfwSetWindowSize(_window, width, height);
+        // resize_callback(_window, width, height);
     }
 
     void Display::showCursor(bool state) {
