@@ -18,5 +18,6 @@ Math:
 Other:
   ☐ Restructure again for vendor and src directories
   ☐ Mouse and Key macros
+  ☐ Mouse and key press once checking.
   ☐ Some sort of base UI system?
   We at least need some sort of text input

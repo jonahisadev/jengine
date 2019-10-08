@@ -7,7 +7,7 @@
 namespace JEngine {
 
     Display::Display(int width, int height, const char *title, bool resizable) 
-    : _width(width), _height(height), _fps(0)
+    : _size({width, height}), _fps(0)
     {
         if (!glfwInit()) {
             JERROR("Could not initialize GLFW");
@@ -35,12 +35,19 @@ namespace JEngine {
         
         // Mouse position callback
         auto mouse_pos = [](GLFWwindow* w, double x, double y) {
-            Display* d = static_cast<Display*>(glfwGetWindowUserPointer(w));
+            auto d = static_cast<Display*>(glfwGetWindowUserPointer(w));
             d->_mouse_pos = {float(x), float(y)};
             if (d->_mouse_tex)
                 d->_mouse_tex->setCenter(d->_mouse_pos);
         };
         glfwSetCursorPosCallback(_window, mouse_pos);
+
+//        // Window position callback
+//        auto window_pos = [](GLFWwindow* w, int x, int y) {
+//            auto d = static_cast<Display*>(glfwGetWindowUserPointer(w));
+//            d->_pos = {x, y};
+//        };
+//        glfwSetWindowPosCallback(_window, window_pos);
 
 #ifdef JENGINE_WINDOWS
         if (glewInit() != GLEW_OK) {
@@ -49,6 +56,11 @@ namespace JEngine {
         }  
 #endif
         resize_callback(_window, width, height);
+
+        // Save position
+        int x, y;
+        glfwGetWindowPos(_window, &x, &y);
+        _pos = {x, y};
         
         glEnable(GL_TEXTURE_2D);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -62,8 +74,7 @@ namespace JEngine {
     }
 
     void Display::resize_callback(GLFWwindow *window, int width, int height) {
-        _width = width;
-        _height = height;
+        _size = {width, height};
         int fb_width, fb_height;
         glfwGetFramebufferSize(window, &fb_width, &fb_height);
         glMatrixMode(GL_PROJECTION);
@@ -76,6 +87,16 @@ namespace JEngine {
 
     bool Display::key(int code) {
         return glfwGetKey(_window, code) == GLFW_PRESS;
+    }
+
+    bool Display::keyOnce(int code) {
+        if (key(code) && !_keys[code]) {
+            _keys[code] = true;
+            return true;
+        }
+
+        if (!key(code)) { _keys[code] = false; }
+        return false;
     }
 
     const Vector2f& Display::mousePosition() {
@@ -138,15 +159,17 @@ namespace JEngine {
     void Display::fullscreen(bool state) {
         if (state) {
             const GLFWvidmode *mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+            Vector2i last_pos = _pos;
+            _last_size = _size;
             glfwSetWindowMonitor(_window, glfwGetPrimaryMonitor(), 0, 0, mode->width, mode->height, GLFW_DONT_CARE);
+            _pos = last_pos;
         } else {
-            glfwSetWindowMonitor(_window, nullptr, 100, 100, _width, _height, GLFW_DONT_CARE);
+            glfwSetWindowMonitor(_window, nullptr, _pos.x(), _pos.y(), _last_size.x(), _last_size.y(), GLFW_DONT_CARE);
         }
     }
 
     void Display::resize(int width, int height) {
         glfwSetWindowSize(_window, width, height);
-        // resize_callback(_window, width, height);
     }
 
     void Display::showCursor(bool state) {

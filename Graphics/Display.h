@@ -19,10 +19,13 @@ namespace JEngine {
     class Display {
     private:
         GLFWwindow* _window;
-        int _width, _height;
+        Vector2i _size;
+        Vector2i _last_size;
+        Vector2i _pos;
         int _fps;
         Vector2f _mouse_pos;
         TexturedQuadPtr _mouse_tex;
+        unsigned char _keys[256];
 
         void resize_callback(GLFWwindow* window, int width, int height);
         
@@ -31,6 +34,7 @@ namespace JEngine {
         virtual ~Display();
         
         bool key(int code);
+        bool keyOnce(int code);
         const Vector2f& mousePosition();
         bool mousePressed(int button);
         inline int getFPS() const { return _fps; }
@@ -44,8 +48,10 @@ namespace JEngine {
         void showCursor(bool state);
         void setCursorImage(const char* path, int size);
         
-        inline int width() const { return _width; }
-        inline int height() const { return _height; }
+        inline int width() const { return _size.x(); }
+        inline int height() const { return _size.y(); }
+        inline int x() const { return _pos.x(); }
+        inline int y() const { return _pos.y(); }
     };
 
 }

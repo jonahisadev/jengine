@@ -15,15 +15,12 @@ int main(int argc, char** argv) {
     Game::flags() << Game::EnableFonts;
     Display window(800, 600, "JEngine Test v0.4", true);
     window.vsync(true);
-    window.fullscreen(true);
 
-    Font text("Roboto-Regular.ttf", 24);
+    Font text("/Users/jonah/Dev/jengine/test/Roboto-Regular.ttf", 24);
     // TexturedQuad gradient(100, 100, 64, 64, "spritesheet.png");
 
-    Spritesheet sheet(100, 100, 64, 64, "spritesheet.png", 32);
+    Spritesheet sheet(100, 100, 64, 64, "/Users/jonah/Dev/jengine/test/spritesheet.png", 32);
     sheet.setGridPosition(1, 1);
-
-    window.setCursorImage("cursor.png", 16);
 
     auto render = [&]() {
         window.clear(0, 128, 128);
@@ -38,9 +35,12 @@ int main(int argc, char** argv) {
             sheet.setCenter(window.mousePosition());
         }
 
-        if (window.key(256)) {
+        if (window.keyOnce(256)) {
             window.fullscreen(false);
-            window.resize(800, 600);
+        }
+
+        if (window.keyOnce('F')) {
+            window.fullscreen(true);
         }
 
         sheet.rotate(10 * delta);
