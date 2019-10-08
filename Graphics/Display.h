@@ -53,5 +53,44 @@ namespace JEngine {
         inline int x() const { return _pos.x(); }
         inline int y() const { return _pos.y(); }
     };
+    
+    enum Key {
+        KeyEscape =         256,
+        KeyEnter =          257,
+        KeyTab =            258,
+        KeyBackspace =      259,
+        KeyRight =          262,
+        KeyLeft =           263,
+        KeyDown =           264,
+        KeyUp =             265,
+        KeyCapsLock =       280,
+        KeyLeftShift =      340,
+        KeyLeftControl =    341,
+        KeyLeftAlt =        342,
+        KeyLeftSuper =      343,
+        KeyRightShift =     344,
+        KeyRightControl =   345,
+        KeyRightAlt =       346,
+        KeyRightSuper =     347,
+        
+        KeyF1 =             290,
+        KeyF2 =             291,
+        KeyF3 =             292,
+        KeyF4 =             293,
+        KeyF5 =             294,
+        KeyF6 =             295,
+        KeyF7 =             296,
+        KeyF8 =             297,
+        KeyF9 =             298,
+        KeyF10 =            299,
+        KeyF11 =            300,
+        KeyF12 =            301,
+    };
+    
+    enum Mouse {
+        MouseLeft =     0,
+        MouseMiddle =   1,
+        MouseRight =    2
+    };
 
 }

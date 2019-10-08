@@ -42,12 +42,12 @@ namespace JEngine {
         };
         glfwSetCursorPosCallback(_window, mouse_pos);
 
-//        // Window position callback
-//        auto window_pos = [](GLFWwindow* w, int x, int y) {
-//            auto d = static_cast<Display*>(glfwGetWindowUserPointer(w));
-//            d->_pos = {x, y};
-//        };
-//        glfwSetWindowPosCallback(_window, window_pos);
+        // Window position callback
+        auto window_pos = [](GLFWwindow* w, int x, int y) {
+            auto d = static_cast<Display*>(glfwGetWindowUserPointer(w));
+            d->_pos = {x, y};
+        };
+        glfwSetWindowPosCallback(_window, window_pos);
 
 #ifdef JENGINE_WINDOWS
         if (glewInit() != GLEW_OK) {

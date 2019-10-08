@@ -16,10 +16,10 @@ int main(int argc, char** argv) {
     Display window(800, 600, "JEngine Test v0.4", true);
     window.vsync(true);
 
-    Font text("/Users/jonah/Dev/jengine/test/Roboto-Regular.ttf", 24);
+    Font text("Roboto-Regular.ttf", 24);
     // TexturedQuad gradient(100, 100, 64, 64, "spritesheet.png");
 
-    Spritesheet sheet(100, 100, 64, 64, "/Users/jonah/Dev/jengine/test/spritesheet.png", 32);
+    Spritesheet sheet(100, 100, 64, 64, "spritesheet.png", 32);
     sheet.setGridPosition(1, 1);
 
     auto render = [&]() {
@@ -31,11 +31,11 @@ int main(int argc, char** argv) {
     };
 
     auto update = [&](float delta) {
-        if (window.mousePressed(0)) {
+        if (window.mousePressed(Mouse::MouseLeft)) {
             sheet.setCenter(window.mousePosition());
         }
 
-        if (window.keyOnce(256)) {
+        if (window.keyOnce(Key::KeyEscape)) {
             window.fullscreen(false);
         }
 
