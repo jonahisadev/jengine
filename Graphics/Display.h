@@ -25,7 +25,7 @@ namespace JEngine {
         int _fps;
         Vector2f _mouse_pos;
         TexturedQuadPtr _mouse_tex;
-        unsigned char _keys[256];
+        unsigned char _keys[350];
 
         void resize_callback(GLFWwindow* window, int width, int height);
         
