@@ -41,6 +41,7 @@ namespace JEngine {
         
         void run(std::function<void()> renderfn, std::function<void(float)> updatefn);
         void clear(int r, int g, int b);
+        void clear(const Vector3i& vec);
         void close();
         void vsync(bool state);
         void fullscreen(bool state);

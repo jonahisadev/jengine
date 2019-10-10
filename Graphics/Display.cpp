@@ -148,6 +148,10 @@ namespace JEngine {
         glClear(GL_COLOR_BUFFER_BIT);
     }
 
+    void Display::clear(const Vector3i& vec) {
+        clear(vec.r(), vec.g(), vec.b());
+    }
+
     void Display::close() {
         glfwSetWindowShouldClose(_window, true);
     }
