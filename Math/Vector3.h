@@ -18,6 +18,7 @@ namespace JEngine {
         T _z;
 
     public:
+        Vector3() = default;
         Vector3(T x, T y, T z) : _x(x), _y(y), _z(z) {}
 
         T distance(const Vector3& other) const;
