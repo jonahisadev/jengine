@@ -45,6 +45,10 @@ namespace JEngine {
         _mesh->setPosition(pos);
     }
 
+    void Quad::translate(const Vector2f &vec) {
+        translate(vec.x(), vec.y());
+    }
+
     void Quad::rotate(float dr) {
         _angle += dr;
     }
@@ -78,6 +82,10 @@ namespace JEngine {
         };
         
         _mesh->setColor(color);
+    }
+
+    void Quad::setColor(const Vector3i &rgb) {
+        setColor(rgb.r(), rgb.g(), rgb.b());
     }
 
     void Quad::setCenter(Vector2f center) {

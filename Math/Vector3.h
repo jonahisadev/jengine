@@ -24,7 +24,8 @@ namespace JEngine {
         T distance(const Vector3& other) const;
         static T distance(const Vector3& a, const Vector3& b);
 
-        void translate(T dx, T dy, T dz);
+        inline void translate(T dx, T dy, T dz);
+        inline void translate(const Vector3<T>& vec);
         const Vector3<T>& normalize(T max);
 
         const Vector3& operator+(const Vector3& other);
@@ -67,6 +68,11 @@ namespace JEngine {
         _x += dx;
         _y += dy;
         _z += dz;
+    }
+
+    template<class T>
+    void Vector3<T>::translate(const Vector3<T> &vec) {
+        translate(vec.x(), vec.y(), vec.z());
     }
 
     template<class T>

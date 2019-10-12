@@ -21,12 +21,14 @@ namespace JEngine {
         virtual ~Quad();
         
         void translate(float dx, float dy);
+        inline void translate(const Vector2f& vec);
         void rotate(float dr);
         
         void setPosition(float x, float y);
         void setPosition(const Vector2f& pos);
         void setAngle(float angle);
         void setColor(int r, int g, int b);
+        inline void setColor(const Vector3i& rgb);
         void setCenter(Vector2f center);
 
         bool intersects(const Quad& other) const;

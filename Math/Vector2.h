@@ -23,11 +23,14 @@ namespace JEngine {
         T distance(const Vector2& other) const;
         static T distance(const Vector2& a, const Vector2& b);
 
-        void translate(T dx, T dy);
+        inline void translate(T dx, T dy);
+        inline void translate(const Vector2<T>& vec);
         const Vector2<T>& normalize(T max);
 
         const Vector2& operator+(const Vector2& other);
         const Vector2& operator+=(const Vector2& other);
+        const Vector2& operator-(const Vector2& other);
+        const Vector2& operator-=(const Vector2& other);
         Vector2& operator=(Vector2 other);
 
         inline void setX(T x) { _x = x; }
@@ -63,6 +66,11 @@ namespace JEngine {
     }
 
     template<class T>
+    void Vector2<T>::translate(const Vector2<T> &vec) {
+        translate(vec.x(), vec.y());
+    }
+
+    template<class T>
     const Vector2<T>& Vector2<T>::normalize(T max) {
         setX(_x / max);
         setY(_y / max);
@@ -79,6 +87,18 @@ namespace JEngine {
     template<class T>
     const Vector2<T>& Vector2<T>::operator+=(const Vector2 &other) {
         return *this + other;
+    }
+
+    template<class T>
+    const Vector2<T>& Vector2<T>::operator-(const Vector2 &other) {
+        _x -= other.x();
+        _y -= other.y();
+        return *this;
+    }
+
+    template<class T>
+    const Vector2<T>& Vector2<T>::operator-=(const Vector2 &other) {
+        return *this - other;
     }
 
     template<class T>
