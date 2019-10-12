@@ -19,8 +19,11 @@ int main(int argc, char** argv) {
     Font text("Roboto-Regular.ttf", 24);
     // TexturedQuad gradient(100, 100, 64, 64, "spritesheet.png");
 
-    Spritesheet sheet(100, 100, 64, 64, "spritesheet.png", 32);
-    sheet.setGridPosition(1, 1);
+    // Spritesheet sheet(100, 100, 128, 128, "spritesheet.png", 32);
+    // sheet.setGridPosition(1, 1);
+    TexturedQuad sheet(100, 100, 400, 400, "coyote.png");
+    bool linear = true;
+    sheet.linearInterp(linear);
 
     auto render = [&]() {
         window.clear(0, 128, 128);
@@ -43,7 +46,12 @@ int main(int argc, char** argv) {
             window.fullscreen(true);
         }
 
-        sheet.rotate(10 * delta);
+        if (window.keyOnce('Q')) {
+            linear = !linear;
+            sheet.linearInterp(linear);
+        }
+
+        // sheet.rotate(2 * delta);
     };
 
     window.run(render, update);

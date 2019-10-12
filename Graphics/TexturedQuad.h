@@ -11,6 +11,10 @@ namespace JEngine {
     public:
         TexturedQuad(float x, float y, float width, float height, const char* path);
         virtual ~TexturedQuad();
+
+        void linearInterp(bool state) {
+            dynamic_cast<TexturedMesh*>(_mesh.get())->linearInterp(state);
+        }
         
     protected:
         void setUV(float* uv);

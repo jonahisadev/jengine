@@ -17,11 +17,14 @@ namespace JEngine {
             SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
         );
         
+        // TODO: For smaller images, this will create a weird border
         glBindTexture(GL_TEXTURE_2D, _buffers[BufferTexture]);
-        // FIXME: The texture parameters assume "retro" graphics. Have this as an option.
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         glBindTexture(GL_TEXTURE_2D, 0);
+        
+        // Turn off linear interpolation by default
+        linearInterp(false);
         
         float coords[] = {
             0, 0,
@@ -45,6 +48,20 @@ namespace JEngine {
         glBindBuffer(GL_ARRAY_BUFFER, _buffers[BufferCoords]);
         glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float) * 2 * _vertex_count, uv);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
+    }
+    
+    void TexturedMesh::linearInterp(bool state) {
+        if (state) {
+            glBindTexture(GL_TEXTURE_2D, _buffers[BufferTexture]);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glBindTexture(GL_TEXTURE_2D, 0);
+        } else {
+            glBindTexture(GL_TEXTURE_2D, _buffers[BufferTexture]);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            glBindTexture(GL_TEXTURE_2D, 0);
+        }
     }
 
 }

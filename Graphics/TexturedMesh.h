@@ -18,6 +18,7 @@ namespace JEngine {
         virtual ~TexturedMesh();
         
         void setUV(float* uv);
+        void linearInterp(bool state);
         
         inline int getImageWidth() const { return _img_width; }
         inline int getImageHeight() const { return _img_height; }

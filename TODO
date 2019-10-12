@@ -1,7 +1,7 @@
 Graphics:
   ☐ Specify mesh rotation point
   ☐ Fonts are blurry when scaled, try and fix this
-  ☐ Allow textures to be displayed without GL_NEAREST
+  ✔ Allow textures to be displayed without GL_NEAREST @done(19-10-12 12:43)
   ☐ Quads should translate to a vector in addition to coordinates
   ☐ Better spritesheet support
   Do we maybe want to have a Sprite class where we have multiple
