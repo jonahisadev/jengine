@@ -14,6 +14,8 @@
 #include "../Math/Vector.h"
 #include "TexturedQuad.h"
 
+#include "UI/TextField.h"
+
 namespace JEngine {
 
     class Display {
@@ -25,8 +27,10 @@ namespace JEngine {
         int _fps;
         Vector2f _mouse_pos;
         TexturedQuadPtr _mouse_tex;
+        std::vector<TextField*> _ui;
         unsigned char _keys[350];
 
+        void ui_loop();
         void resize_callback(GLFWwindow* window, int width, int height);
         
     public:
@@ -38,7 +42,9 @@ namespace JEngine {
         const Vector2f& mousePosition();
         bool mousePressed(int button);
         inline int getFPS() const { return _fps; }
-        
+
+        void installUI(TextField* tf);
+
         void run(std::function<void()> renderfn, std::function<void(float)> updatefn);
         void clear(int r, int g, int b);
         void clear(const Vector3i& vec);

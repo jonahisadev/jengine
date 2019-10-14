@@ -73,6 +73,25 @@ namespace JEngine {
         glfwTerminate();
     }
 
+    void Display::ui_loop() {
+        for (auto* element : _ui) {
+            if (element->focus()) {
+                // TODO: replace with function
+                for (char c = 'A'; c <= 'Z'; c++) {
+                    int ch = int(c);
+                    if (keyOnce(ch)) {
+                        if (!key(KeyLeftShift) && !key(KeyRightShift))
+                            ch += 32;
+                        element->append(ch);
+                    }
+                }
+
+                if (keyOnce(' ')) element->append(' ');
+                if (keyOnce(KeyBackspace)) element->backspace();
+            }
+        }
+    }
+
     void Display::resize_callback(GLFWwindow *window, int width, int height) {
         _size = {width, height};
         int fb_width, fb_height;
@@ -107,6 +126,10 @@ namespace JEngine {
         return glfwGetMouseButton(_window, button) == GLFW_PRESS;
     }
 
+    void Display::installUI(TextField *tf) {
+        _ui.push_back(tf);
+    }
+
     void Display::run(std::function<void()> renderfn, std::function<void(float)> updatefn) {
         Game::init();
         
@@ -126,7 +149,11 @@ namespace JEngine {
             glfwSwapBuffers(_window);
             glfwPollEvents();
 
+            // Audio
             Audio::audioLoop();
+
+            // UI Loop
+            ui_loop();
             
             double now = glfwGetTime();
             delta = float(now - last) * 10.0f;

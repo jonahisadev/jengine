@@ -5,6 +5,7 @@
 #include "../Graphics/Font.h"
 #include "../Graphics/TexturedQuad.h"
 #include "../Graphics/Spritesheet.h"
+#include "../Graphics/UI/TextField.h"
 
 #include <iostream>
 #include <string>
@@ -17,41 +18,20 @@ int main(int argc, char** argv) {
     window.vsync(true);
 
     Font text("Roboto-Regular.ttf", 24);
-    // TexturedQuad gradient(100, 100, 64, 64, "spritesheet.png");
-
-    // Spritesheet sheet(100, 100, 128, 128, "spritesheet.png", 32);
-    // sheet.setGridPosition(1, 1);
-    TexturedQuad sheet(100, 100, 400, 400, "coyote.png");
-    bool linear = true;
-    sheet.linearInterp(linear);
+    TextField name(100, 100, "Roboto-Regular.ttf");
+    name.install(window);
 
     auto render = [&]() {
         window.clear(0, 128, 128);
-        sheet.render();
+
+        name.render();
 
         std::string fps = std::to_string(window.getFPS());
         text.render(5, text.height(fps) + 5, fps, {1, 1, 1});
     };
 
     auto update = [&](float delta) {
-        if (window.mousePressed(Mouse::MouseLeft)) {
-            sheet.setCenter(window.mousePosition());
-        }
-
-        if (window.keyOnce(Key::KeyEscape)) {
-            window.fullscreen(false);
-        }
-
-        if (window.keyOnce('F')) {
-            window.fullscreen(true);
-        }
-
-        if (window.keyOnce('Q')) {
-            linear = !linear;
-            sheet.linearInterp(linear);
-        }
-
-        // sheet.rotate(2 * delta);
+        
     };
 
     window.run(render, update);
