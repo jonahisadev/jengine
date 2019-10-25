@@ -85,6 +85,23 @@ namespace JEngine {
         glLoadIdentity();
     }
 
+    GLFWmonitor *Display::getMonitorByIndex(int monitor) {
+        GLFWmonitor* mtr;
+        if (monitor < 0)
+            mtr = glfwGetPrimaryMonitor();
+        else {
+            int count;
+            GLFWmonitor** mtrs = glfwGetMonitors(&count);
+            if (monitor >= count) {
+                JERROR("Monitor index out of range! (%d >= %d)", monitor, count);
+                return nullptr;
+            }
+
+            mtr = mtrs[monitor];
+        }
+        return mtr;
+    }
+
     bool Display::key(int code) {
         return glfwGetKey(_window, code) == GLFW_PRESS;
     }
@@ -170,6 +187,27 @@ namespace JEngine {
         } else {
             glfwSetWindowMonitor(_window, nullptr, _pos.x(), _pos.y(), _last_size.x(), _last_size.y(), GLFW_DONT_CARE);
         }
+    }
+
+    void Display::setPosition(int x, int y, int monitor) {
+        GLFWmonitor* mtr = getMonitorByIndex(monitor);
+        if (!mtr) return;
+        
+        int vx, vy;
+        glfwGetMonitorPos(mtr, &vx, &vy);
+        glfwSetWindowPos(_window, x + vx, y + vy);
+    }
+
+    void Display::setPosition(const Vector2i &pos, int monitor) {
+        setPosition(pos.x(), pos.y(), monitor);
+    }
+
+    void Display::center(int monitor) {
+        GLFWmonitor* mtr = getMonitorByIndex(monitor);
+        if (!mtr) return;
+        
+        const GLFWvidmode* vidmode = glfwGetVideoMode(mtr);
+        setPosition((vidmode->width / 2) - (width() / 2), (vidmode->height / 2) - (height() / 2), monitor);
     }
 
     void Display::resize(int width, int height) {

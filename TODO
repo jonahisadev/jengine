@@ -2,13 +2,16 @@ Graphics:
   ☐ Specify mesh rotation point
   ☐ Fonts are blurry when scaled, try and fix this
   ✔ Allow textures to be displayed without GL_NEAREST @done(19-10-12 12:43)
-  ☐ Quads should translate to a vector in addition to coordinates
+  ✔ Quads should translate to a vector in addition to coordinates @done(19-10-12 17:35)
   ☐ Better spritesheet support
   Do we maybe want to have a Sprite class where we have multiple
   sprites that all inherit from the same spritesheet?
   ☐ Eventually move to OpenGL 3
   ✔ Allow cursor replacement @done(19-10-03 00:43)
   ✔ Anti-aliasing? @done(19-10-03 00:02)
+  ✔ Add more window positioning @done(19-10-25 00:48)
+    ✔ Set position @done(19-10-25 00:48)
+    ✔ Center function @done(19-10-25 00:48)
 
 Audio:
   ☐ Looping

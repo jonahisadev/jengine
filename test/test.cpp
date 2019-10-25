@@ -8,22 +8,21 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 int main(int argc, char** argv) {
     using namespace JEngine;
 
     Game::flags() << Game::EnableFonts;
     Display window(800, 600, "JEngine Test v0.4", true);
+    window.center();
     window.vsync(true);
 
     Font text("Roboto-Regular.ttf", 24);
-    // TexturedQuad gradient(100, 100, 64, 64, "spritesheet.png");
 
-    // Spritesheet sheet(100, 100, 128, 128, "spritesheet.png", 32);
-    // sheet.setGridPosition(1, 1);
-    TexturedQuad sheet(100, 100, 400, 400, "coyote.png");
-    bool linear = true;
-    sheet.linearInterp(linear);
+    // TexturedQuad sheet(100, 100, 200, 200, "coyote.png");
+    // bool linear = true;
+    // sheet.linearInterp(linear);
 
     auto render = [&]() {
         window.clear(0, 128, 128);
@@ -45,13 +44,6 @@ int main(int argc, char** argv) {
         if (window.keyOnce('F')) {
             window.fullscreen(true);
         }
-
-        if (window.keyOnce('Q')) {
-            linear = !linear;
-            sheet.linearInterp(linear);
-        }
-
-        // sheet.rotate(2 * delta);
     };
 
     window.run(render, update);

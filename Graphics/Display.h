@@ -28,6 +28,7 @@ namespace JEngine {
         unsigned char _keys[350];
 
         void resize_callback(GLFWwindow* window, int width, int height);
+        GLFWmonitor* getMonitorByIndex(int monitor);
         
     public:
         Display(int width, int height, const char* title, bool resizable);
@@ -45,6 +46,9 @@ namespace JEngine {
         void close();
         void vsync(bool state);
         void fullscreen(bool state);
+        void setPosition(int x, int y, int monitor = -1);
+        void setPosition(const Vector2i& pos, int monitor = -1);
+        void center(int monitor = -1);
         void resize(int width, int height);
         void showCursor(bool state);
         void setCursorImage(const char* path, int size);
