@@ -26,6 +26,7 @@ namespace JEngine {
         Vector2f _mouse_pos;
         TexturedQuadPtr _mouse_tex;
         unsigned char _keys[350];
+        unsigned char _mouse[32];
 
         void resize_callback(GLFWwindow* window, int width, int height);
         GLFWmonitor* getMonitorByIndex(int monitor);
@@ -38,6 +39,7 @@ namespace JEngine {
         bool keyOnce(int code);
         const Vector2f& mousePosition();
         bool mousePressed(int button);
+        bool mousePressedOnce(int button);
         inline int getFPS() const { return _fps; }
         
         void run(std::function<void()> renderfn, std::function<void(float)> updatefn);

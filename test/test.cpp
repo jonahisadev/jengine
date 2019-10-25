@@ -20,29 +20,44 @@ int main(int argc, char** argv) {
 
     Font text("Roboto-Regular.ttf", 24);
 
-    // TexturedQuad sheet(100, 100, 200, 200, "coyote.png");
-    // bool linear = true;
-    // sheet.linearInterp(linear);
+    std::vector<TexturedQuad> quads;
 
     auto render = [&]() {
         window.clear(0, 128, 128);
-        sheet.render();
 
-        std::string fps = std::to_string(window.getFPS());
+        for (auto& quad : quads) {
+            quad.render();
+        }
+
+        std::string fps = "FPS: " + std::to_string(window.getFPS());
         text.render(5, text.height(fps) + 5, fps, {1, 1, 1});
+
+        std::string count = "Count: " + std::to_string(quads.size());
+        text.render(5, 2 * (text.height(fps) + 5), count, {1, 1, 1});
     };
 
     auto update = [&](float delta) {
-        if (window.mousePressed(Mouse::MouseLeft)) {
-            sheet.setCenter(window.mousePosition());
-        }
-
         if (window.keyOnce(Key::KeyEscape)) {
             window.fullscreen(false);
         }
 
         if (window.keyOnce('F')) {
             window.fullscreen(true);
+        }
+
+        if (window.mousePressedOnce(MouseLeft)) {
+            TexturedQuad sheet(0, 0, 100, 100, "coyote.png");
+            sheet.setCenter(window.mousePosition());
+            sheet.linearInterp(true);
+            quads.push_back(sheet);
+        }
+
+        if (window.keyOnce('V')) {
+            window.vsync(false);
+        }
+
+        for (auto& quad : quads) {
+            quad.rotate(5 * delta);
         }
     };
 

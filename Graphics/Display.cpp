@@ -124,6 +124,16 @@ namespace JEngine {
         return glfwGetMouseButton(_window, button) == GLFW_PRESS;
     }
 
+    bool Display::mousePressedOnce(int button) {
+        if (mousePressed(button) && !_mouse[button]) {
+            _mouse[button] = true;
+            return true;
+        }
+        
+        if (!mousePressed(button)) { _mouse[button] = false; }
+        return false;
+    }
+
     void Display::run(std::function<void()> renderfn, std::function<void(float)> updatefn) {
         Game::init();
         
