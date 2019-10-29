@@ -86,6 +86,7 @@ namespace JEngine {
 //        glMatrixMode(GL_PROJECTION);
 //        glLoadIdentity();
         glViewport(0, 0, fb_width, fb_height);
+        _projection = glm::ortho(0.0f, float(fb_width), float(fb_height), 0.0f, -1.0f, 1.0f);
 //        glOrtho(0, width, height, 0, -1, 1);
 //        glMatrixMode(GL_MODELVIEW);
 //        glLoadIdentity();
@@ -140,7 +141,7 @@ namespace JEngine {
         return false;
     }
 
-    void Display::run(std::function<void()> renderfn, std::function<void(float)> updatefn) {
+    void Display::run(std::function<void(Matrix4f)> renderfn, std::function<void(float)> updatefn) {
         Game::init();
         
         float delta = 1.0f;
@@ -151,10 +152,10 @@ namespace JEngine {
             double last = glfwGetTime();
             
             updatefn(delta);
-            renderfn();
+            renderfn(_projection * glm::mat4(1.0f));
             
             if (_mouse_tex)
-                _mouse_tex->render();
+                _mouse_tex->render(_projection * glm::mat4(1.0f));
             
             glfwSwapBuffers(_window);
             glfwPollEvents();

@@ -6,35 +6,29 @@ int main()
 	using namespace JEngine;
 
 	Display window(800, 600, "OpenGL 3", false);
-	// window.vsync(true);
-	// window.center();
+	window.vsync(true);
+	window.center();
 
-	// Quad mesh(-0.5f, -0.5f, 1.0f, 1.0f);
+	Quad mesh(100, 100, 100, 100);
+	mesh.setColor(0, 255, 128);
 
-	float pos[] = {
-	    200, 200,
-		200, 100,
-		100, 100,
-		100, 200
-	};
-	
-	float color[] = {0};
-	
-	int els[] = {
-	    0, 1, 3,
-	    1, 2, 3
-	};
-
-	Mesh mesh(pos, color, els, 4, 6);
-
-	auto render = [&]() {
+	auto render = [&](Matrix4f screen) {
 		window.clear(0, 128, 128);
 
-		mesh.render();
+		mesh.render(screen);
 	};
 
 	auto update = [&](float delta) {
+		if (window.key('D'))
+			mesh.translate(20 * delta, 0);
+		if (window.key('A'))
+			mesh.translate(-20 * delta, 0);
+		if (window.key('S'))
+			mesh.translate(0, 20 * delta);
+		if (window.key('W'))
+			mesh.translate(0, -20 * delta);
 
+		mesh.rotate(45);
 	};
 
 	window.run(render, update);

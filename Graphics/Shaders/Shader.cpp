@@ -64,6 +64,10 @@ namespace JEngine {
         glUniform3f(glGetUniformLocation(_program, name.c_str()), x, y, z);
     }
 
+    void Shader::setVec3(const std::string &name, const Vector3f &value) const {
+        glUniform3f(glGetUniformLocation(_program, name.c_str()), value.x(), value.y(), value.z());
+    }
+
     void Shader::setVec4(const std::string& name, const glm::vec4& value) const {
         glUniform4fv(glGetUniformLocation(_program, name.c_str()), 1, &value[0]);
     }
@@ -112,10 +116,9 @@ namespace JEngine {
             "out vec4 v_color;\n"
             "uniform vec3 color;\n"
             "uniform mat4 model;\n"
-            "uniform mat4 view;\n"
-            "uniform mat4 projection;\n"
+            "uniform mat4 screen;\n"
             "void main() {\n"
-            "    gl_Position = projection * view * model * vec4(aPos, 0.0f, 1.0f);\n"
+            "    gl_Position = screen * model * vec4(aPos, 0.0f, 1.0f);\n"
             "    v_color = vec4(color, 1.0f);\n"
             "}";
     

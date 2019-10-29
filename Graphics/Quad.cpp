@@ -12,12 +12,7 @@ namespace JEngine {
             x, y + height
         };
         
-        float color[] = {
-            1, 1, 1,
-            1, 1, 1,
-            1, 1, 1,
-            1, 1, 1
-        };
+        Vector3f color = {1, 1, 1};
         
         int els[] = {
             0, 1, 2,
@@ -25,21 +20,7 @@ namespace JEngine {
         };
         
         _angle = 0;
-//        _mesh = std::make_shared<Mesh>(pos, color, els, 4, 6);
-
-        float n_pos[] = {
-             0.5f,  0.5f, 0.0f,
-             0.5f, -0.5f, 0.0f,
-            -0.5f, -0.5f, 0.0f,
-            -0.5f,  0.5f, 0.0f
-        };
-        
-        int n_els[] = {
-            0, 1, 2,
-            1, 2, 3,
-        };
-        
-        _mesh = std::make_shared<Mesh>(n_pos, color, n_els, 4, 6);
+        _mesh = std::make_shared<Mesh>(pos, color, els, 4, 6);
     }
 
     Quad::~Quad() {
@@ -65,6 +46,7 @@ namespace JEngine {
 
     void Quad::rotate(float dr) {
         _angle += dr;
+        _mesh->rotate(dr);
     }
 
     void Quad::setPosition(float x, float y) {
@@ -87,15 +69,7 @@ namespace JEngine {
         _color.setG(g);
         _color.setB(b);
         _color.normalize(255);
-        
-        float color[] = {
-            _color.r(), _color.g(), _color.b(),
-            _color.r(), _color.g(), _color.b(),
-            _color.r(), _color.g(), _color.b(),
-            _color.r(), _color.g(), _color.b()
-        };
-        
-        _mesh->setColor(color);
+        _mesh->setColor(_color);
     }
 
     void Quad::setColor(const Vector3i &rgb) {
@@ -124,14 +98,14 @@ namespace JEngine {
         return quad.intersects(vec);
     }
 
-    void Quad::render() {
+    void Quad::render(Matrix4f screen) {
 //        glPushMatrix();
 //        
 //        glTranslatef(_pos.x() + (_size.x() / 2), _pos.y() + (_size.y() / 2), 0);
 //        glRotatef(_angle, 0, 0, 1);
 //        glTranslatef(-(_pos.x() + (_size.x() / 2)), -(_pos.y() + (_size.y() / 2)), 0);
         
-        _mesh->render();
+        _mesh->render(screen);
         
 //        glPopMatrix();
     }

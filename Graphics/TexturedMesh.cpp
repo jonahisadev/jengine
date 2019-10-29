@@ -3,7 +3,7 @@
 namespace JEngine {
 
     TexturedMesh::TexturedMesh(float* pos, float* color, int* els, int vCount, int lCount, const char* path)
-    : Mesh(pos, color, els, vCount, lCount)
+    : Mesh(pos, {1, 1, 1}, els, vCount, lCount)
     {
         int width, height, channels;
         unsigned char* pixel_data = SOIL_load_image(path, &width, &height, &channels, SOIL_LOAD_AUTO);

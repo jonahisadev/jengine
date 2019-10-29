@@ -36,7 +36,7 @@ namespace JEngine {
         static bool intersects(const Quad& a, const Quad& b);
         static bool intersects(const Quad& quad, const Vector2f& vec);
         
-        void render();
+        void render(Matrix4f screen);
 
         inline float x() const { return _pos.x(); }
         inline float y() const { return _pos.y(); }

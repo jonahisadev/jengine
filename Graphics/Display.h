@@ -27,6 +27,7 @@ namespace JEngine {
         TexturedQuadPtr _mouse_tex;
         unsigned char _keys[350];
         unsigned char _mouse[32];
+        Matrix4f _projection;
 
         void resize_callback(GLFWwindow* window, int width, int height);
         GLFWmonitor* getMonitorByIndex(int monitor);
@@ -42,7 +43,7 @@ namespace JEngine {
         bool mousePressedOnce(int button);
         inline int getFPS() const { return _fps; }
         
-        void run(std::function<void()> renderfn, std::function<void(float)> updatefn);
+        void run(std::function<void(Matrix4f)> renderfn, std::function<void(float)> updatefn);
         void clear(int r, int g, int b);
         void clear(const Vector3i& vec);
         void close();
