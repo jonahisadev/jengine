@@ -1,7 +1,11 @@
 #pragma once
 
 #include "OpenGL.h"
+#include "Shaders/Shader.h"
+#include "../Math/Vector.h"
 #include <memory>
+
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace JEngine {
 
@@ -23,8 +27,12 @@ namespace JEngine {
         int _list_count;
         bool _textured = false;
         
+        GLuint _vao, _vbo, _ebo;
+        Shader _shader;
+        
     public:
-        Mesh(float* pos, float* color, int* els, int vCount, int lCount);
+//        Mesh(float* pos, float* color, int* els, int vCount, int lCount);
+        Mesh();
         virtual ~Mesh();
         
         void setPosition(float* pos);

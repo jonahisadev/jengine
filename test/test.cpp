@@ -1,66 +1,42 @@
 #include "../JEngine.h"
-#include "../Game/Game.h"
-
 #include "../Graphics/Display.h"
-#include "../Graphics/Font.h"
-#include "../Graphics/TexturedQuad.h"
-#include "../Graphics/Spritesheet.h"
 
-#include <iostream>
-#include <string>
-#include <vector>
+int main()
+{
+	using namespace JEngine;
 
-int main(int argc, char** argv) {
-    using namespace JEngine;
+	Display window(800, 600, "OpenGL 3", false);
+	// window.vsync(true);
+	// window.center();
 
-    Game::flags() << Game::EnableFonts;
-    Display window(800, 600, "JEngine Test v0.4", true);
-    window.center();
-    window.vsync(true);
+	// Quad mesh(-0.5f, -0.5f, 1.0f, 1.0f);
 
-    Font text("Roboto-Regular.ttf", 24);
+	float pos[] = {
+	    200, 200,
+		200, 100,
+		100, 100,
+		100, 200
+	};
+	
+	float color[] = {0};
+	
+	int els[] = {
+	    0, 1, 3,
+	    1, 2, 3
+	};
 
-    std::vector<TexturedQuad> quads;
+	Mesh mesh(pos, color, els, 4, 6);
 
-    auto render = [&]() {
-        window.clear(0, 128, 128);
+	auto render = [&]() {
+		window.clear(0, 128, 128);
 
-        for (auto& quad : quads) {
-            quad.render();
-        }
+		mesh.render();
+	};
 
-        std::string fps = "FPS: " + std::to_string(window.getFPS());
-        text.render(5, text.height(fps) + 5, fps, {1, 1, 1});
+	auto update = [&](float delta) {
 
-        std::string count = "Count: " + std::to_string(quads.size());
-        text.render(5, 2 * (text.height(fps) + 5), count, {1, 1, 1});
-    };
+	};
 
-    auto update = [&](float delta) {
-        if (window.keyOnce(Key::KeyEscape)) {
-            window.fullscreen(false);
-        }
-
-        if (window.keyOnce('F')) {
-            window.fullscreen(true);
-        }
-
-        if (window.mousePressedOnce(MouseLeft)) {
-            TexturedQuad sheet(0, 0, 100, 100, "coyote.png");
-            sheet.setCenter(window.mousePosition());
-            sheet.linearInterp(true);
-            quads.push_back(sheet);
-        }
-
-        if (window.keyOnce('V')) {
-            window.vsync(false);
-        }
-
-        for (auto& quad : quads) {
-            quad.rotate(5 * delta);
-        }
-    };
-
-    window.run(render, update);
-    return 0;
+	window.run(render, update);
+	return 0;
 }

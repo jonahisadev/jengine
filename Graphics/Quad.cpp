@@ -25,7 +25,21 @@ namespace JEngine {
         };
         
         _angle = 0;
-        _mesh = std::make_shared<Mesh>(pos, color, els, 4, 6);
+//        _mesh = std::make_shared<Mesh>(pos, color, els, 4, 6);
+
+        float n_pos[] = {
+             0.5f,  0.5f, 0.0f,
+             0.5f, -0.5f, 0.0f,
+            -0.5f, -0.5f, 0.0f,
+            -0.5f,  0.5f, 0.0f
+        };
+        
+        int n_els[] = {
+            0, 1, 2,
+            1, 2, 3,
+        };
+        
+        _mesh = std::make_shared<Mesh>(n_pos, color, n_els, 4, 6);
     }
 
     Quad::~Quad() {
@@ -111,15 +125,15 @@ namespace JEngine {
     }
 
     void Quad::render() {
-        glPushMatrix();
-        
-        glTranslatef(_pos.x() + (_size.x() / 2), _pos.y() + (_size.y() / 2), 0);
-        glRotatef(_angle, 0, 0, 1);
-        glTranslatef(-(_pos.x() + (_size.x() / 2)), -(_pos.y() + (_size.y() / 2)), 0);
+//        glPushMatrix();
+//        
+//        glTranslatef(_pos.x() + (_size.x() / 2), _pos.y() + (_size.y() / 2), 0);
+//        glRotatef(_angle, 0, 0, 1);
+//        glTranslatef(-(_pos.x() + (_size.x() / 2)), -(_pos.y() + (_size.y() / 2)), 0);
         
         _mesh->render();
         
-        glPopMatrix();
+//        glPopMatrix();
     }
 
 }

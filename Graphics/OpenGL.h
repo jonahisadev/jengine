@@ -12,4 +12,5 @@
 #elif defined(JENGINE_LINUX)
     #define GL_GLEXT_PROTOTYPES
     #include <GL/gl.h>
+    #include <GL/glext.h>
 #endif

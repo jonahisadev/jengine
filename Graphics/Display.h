@@ -1,7 +1,7 @@
 #pragma once
 
-#include "OpenGL.h"
-#define GLFW_INCLUDE_NONE
+//#include "OpenGL.h"
+//#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 #include "../Math/Vector2.h"
 

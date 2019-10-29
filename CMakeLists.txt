@@ -3,7 +3,7 @@ project(jengine)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_library(jengine Graphics/Display.cpp Graphics/Display.h Graphics/OpenGL.h Math/Vector2.h Graphics/Mesh.cpp Graphics/Mesh.h JEngine.h Graphics/Quad.cpp Graphics/Quad.h Graphics/TexturedMesh.cpp Graphics/TexturedMesh.h Graphics/TexturedQuad.cpp Graphics/TexturedQuad.h Math/Vector3.h Math/Vector.h Graphics/Font.cpp Graphics/Font.h Audio/Audio.cpp Audio/Audio.h Audio/WaveData.cpp Audio/WaveData.h Util/File.cpp Util/File.h Audio/Sound.cpp Audio/Sound.h Game/Game.cpp Game/Game.h Util/Bitmask.cpp Util/Bitmask.h Util/Logger.cpp Util/Logger.h Graphics/Spritesheet.cpp Graphics/Spritesheet.h)
+add_library(jengine Graphics/Display.cpp Graphics/Display.h Graphics/OpenGL.h Math/Vector2.h Graphics/Mesh.cpp Graphics/Mesh.h JEngine.h Graphics/Quad.cpp Graphics/Quad.h Graphics/TexturedMesh.cpp Graphics/TexturedMesh.h Graphics/TexturedQuad.cpp Graphics/TexturedQuad.h Math/Vector3.h Math/Vector.h Graphics/Font.cpp Graphics/Font.h Audio/Audio.cpp Audio/Audio.h Audio/WaveData.cpp Audio/WaveData.h Util/File.cpp Util/File.h Audio/Sound.cpp Audio/Sound.h Game/Game.cpp Game/Game.h Util/Bitmask.cpp Util/Bitmask.h Util/Logger.cpp Util/Logger.h Graphics/Spritesheet.cpp Graphics/Spritesheet.h Graphics/Shaders/Shader.cpp Graphics/Shaders/Shader.h)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     add_definitions(-DJENGINE_WINDOWS)
@@ -48,7 +48,7 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     pkg_check_modules(GLFW REQUIRED glfw3)
 
     target_link_libraries(jengine ${GLFW_LIBRARIES} dl GL rt Xrandr Xxf86vm Xi 
-            Xinerama X11 Xcursor pthread SOIL freetype openal)
+            Xinerama X11 Xcursor pthread SOIL freetype openal glm)
     target_include_directories(jengine PUBLIC ${GLFW_INCLUDE_DIRS} /usr/local/include/freetype2)
     target_compile_options(jengine PUBLIC ${GLFW_CFLAGS_OTHER})
 endif()
