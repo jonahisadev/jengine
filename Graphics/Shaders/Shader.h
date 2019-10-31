@@ -16,6 +16,8 @@ namespace JEngine {
         
         static const char* DefaultQuadVertexShader;
         static const char* DefaultQuadFragmentShader;
+        static const char* DefaultTextureVertexShader;
+        static const char* DefaultTextureFragmentShader;
         
     private:
         Type _type;

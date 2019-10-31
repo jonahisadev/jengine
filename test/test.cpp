@@ -21,8 +21,7 @@ int main()
 		0, 3, 2
 	};
 
-	TexturedQuad mesh(100, 100, 100, 100, "coyote.png");
-
+	TexturedQuad tex(100, 100, 100, 100, "coyote.png");
 	// TexturedMesh mesh(buffer, {1, 1, 1}, els, 4, 6, "gradient.png");
 	// Mesh mesh(buffer, {1, 1, 1}, els, 4, 6);
 	// Quad mesh(100, 100, 100, 100);
@@ -30,14 +29,15 @@ int main()
 	auto render = [&](Matrix4f screen) {
 		window.clear(0, 128, 128);
 
-		mesh.render(screen);
+		// mesh.render(screen);
+		tex.render(screen);
 	};
 
 	auto update = [&](float delta) {
-		mesh.rotate(15 * delta);
+		tex.rotate(15 * delta);
 
 		if (window.mousePressed(Mouse::MouseLeft))
-			mesh.setCenter(window.mousePosition());
+			tex.setCenter(window.mousePosition());
 	};
 
 	window.run(render, update);

@@ -7,11 +7,11 @@ namespace JEngine {
     {
         float ox = (width / 2);
         float oy = (height / 2);
-        float pos[] = {
-            -ox, -oy,
-            ox, -oy,
-            ox, oy,
-            -ox, oy
+        float buffer[] = {
+            -ox, -oy, 0, 0,
+            ox, -oy, 0, 0,
+            ox, oy, 0, 0,
+            -ox, oy, 0, 0
         };
 
         Vector3f color = {1, 1, 1};
@@ -22,8 +22,7 @@ namespace JEngine {
         };
         
         _angle = 0;
-        _mesh = std::make_shared<Mesh>(pos, color, els, 4, 6);
-        
+        _mesh = std::make_shared<Mesh>(buffer, color, els, 4, 6);
         
         setPosition(_pos);
         setColor(_color);

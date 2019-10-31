@@ -28,8 +28,8 @@ namespace JEngine {
         void setPosition(const Vector2f& pos);
         void setAngle(float angle);
         void setColor(int r, int g, int b);
-        inline void setColor(const Vector3i& rgb);
-        inline void setColor(const Vector3f& rgb);
+        void setColor(const Vector3i& rgb);
+        void setColor(const Vector3f& rgb);
         void setCenter(Vector2f center);
 
         bool intersects(const Quad& other) const;

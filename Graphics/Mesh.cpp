@@ -1,9 +1,10 @@
 #include "Mesh.h"
+#include "TexturedMesh.h"
 
 namespace JEngine {
 
-    Mesh::Mesh(float *pos, const Vector3f& color, int *els, int vCount, int lCount)
-    : _shader(Shader()), _list_count(lCount), _vertex_count(vCount), _color(color),
+    Mesh::Mesh(float *buffer, const Vector3f& color, int *els, int vCount, int lCount)
+    : _shader(new Shader()), _list_count(lCount), _vertex_count(vCount), _color(color),
         _model(glm::mat4(1.0f))
     {
         glGenVertexArrays(1, &_vao);
@@ -13,12 +14,12 @@ namespace JEngine {
         glBindVertexArray(_vao);
         
         glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-        glBufferData(GL_ARRAY_BUFFER, vCount * 2 * sizeof(float), pos, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, vCount * 4 * sizeof(float), buffer, GL_STATIC_DRAW);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ebo);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, lCount * sizeof(int), els, GL_STATIC_DRAW);
         
-        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
         glEnableVertexAttribArray(0);
         
         glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -50,14 +51,14 @@ namespace JEngine {
     }
 
     void Mesh::render(Matrix4f screen) {
-        _shader.use();
-        _shader.setMat4("model", _model);
-        _shader.setMat4("screen", screen);
-        _shader.setVec3("color", _color);
+        _shader->use();
+        _shader->setMat4("model", _model);
+        _shader->setMat4("screen", screen);
+        _shader->setVec3("color", _color);
         glBindVertexArray(_vao);
         glDrawElements(GL_TRIANGLES, _list_count, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
-        _shader.stop();
+        _shader->stop();
     }
 
 }

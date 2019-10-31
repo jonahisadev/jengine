@@ -2,65 +2,87 @@
 
 namespace JEngine {
 
-    TexturedMesh::TexturedMesh(float* pos, float* color, int* els, int vCount, int lCount, const char* path)
-    : Mesh(pos, {1, 1, 1}, els, vCount, lCount)
+    TexturedMesh::TexturedMesh(float *buffer, const Vector3f &color, int *els, int vCount, int lCount, const char *path)
+    : Mesh(buffer, {1, 1, 1}, els, vCount, lCount)
     {
+        delete _shader;
+        _shader = new Shader(Shader::DefaultTextureVertexShader, Shader::DefaultTextureFragmentShader);
+
         int width, height, channels;
         unsigned char* pixel_data = SOIL_load_image(path, &width, &height, &channels, SOIL_LOAD_AUTO);
         _img_width = width;
         _img_height = height;
-        
-        _buffers[BufferTexture] = SOIL_create_OGL_texture(
-            pixel_data, 
-            width, height, channels, 
+
+        _tex = SOIL_create_OGL_texture(
+            pixel_data,
+            width, height, channels,
             0,
             SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
         );
         
+        glBindVertexArray(_vao);
+        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+
         // TODO: For smaller images, this will create a weird border
-        glBindTexture(GL_TEXTURE_2D, _buffers[BufferTexture]);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, _tex);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glGenerateMipmap(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, 0);
-        
+
         // Turn off linear interpolation by default
         linearInterp(false);
-        
-        float coords[] = {
-            0, 0,
-            1, 0,
-            1, 1,
-            0, 1
-        };
-        
-        glBindBuffer(GL_ARRAY_BUFFER, _buffers[BufferCoords]);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * 4, coords, GL_DYNAMIC_DRAW);
+
+        // Enable UV coords
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+        glEnableVertexAttribArray(1);
+
         glBindBuffer(GL_ARRAY_BUFFER, 0);
-        
+        glBindVertexArray(0);
         _textured = true;
     }
 
     TexturedMesh::~TexturedMesh() {
-        glDeleteBuffers(BufferCount, _buffers);
-    }
-
-    void TexturedMesh::setUV(float *uv) {
-        glBindBuffer(GL_ARRAY_BUFFER, _buffers[BufferCoords]);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float) * 2 * _vertex_count, uv);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
+//        glDeleteBuffers(BufferCount, _buffers);
     }
     
     void TexturedMesh::linearInterp(bool state) {
         if (state) {
-            glBindTexture(GL_TEXTURE_2D, _buffers[BufferTexture]);
+            glBindTexture(GL_TEXTURE_2D, _tex);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glBindTexture(GL_TEXTURE_2D, 0);
         } else {
-            glBindTexture(GL_TEXTURE_2D, _buffers[BufferTexture]);
+            glBindTexture(GL_TEXTURE_2D, _tex);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
             glBindTexture(GL_TEXTURE_2D, 0);
+        }
+    }
+
+    void TexturedMesh::render(Matrix4f screen) {
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, _tex);
+
+        _shader->use();
+        _shader->setMat4("model", _model);
+        _shader->setMat4("screen", screen);
+        _shader->setVec3("color", _color);
+        _shader->setInt("tex", 0);
+        
+        glBindVertexArray(_vao);
+        glDrawElements(GL_TRIANGLES, _list_count, GL_UNSIGNED_INT, 0);
+        glBindVertexArray(0);
+        _shader->stop();
+    }
+
+    void TexturedMesh::setUV(float *uv) {
+        for (int i = 0; i < _vertex_count; i++) {
+            float coord[2];
+            coord[0] = uv[i * 0];
+            coord[1] = uv[i * 1];
+            glBufferSubData(GL_ARRAY_BUFFER, i * sizeof(float), 2 * sizeof(float), coord);
         }
     }
 

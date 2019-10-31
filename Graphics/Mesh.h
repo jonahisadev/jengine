@@ -29,13 +29,13 @@ namespace JEngine {
         bool _textured = false;
         
         GLuint _vao, _vbo, _ebo;
-        Shader _shader;
+        Shader* _shader;
         Vector3f _color;
         glm::mat4 _model;
         float _angle = 0.0f;
         
     public:
-        Mesh(float *pos, const Vector3f& color, int *els, int vCount, int lCount);
+        Mesh(float *buffer, const Vector3f& color, int *els, int vCount, int lCount);
         virtual ~Mesh();
         
         void setPosition(const Vector2f& pos);
@@ -43,8 +43,8 @@ namespace JEngine {
         
         void translate(const Vector2f& pos);
         void rotate(float dr);
-        
-        void render(Matrix4f screen);
+
+        virtual void render(Matrix4f screen);
     };
     
     typedef std::shared_ptr<Mesh> MeshPtr;
