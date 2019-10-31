@@ -32,19 +32,21 @@ namespace JEngine {
         glDeleteBuffers(1, &_ebo);
     }
 
-    void Mesh::setPosition(float *pos) {
-        // TODO: Do something different here, this is not smart
-        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float) * 2 * _vertex_count, pos);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
+    void Mesh::setPosition(const Vector2f &pos) {
+        _model[3][0] = pos.x();
+        _model[3][1] = pos.y();
     }
 
     void Mesh::setColor(const Vector3f& color) {
         _color = color;
     }
 
+    void Mesh::translate(const Vector2f &pos) {
+        _model = glm::translate(_model, glm::vec3(pos.x(), pos.y(), 0));
+    }
+
     void Mesh::rotate(float dr) {
-        glm::rotate(_model, glm::radians(dr), glm::vec3(0, 0, 1));
+        _model = glm::rotate(_model, glm::radians(dr), glm::vec3(0, 0, 1));
     }
 
     void Mesh::render(Matrix4f screen) {

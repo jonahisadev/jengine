@@ -5,13 +5,15 @@ namespace JEngine {
     Quad::Quad(float x, float y, float width, float height)
     : _pos(x, y), _size(width, height), _color(1, 1, 1)
     {
+        float ox = (width / 2);
+        float oy = (height / 2);
         float pos[] = {
-            x, y,
-            x + width, y,
-            x + width, y + height,
-            x, y + height
+            -ox, -oy,
+            ox, -oy,
+            ox, oy,
+            -ox, oy
         };
-        
+
         Vector3f color = {1, 1, 1};
         
         int els[] = {
@@ -21,6 +23,10 @@ namespace JEngine {
         
         _angle = 0;
         _mesh = std::make_shared<Mesh>(pos, color, els, 4, 6);
+        
+        
+        setPosition(_pos);
+        setColor(_color);
     }
 
     Quad::~Quad() {
@@ -29,15 +35,7 @@ namespace JEngine {
 
     void Quad::translate(float dx, float dy) {
         _pos.translate(dx, dy);
-        
-        float pos[] = {
-            _pos.x(), _pos.y(),
-            _pos.x() + _size.x(), _pos.y(),
-            _pos.x() + _size.x(), _pos.y() + _size.y(),
-            _pos.x(), _pos.y() + _size.y()
-        };
-        
-        _mesh->setPosition(pos);
+        _mesh->setPosition(_pos);
     }
 
     void Quad::translate(const Vector2f &vec) {
@@ -50,14 +48,13 @@ namespace JEngine {
     }
 
     void Quad::setPosition(float x, float y) {
-        _pos.setX(x);
-        _pos.setY(y);
-        translate(0, 0);
+        _pos.setX(x + (width() / 2));
+        _pos.setY(y + (height() / 2));
+        _mesh->setPosition(_pos);
     }
 
     void Quad::setPosition(const Vector2f &pos) {
-        _pos = pos;
-        translate(0, 0);
+        setPosition(pos.x(), pos.y());
     }
 
     void Quad::setAngle(float angle) {
@@ -74,6 +71,11 @@ namespace JEngine {
 
     void Quad::setColor(const Vector3i &rgb) {
         setColor(rgb.r(), rgb.g(), rgb.b());
+    }
+
+    void Quad::setColor(const Vector3f &rgb) {
+        _color = rgb;
+        _mesh->setColor(_color);
     }
 
     void Quad::setCenter(Vector2f center) {
@@ -99,15 +101,7 @@ namespace JEngine {
     }
 
     void Quad::render(Matrix4f screen) {
-//        glPushMatrix();
-//        
-//        glTranslatef(_pos.x() + (_size.x() / 2), _pos.y() + (_size.y() / 2), 0);
-//        glRotatef(_angle, 0, 0, 1);
-//        glTranslatef(-(_pos.x() + (_size.x() / 2)), -(_pos.y() + (_size.y() / 2)), 0);
-        
         _mesh->render(screen);
-        
-//        glPopMatrix();
     }
 
 }

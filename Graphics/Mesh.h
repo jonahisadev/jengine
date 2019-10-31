@@ -38,8 +38,10 @@ namespace JEngine {
         Mesh(float *pos, const Vector3f& color, int *els, int vCount, int lCount);
         virtual ~Mesh();
         
-        void setPosition(float* pos);
+        void setPosition(const Vector2f& pos);
         void setColor(const Vector3f& color);
+        
+        void translate(const Vector2f& pos);
         void rotate(float dr);
         
         void render(Matrix4f screen);

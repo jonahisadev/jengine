@@ -28,7 +28,11 @@ int main()
 		if (window.key('W'))
 			mesh.translate(0, -20 * delta);
 
-		mesh.rotate(45);
+		if (window.key('R'))
+			mesh.rotate(15 * delta);
+
+		if (window.mousePressed(Mouse::MouseLeft))
+			mesh.setCenter(window.mousePosition());
 	};
 
 	window.run(render, update);
