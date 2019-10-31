@@ -9,8 +9,23 @@ int main()
 	window.vsync(true);
 	window.center();
 
-	Quad mesh(100, 100, 100, 100);
-	mesh.setColor(0, 255, 128);
+	float buffer[] = {
+		100, 100, 0, 0,
+		200, 100, 1, 0,
+		200, 200, 1, 1,
+		100, 200, 0, 1
+	};
+
+	int els[] = {
+		0, 1, 2,
+		0, 3, 2
+	};
+
+	TexturedQuad mesh(100, 100, 100, 100, "coyote.png");
+
+	// TexturedMesh mesh(buffer, {1, 1, 1}, els, 4, 6, "gradient.png");
+	// Mesh mesh(buffer, {1, 1, 1}, els, 4, 6);
+	// Quad mesh(100, 100, 100, 100);
 
 	auto render = [&](Matrix4f screen) {
 		window.clear(0, 128, 128);
@@ -19,17 +34,7 @@ int main()
 	};
 
 	auto update = [&](float delta) {
-		if (window.key('D'))
-			mesh.translate(20 * delta, 0);
-		if (window.key('A'))
-			mesh.translate(-20 * delta, 0);
-		if (window.key('S'))
-			mesh.translate(0, 20 * delta);
-		if (window.key('W'))
-			mesh.translate(0, -20 * delta);
-
-		if (window.key('R'))
-			mesh.rotate(15 * delta);
+		mesh.rotate(15 * delta);
 
 		if (window.mousePressed(Mouse::MouseLeft))
 			mesh.setCenter(window.mousePosition());
