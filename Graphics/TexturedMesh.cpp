@@ -78,12 +78,16 @@ namespace JEngine {
     }
 
     void TexturedMesh::setUV(float *uv) {
+        glBindVertexArray(_vao);
+        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
         for (int i = 0; i < _vertex_count; i++) {
             float coord[2];
-            coord[0] = uv[i * 0];
-            coord[1] = uv[i * 1];
-            glBufferSubData(GL_ARRAY_BUFFER, i * sizeof(float), 2 * sizeof(float), coord);
+            coord[0] = uv[(i * 2) + 0];
+            coord[1] = uv[(i * 2) + 1];
+            glBufferSubData(GL_ARRAY_BUFFER, ((i * 4) + 2) * sizeof(float), 2 * sizeof(float), coord);
         }
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
     }
 
 }

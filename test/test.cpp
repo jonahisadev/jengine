@@ -1,5 +1,6 @@
 #include "../JEngine.h"
 #include "../Graphics/Display.h"
+#include "../Graphics/Spritesheet.h"
 
 int main()
 {
@@ -21,23 +22,27 @@ int main()
 		0, 3, 2
 	};
 
-	TexturedQuad tex(100, 100, 100, 100, "coyote.png");
+	// TexturedQuad tex(100, 100, 100, 100, "coyote.png");
 	// TexturedMesh mesh(buffer, {1, 1, 1}, els, 4, 6, "gradient.png");
 	// Mesh mesh(buffer, {1, 1, 1}, els, 4, 6);
 	// Quad mesh(100, 100, 100, 100);
+
+	Spritesheet sheet(100, 100, 100, 100, "spritesheet.png", 32);
+	sheet.setGridPosition(1, 1);
 
 	auto render = [&](Matrix4f screen) {
 		window.clear(0, 128, 128);
 
 		// mesh.render(screen);
-		tex.render(screen);
+		// tex.render(screen);
+		sheet.render(screen);
 	};
 
 	auto update = [&](float delta) {
-		tex.rotate(15 * delta);
+		sheet.rotate(15 * delta);
 
 		if (window.mousePressed(Mouse::MouseLeft))
-			tex.setCenter(window.mousePosition());
+			sheet.setCenter(window.mousePosition());
 	};
 
 	window.run(render, update);
