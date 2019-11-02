@@ -10,7 +10,7 @@
     #define GLEW_STATIC
     #include <GL/glew.h>
 #elif defined(JENGINE_MACOS)
-    #include <OpenGL/gl.h>
+    #include <OpenGL/gl3.h>
 #elif defined(JENGINE_LINUX)
     #define GL_GLEXT_PROTOTYPES
     #include <GL/gl.h>

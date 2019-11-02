@@ -3,7 +3,7 @@
 namespace JEngine {
 
     TexturedMesh::TexturedMesh(float *buffer, const Vector3f &color, int *els, int vCount, int lCount, const char *path)
-    : Mesh(buffer, {1, 1, 1}, els, vCount, lCount)
+    : Mesh(buffer, {1, 1, 1}, els, vCount, lCount), _tex(0)
     {
         delete _shader;
         _shader = new Shader(Shader::DefaultTextureVertexShader, Shader::DefaultTextureFragmentShader);
@@ -14,13 +14,17 @@ namespace JEngine {
         _img_height = height;
 
         // Generate texture
-         _tex = SOIL_create_OGL_texture(
-             pixel_data,
-             width, height, channels,
-             0,
-             SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
-         );
-        
+        glGenTextures(1, &_tex);
+        glBindTexture(GL_TEXTURE_2D, _tex);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, pixel_data);
+//         _tex = SOIL_create_OGL_texture(
+//             pixel_data,
+//             width, height, channels,
+//             0,
+//             SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+//         );
+        glBindBuffer(GL_TEXTURE_2D, 0);
+
         glBindVertexArray(_vao);
         glBindBuffer(GL_ARRAY_BUFFER, _vbo);
 
