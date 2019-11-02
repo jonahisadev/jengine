@@ -60,6 +60,7 @@ namespace JEngine {
         inline int height() const { return _size.y(); }
         inline int x() const { return _pos.x(); }
         inline int y() const { return _pos.y(); }
+        inline const Matrix4f& screen() const { return _projection; }
     };
     
     enum Key {

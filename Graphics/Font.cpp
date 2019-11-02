@@ -1,83 +1,89 @@
 #include "Font.h"
+#include "Display.h"
 
 namespace JEngine {
     
     FT_Library Font::_lib = nullptr;
 
-    FontMesh::FontMesh() {
-        glGenBuffers(Mesh::BufferCount, _buffers);
-
-        glBindBuffer(GL_ARRAY_BUFFER, _buffers[Mesh::BufferPosition]);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * 4, nullptr, GL_DYNAMIC_DRAW);
-
-        glBindBuffer(GL_ARRAY_BUFFER, _buffers[Mesh::BufferColor]);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * 4, nullptr, GL_DYNAMIC_DRAW);
-
-        float uv[] = {
-            0, 0,
-            1, 0,
-            1, 1,
-            0, 1
+    FontMesh::FontMesh()
+    : _shader(new Shader(Shader::DefaultTextureVertexShader, Shader::DefaultTextureFragmentShader)),
+        _color({1, 1, 1}), _model(1.0f)
+    {
+        glGenVertexArrays(1, &_vao);
+        glGenBuffers(1, &_vbo);
+        glGenBuffers(1, &_ebo);
+        
+        glBindVertexArray(_vao);
+        
+        float buffer[] = {
+            0, 0, 0, 0,
+            0, 0, 1, 0,
+            0, 0, 1, 1,
+            0, 0, 0, 1
         };
-
-        glBindBuffer(GL_ARRAY_BUFFER, _buffers[Mesh::BufferCoords]);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * 4, uv, GL_STATIC_DRAW);
-
+        
+        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+        glBufferData(GL_ARRAY_BUFFER, 4 * 4 * sizeof(float), buffer, GL_STATIC_DRAW);
+        
         int els[] = {
             0, 1, 2,
             0, 3, 2
         };
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffers[Mesh::BufferIndex]);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * 6, els, GL_STATIC_DRAW);
-
+        
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ebo);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(int), els, GL_STATIC_DRAW);
+        
+        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+        glEnableVertexAttribArray(0);
+        
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+        glEnableVertexAttribArray(1);
+        
         glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
     FontMesh::~FontMesh() {
-        glDeleteBuffers(Mesh::BufferCount, _buffers);
+//        glDeleteBuffers(Mesh::BufferCount, _buffers);?
     }
 
-    void FontMesh::render() {
-        glBindBuffer(GL_ARRAY_BUFFER, _buffers[Mesh::BufferPosition]);
-        glVertexPointer(2, GL_FLOAT, 0, 0);
-        glEnableClientState(GL_VERTEX_ARRAY);
-
-        glBindBuffer(GL_ARRAY_BUFFER, _buffers[Mesh::BufferColor]);
-        glColorPointer(3, GL_FLOAT, 0, 0);
-        glEnableClientState(GL_COLOR_ARRAY);
-
+    void FontMesh::render(Matrix4f screen) {
+        glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, _tex);
-        glBindBuffer(GL_ARRAY_BUFFER, _buffers[Mesh::BufferCoords]);
-        glTexCoordPointer(2, GL_FLOAT, 0, 0);
-        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffers[Mesh::BufferIndex]);
+        
+        _shader->use();
+        _shader->setMat4("model", _model);
+        _shader->setMat4("screen", screen);
+        _shader->setVec3("color", _color);
+        _shader->setInt("tex", 0);
+        
+        glBindVertexArray(_vao);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-        glDisableClientState(GL_VERTEX_ARRAY);
-        glDisableClientState(GL_COLOR_ARRAY);
-        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
-        glBindTexture(GL_TEXTURE_2D, 0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
+        _shader->stop();
     }
 
     void FontMesh::setPosition(float *pos) {
-        glBindBuffer(GL_ARRAY_BUFFER, _buffers[Mesh::BufferPosition]);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float) * 2 * 4, pos);
+        glBindVertexArray(_vao);
+        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+        for (int i = 0; i < 4; i++) {
+            float coord[2];
+            coord[0] = pos[(i * 2) + 0];
+            coord[1] = pos[(i * 2) + 1];
+            glBufferSubData(GL_ARRAY_BUFFER, ((i * 4)) * sizeof(float), 2 * sizeof(float), coord);
+        }
         glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
     }
 
-    void FontMesh::setColor(float *color) {
-        glBindBuffer(GL_ARRAY_BUFFER, _buffers[Mesh::BufferColor]);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float) * 3 * 4, color);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
+    void FontMesh::setColor(const Vector3f& color) {
+        _color = color;
     }
 
-    Font::Font(const char* path, int size) {
+    Font::Font(const char* path, int size, Display* d)
+    : _projection(d->screen())
+    {
         if (!_lib) {
             if (FT_Init_FreeType(&_lib)) {
                 std::cerr << "Could not initialize FreeType library" << std::endl;
@@ -111,6 +117,7 @@ namespace JEngine {
             
             GLuint tex;
             glGenTextures(1, &tex);
+            
             glBindTexture(GL_TEXTURE_2D, tex);
             glTexImage2D(
                 GL_TEXTURE_2D,
@@ -129,6 +136,7 @@ namespace JEngine {
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glBindTexture(GL_TEXTURE_2D, 0);
             
             Character character = {
                 tex,
@@ -167,18 +175,11 @@ namespace JEngine {
                 xpos + width, ypos + height,
                 xpos, ypos + height
             };
-            
-            float col[] = {
-                color.r(), color.g(), color.b(),
-                color.r(), color.g(), color.b(),
-                color.r(), color.g(), color.b(),
-                color.r(), color.g(), color.b(),
-            };
 
             _mesh.setTextureID(ch.tex_id);
             _mesh.setPosition(pos);
-            _mesh.setColor(col);
-            _mesh.render();
+            _mesh.setColor(color);
+            _mesh.render(_projection);
 
             x += (ch.advance >> 6);
         }

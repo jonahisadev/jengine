@@ -7,6 +7,7 @@
 #include "Mesh.h"
 #include "../Math/Vector.h"
 #include "../Util/Logger.h"
+#include "Display.h"
 
 #include <iostream>
 #include <map>
@@ -14,10 +15,18 @@
 #include <string>
 
 namespace JEngine {
- 
+
+    class Display;
+    
     class FontMesh {
     protected:
         GLuint _buffers[Mesh::BufferCount];
+        
+        Shader* _shader;
+        Vector3f _color;
+        glm::mat4 _model;
+        
+        GLuint _vao, _vbo, _ebo;
         GLuint _tex;
 
     public:
@@ -25,9 +34,9 @@ namespace JEngine {
         ~FontMesh();
 
         inline void setTextureID(GLuint tex) { _tex = tex; };
-        void render();
+        void render(Matrix4f screen);
         void setPosition(float* pos);
-        void setColor(float* color);
+        void setColor(const Vector3f& color);
     };
     
     class Font {
@@ -39,13 +48,15 @@ namespace JEngine {
             GLuint advance;
         };
         typedef std::map<char, Character> CharMap;
+
+        const Matrix4f& _projection;
         
         static FT_Library _lib;
         FT_Face _face;
         CharMap _chars;
         FontMesh _mesh;
     public:
-        Font(const char* path, int size);
+        Font(const char* path, int size, Display* d);
         virtual ~Font();
         
         void render(float x, float y, const char* str, Vector3f color);

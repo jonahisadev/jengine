@@ -13,18 +13,18 @@ namespace JEngine {
         _img_width = width;
         _img_height = height;
 
-        _tex = SOIL_create_OGL_texture(
-            pixel_data,
-            width, height, channels,
-            0,
-            SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
-        );
+        // Generate texture
+         _tex = SOIL_create_OGL_texture(
+             pixel_data,
+             width, height, channels,
+             0,
+             SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+         );
         
         glBindVertexArray(_vao);
         glBindBuffer(GL_ARRAY_BUFFER, _vbo);
 
         // TODO: For smaller images, this will create a weird border
-        glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, _tex);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);

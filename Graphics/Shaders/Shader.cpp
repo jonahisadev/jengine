@@ -153,6 +153,7 @@ namespace JEngine {
             "uniform sampler2D tex;\n"
             "void main() {\n"
             "    FragColor = texture(tex, v_coords) * v_color;\n"
+//            "    FragColor = v_color;\n"
             "}\n";
 
 }
