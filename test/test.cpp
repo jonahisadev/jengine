@@ -3,61 +3,44 @@
 
 #include "../Graphics/Display.h"
 #include "../Graphics/Font.h"
-#include "../Graphics/TexturedQuad.h"
-#include "../Graphics/Spritesheet.h"
-
-#include <iostream>
-#include <string>
-#include <vector>
+#include "../Graphics/Scene.h"
+#include "../Graphics/Quad.h"
 
 int main(int argc, char** argv) {
     using namespace JEngine;
 
     Game::flags() << Game::EnableFonts;
-    Display window(800, 600, "JEngine Test v0.4", true);
+
+    Display window(800, 600, "JEngine Test v0.5", true);
     window.center();
     window.vsync(true);
 
     Font text("Roboto-Regular.ttf", 24, &window);
-    std::vector<TexturedQuad> quads;
+
+    Scene scene(&window);
+
+    Quad a(100, 100, 64, 64);
+    a.setColor(0, 255, 128);
+    scene.add(a);
+
+    Quad b(200, 200, 128, 128);
+    b.setColor(128, 0, 255);
+    scene.add(b);
 
     auto render = [&](Matrix4f screen) {
         window.clear(0, 128, 128);
 
-        for (auto& quad : quads) {
-            quad.render(screen);
-        }
+        scene.render();
 
         std::string fps = "FPS: " + std::to_string(window.getFPS());
         text.render(5, text.height(fps) + 5, fps, {1, 1, 1});
-
-        std::string count = "Count: " + std::to_string(quads.size());
-        text.render(5, 2 * (text.height(fps) + 5), count, {1, 1, 1});
     };
 
     auto update = [&](float delta) {
-        if (window.keyOnce(Key::KeyEscape)) {
-            window.fullscreen(false);
-        }
-
-        if (window.keyOnce('F')) {
-            window.fullscreen(true);
-        }
-
-        if (window.mousePressedOnce(MouseLeft)) {
-            TexturedQuad sheet(0, 0, 100, 100, "coyote.png");
-            sheet.setCenter(window.mousePosition());
-            sheet.linearInterp(true);
-            quads.push_back(sheet);
-        }
-
-        if (window.keyOnce('V')) {
-            window.vsync(false);
-        }
-
-        for (auto& quad : quads) {
-            quad.rotate(5 * delta);
-        }
+        if (window.key('D'))
+            scene.translateCamera({10 * delta, 0});
+        if (window.key('A'))
+            scene.translateCamera({-10 * delta, 0});
     };
 
     window.run(render, update);

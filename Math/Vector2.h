@@ -31,6 +31,10 @@ namespace JEngine {
         const Vector2& operator+=(const Vector2& other);
         const Vector2& operator-(const Vector2& other);
         const Vector2& operator-=(const Vector2& other);
+        const Vector2& operator*(const Vector2& other);
+        const Vector2& operator*=(const Vector2& other);
+        const Vector2& operator*(T scalar);
+        const Vector2& operator*=(T scalar);
         Vector2& operator=(Vector2 other);
 
         inline void setX(T x) { _x = x; }
@@ -99,6 +103,30 @@ namespace JEngine {
     template<class T>
     const Vector2<T>& Vector2<T>::operator-=(const Vector2 &other) {
         return *this - other;
+    }
+
+    template<class T>
+    const Vector2<T>& Vector2<T>::operator*(const Vector2 &other) {
+        _x *= other.x();
+        _y *= other.y();
+        return *this;
+    }
+
+    template<class T>
+    const Vector2<T>& Vector2<T>::operator*=(const Vector2 &other) {
+        return *this * other;
+    }
+
+    template<class T>
+    const Vector2<T>& Vector2<T>::operator*(T scalar) {
+        _x *= scalar;
+        _y *= scalar;
+        return *this;
+    }
+
+    template<class T>
+    const Vector2<T>& Vector2<T>::operator*=(T scalar) {
+        return *this * scalar;
     }
 
     template<class T>
