@@ -9,18 +9,12 @@ namespace JEngine {
 
     class Shader {
     public:
-        enum Type {
-            VertexShader,
-            FragmentShader
-        };
-        
         static const char* DefaultQuadVertexShader;
         static const char* DefaultQuadFragmentShader;
         static const char* DefaultTextureVertexShader;
         static const char* DefaultTextureFragmentShader;
         
     private:
-        Type _type;
         GLuint _program;
         
         void compiler_check(GLuint shader);

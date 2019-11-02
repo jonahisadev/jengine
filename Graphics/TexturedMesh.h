@@ -16,13 +16,12 @@ namespace JEngine {
         GLuint _tex;
         
     public:
-//        TexturedMesh(float* pos, float* color, int* els, int vCount, int lCount, const char* path);
         TexturedMesh(float* pos, const Vector3f& color, int* els, int vCount, int lCount, const char* path);
         virtual ~TexturedMesh();
         
         void linearInterp(bool state);
         void render(Matrix4f screen) override;
-        void setUV(float* uv);
+        void setUV(const float* uv);
         
         inline int getImageWidth() const { return _img_width; }
         inline int getImageHeight() const { return _img_height; }

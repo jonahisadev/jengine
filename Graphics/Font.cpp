@@ -45,7 +45,10 @@ namespace JEngine {
     }
 
     FontMesh::~FontMesh() {
-//        glDeleteBuffers(Mesh::BufferCount, _buffers);?
+        glDeleteTextures(1, &_tex);
+        glDeleteBuffers(1, &_vbo);
+        glDeleteBuffers(1, &_ebo);
+        glDeleteVertexArrays(1, &_vao);
     }
 
     void FontMesh::render(Matrix4f screen) {
@@ -127,8 +130,7 @@ namespace JEngine {
                 _face->glyph->bitmap.rows,
                 0,
                 GL_RGBA,
-                GL_UNSIGNED_BYTE,
-//                _face->glyph->bitmap.buffer 
+                GL_UNSIGNED_BYTE, 
                 data
             );
             

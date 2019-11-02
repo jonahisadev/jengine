@@ -28,9 +28,9 @@ namespace JEngine {
     }
 
     Mesh::~Mesh() {
-        glDeleteVertexArrays(1, &_vao);
         glDeleteBuffers(1, &_vbo);
         glDeleteBuffers(1, &_ebo);
+        glDeleteVertexArrays(1, &_vao);
     }
 
     void Mesh::setPosition(const Vector2f &pos) {

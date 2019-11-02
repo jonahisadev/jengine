@@ -20,8 +20,6 @@ namespace JEngine {
     
     class FontMesh {
     protected:
-        GLuint _buffers[Mesh::BufferCount];
-        
         Shader* _shader;
         Vector3f _color;
         glm::mat4 _model;

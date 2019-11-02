@@ -17,18 +17,13 @@ namespace JEngine {
         glGenTextures(1, &_tex);
         glBindTexture(GL_TEXTURE_2D, _tex);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, pixel_data);
-//         _tex = SOIL_create_OGL_texture(
-//             pixel_data,
-//             width, height, channels,
-//             0,
-//             SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
-//         );
         glBindBuffer(GL_TEXTURE_2D, 0);
 
+        // Bind buffers
         glBindVertexArray(_vao);
         glBindBuffer(GL_ARRAY_BUFFER, _vbo);
 
-        // TODO: For smaller images, this will create a weird border
+        // Texture wrapping
         glBindTexture(GL_TEXTURE_2D, _tex);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -44,11 +39,12 @@ namespace JEngine {
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
-        _textured = true;
     }
 
     TexturedMesh::~TexturedMesh() {
-//        glDeleteBuffers(BufferCount, _buffers);
+        glDeleteBuffers(1, &_vbo);
+        glDeleteBuffers(1, &_ebo);
+        glDeleteVertexArrays(1, &_vao);
     }
     
     void TexturedMesh::linearInterp(bool state) {
@@ -81,7 +77,7 @@ namespace JEngine {
         _shader->stop();
     }
 
-    void TexturedMesh::setUV(float *uv) {
+    void TexturedMesh::setUV(const float *uv) {
         glBindVertexArray(_vao);
         glBindBuffer(GL_ARRAY_BUFFER, _vbo);
         for (int i = 0; i < _vertex_count; i++) {

@@ -21,7 +21,7 @@ namespace JEngine {
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
         glfwWindowHint(GLFW_RESIZABLE, resizable);
-//        glfwWindowHint(GLFW_SAMPLES, 4);
+        glfwWindowHint(GLFW_SAMPLES, 4);
         
         _window = glfwCreateWindow(width, height, title, nullptr, nullptr);
         if (!_window) {
