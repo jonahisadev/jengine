@@ -1,32 +1,65 @@
 #include "../JEngine.h"
+#include "../Game/Game.h"
+
 #include "../Graphics/Display.h"
-#include "../Graphics/TexturedQuad.h"
 #include "../Graphics/Font.h"
+#include "../Graphics/TexturedQuad.h"
+#include "../Graphics/Spritesheet.h"
 
-int main()
-{
-	using namespace JEngine;
+#include <iostream>
+#include <string>
+#include <vector>
 
-	Display window(800, 600, "OpenGL 3", false);
-	window.vsync(true);
-	window.center();
+int main(int argc, char** argv) {
+    using namespace JEngine;
 
-	Font font("Roboto-Regular.ttf", 24, &window);
-	TexturedQuad tex(200, 200, 128, 128, "coyote.png");
+    Game::flags() << Game::EnableFonts;
+    Display window(800, 600, "JEngine Test v0.4", true);
+    window.center();
+    window.vsync(true);
 
-	auto render = [&](Matrix4f screen) {
-		window.clear(0, 128, 128);
+    Font text("Roboto-Regular.ttf", 24, &window);
+    std::vector<TexturedQuad> quads;
 
-		tex.render(screen);
+    auto render = [&](Matrix4f screen) {
+        window.clear(0, 128, 128);
 
-		std::string fps = "FPS: " + std::to_string(window.getFPS());
-		font.render(10, 10 + font.height(fps), fps, {1, 1, 1});
-	};
+        for (auto& quad : quads) {
+            quad.render(screen);
+        }
 
-	auto update = [&](float delta) {
-		tex.rotate(15 * delta);
-	};
+        std::string fps = "FPS: " + std::to_string(window.getFPS());
+        text.render(5, text.height(fps) + 5, fps, {1, 1, 1});
 
-	window.run(render, update);
-	return 0;
+        std::string count = "Count: " + std::to_string(quads.size());
+        text.render(5, 2 * (text.height(fps) + 5), count, {1, 1, 1});
+    };
+
+    auto update = [&](float delta) {
+        if (window.keyOnce(Key::KeyEscape)) {
+            window.fullscreen(false);
+        }
+
+        if (window.keyOnce('F')) {
+            window.fullscreen(true);
+        }
+
+        if (window.mousePressedOnce(MouseLeft)) {
+            TexturedQuad sheet(0, 0, 100, 100, "coyote.png");
+            sheet.setCenter(window.mousePosition());
+            sheet.linearInterp(true);
+            quads.push_back(sheet);
+        }
+
+        if (window.keyOnce('V')) {
+            window.vsync(false);
+        }
+
+        for (auto& quad : quads) {
+            quad.rotate(5 * delta);
+        }
+    };
+
+    window.run(render, update);
+    return 0;
 }
