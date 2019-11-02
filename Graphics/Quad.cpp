@@ -5,19 +5,16 @@ namespace JEngine {
     Quad::Quad(float x, float y, float width, float height)
     : _pos(x, y), _size(width, height), _color(1, 1, 1)
     {
-        float pos[] = {
-            x, y,
-            x + width, y,
-            x + width, y + height,
-            x, y + height
+        float ox = (width / 2);
+        float oy = (height / 2);
+        float buffer[] = {
+            -ox, -oy, 0, 0,
+            ox, -oy, 0, 0,
+            ox, oy, 0, 0,
+            -ox, oy, 0, 0
         };
-        
-        float color[] = {
-            1, 1, 1,
-            1, 1, 1,
-            1, 1, 1,
-            1, 1, 1
-        };
+
+        Vector3f color = {1, 1, 1};
         
         int els[] = {
             0, 1, 2,
@@ -25,7 +22,10 @@ namespace JEngine {
         };
         
         _angle = 0;
-        _mesh = std::make_shared<Mesh>(pos, color, els, 4, 6);
+        _mesh = std::make_shared<Mesh>(buffer, color, els, 4, 6);
+        
+        setPosition(_pos);
+        setColor(_color);
     }
 
     Quad::~Quad() {
@@ -34,15 +34,7 @@ namespace JEngine {
 
     void Quad::translate(float dx, float dy) {
         _pos.translate(dx, dy);
-        
-        float pos[] = {
-            _pos.x(), _pos.y(),
-            _pos.x() + _size.x(), _pos.y(),
-            _pos.x() + _size.x(), _pos.y() + _size.y(),
-            _pos.x(), _pos.y() + _size.y()
-        };
-        
-        _mesh->setPosition(pos);
+        _mesh->setPosition(_pos);
     }
 
     void Quad::translate(const Vector2f &vec) {
@@ -51,17 +43,17 @@ namespace JEngine {
 
     void Quad::rotate(float dr) {
         _angle += dr;
+        _mesh->rotate(dr);
     }
 
     void Quad::setPosition(float x, float y) {
-        _pos.setX(x);
-        _pos.setY(y);
-        translate(0, 0);
+        _pos.setX(x + (width() / 2));
+        _pos.setY(y + (height() / 2));
+        _mesh->setPosition(_pos);
     }
 
     void Quad::setPosition(const Vector2f &pos) {
-        _pos = pos;
-        translate(0, 0);
+        setPosition(pos.x(), pos.y());
     }
 
     void Quad::setAngle(float angle) {
@@ -73,19 +65,16 @@ namespace JEngine {
         _color.setG(g);
         _color.setB(b);
         _color.normalize(255);
-        
-        float color[] = {
-            _color.r(), _color.g(), _color.b(),
-            _color.r(), _color.g(), _color.b(),
-            _color.r(), _color.g(), _color.b(),
-            _color.r(), _color.g(), _color.b()
-        };
-        
-        _mesh->setColor(color);
+        _mesh->setColor(_color);
     }
 
     void Quad::setColor(const Vector3i &rgb) {
         setColor(rgb.r(), rgb.g(), rgb.b());
+    }
+
+    void Quad::setColor(const Vector3f &rgb) {
+        _color = rgb;
+        _mesh->setColor(_color);
     }
 
     void Quad::setCenter(Vector2f center) {
@@ -110,16 +99,8 @@ namespace JEngine {
         return quad.intersects(vec);
     }
 
-    void Quad::render() {
-        glPushMatrix();
-        
-        glTranslatef(_pos.x() + (_size.x() / 2), _pos.y() + (_size.y() / 2), 0);
-        glRotatef(_angle, 0, 0, 1);
-        glTranslatef(-(_pos.x() + (_size.x() / 2)), -(_pos.y() + (_size.y() / 2)), 0);
-        
-        _mesh->render();
-        
-        glPopMatrix();
+    void Quad::render(Matrix4f screen) {
+        _mesh->render(screen);
     }
 
 }

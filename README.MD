@@ -10,6 +10,7 @@ At the moment, this is mostly for me so I can write games more easily
 * Cross-platform (tested on Windows, Mac and Linux)
 * Easy to get up and running (minimal startup code)
 * Basic quad/texture rendering
+* Modern OpenGL
 * Spritesheets
 * Font loading and rendering (TTF)
 * WAV loading and playback
@@ -21,3 +22,4 @@ At the moment, this is mostly for me so I can write games more easily
 * [GLFW](https://glfw.org) (Zlib)
 * [FreeType](https://www.freetype.org) (GPLv2)
 * [OpenAL Soft](https://github.com/kcat/openal-soft) (LGPL)
+* [GLM](https://glm.g-truc.net/0.9.9/index.html) (MIT / Happy Bunny)

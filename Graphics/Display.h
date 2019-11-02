@@ -1,6 +1,6 @@
 #pragma once
 
-#include "OpenGL.h"
+//#include "OpenGL.h"
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 #include "../Math/Vector2.h"
@@ -27,6 +27,7 @@ namespace JEngine {
         TexturedQuadPtr _mouse_tex;
         unsigned char _keys[350];
         unsigned char _mouse[32];
+        Matrix4f _projection;
 
         void resize_callback(GLFWwindow* window, int width, int height);
         GLFWmonitor* getMonitorByIndex(int monitor);
@@ -42,7 +43,7 @@ namespace JEngine {
         bool mousePressedOnce(int button);
         inline int getFPS() const { return _fps; }
         
-        void run(std::function<void()> renderfn, std::function<void(float)> updatefn);
+        void run(std::function<void(Matrix4f)> renderfn, std::function<void(float)> updatefn);
         void clear(int r, int g, int b);
         void clear(const Vector3i& vec);
         void close();
@@ -59,6 +60,7 @@ namespace JEngine {
         inline int height() const { return _size.y(); }
         inline int x() const { return _pos.x(); }
         inline int y() const { return _pos.y(); }
+        inline const Matrix4f& screen() const { return _projection; }
     };
     
     enum Key {

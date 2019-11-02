@@ -5,7 +5,7 @@ namespace JEngine {
     Spritesheet::Spritesheet(float x, float y, float width, float height, const char *path, float grid_size)
     : TexturedQuad(x, y, width, height, path), _grid_size(grid_size)
     {
-        _grid_pos = {0, 0};
+        setGridPosition(0, 0);
     }
 
     void Spritesheet::setGridPosition(float gx, float gy) {

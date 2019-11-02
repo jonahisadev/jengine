@@ -18,15 +18,14 @@ int main(int argc, char** argv) {
     window.center();
     window.vsync(true);
 
-    Font text("Roboto-Regular.ttf", 24);
-
+    Font text("Roboto-Regular.ttf", 24, &window);
     std::vector<TexturedQuad> quads;
 
-    auto render = [&]() {
+    auto render = [&](Matrix4f screen) {
         window.clear(0, 128, 128);
 
         for (auto& quad : quads) {
-            quad.render();
+            quad.render(screen);
         }
 
         std::string fps = "FPS: " + std::to_string(window.getFPS());

@@ -1,7 +1,7 @@
 #include "Display.h"
 #include "Font.h"
 #include "../Audio/Audio.h"
-#define GLFW_INCLUDE_NONE
+//#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
 namespace JEngine {
@@ -14,6 +14,12 @@ namespace JEngine {
             throw;
         }
         
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+#ifdef JENGINE_MACOS
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+#endif
         glfwWindowHint(GLFW_RESIZABLE, resizable);
         glfwWindowHint(GLFW_SAMPLES, 4);
         
@@ -26,6 +32,8 @@ namespace JEngine {
 
         glfwMakeContextCurrent(_window);
         glfwSetWindowUserPointer(_window, this);
+        
+        JINFO("OpenGL Version: %s", glGetString(GL_VERSION));
 
         // Resize callback
         auto resize = [](GLFWwindow* w, int width, int height) {
@@ -77,12 +85,8 @@ namespace JEngine {
         _size = {width, height};
         int fb_width, fb_height;
         glfwGetFramebufferSize(window, &fb_width, &fb_height);
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
         glViewport(0, 0, fb_width, fb_height);
-        glOrtho(0, width, height, 0, -1, 1);
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
+        _projection = glm::ortho(0.0f, float(width), float(height), 0.0f, -1.0f, 1.0f);
     }
 
     GLFWmonitor *Display::getMonitorByIndex(int monitor) {
@@ -134,7 +138,7 @@ namespace JEngine {
         return false;
     }
 
-    void Display::run(std::function<void()> renderfn, std::function<void(float)> updatefn) {
+    void Display::run(std::function<void(Matrix4f)> renderfn, std::function<void(float)> updatefn) {
         Game::init();
         
         float delta = 1.0f;
@@ -145,10 +149,10 @@ namespace JEngine {
             double last = glfwGetTime();
             
             updatefn(delta);
-            renderfn();
+            renderfn(_projection * glm::mat4(1.0f));
             
             if (_mouse_tex)
-                _mouse_tex->render();
+                _mouse_tex->render(_projection * glm::mat4(1.0f));
             
             glfwSwapBuffers(_window);
             glfwPollEvents();
