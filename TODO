@@ -15,7 +15,8 @@ Graphics:
   ☐ Scenes
   ☐ Cameras (related to Scenes)
   ☐ Lighting
-  ☐ Group of text (mutli-line)
+  ✔ Group of text (mutli-line) @done(19-11-06 19:32)
+  ☐ Animations
 
 Game:
   ☐ Resource Loader

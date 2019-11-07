@@ -3,30 +3,36 @@
 
 #include "../Graphics/Display.h"
 #include "../Graphics/Font.h"
-#include "../Graphics/Scene.h"
 #include "../Graphics/Quad.h"
+#include "../Graphics/TextGroup.h"
+
+#include <string>
 
 int main(int argc, char** argv) {
     using namespace JEngine;
 
     Game::flags() << Game::EnableFonts;
 
-    Logger logger("Test");
-
     Display window(800, 600, "JEngine Test v0.5", true);
     window.center();
     window.vsync(true);
-    logger.info("Window created!");
 
     Quad quad(100, 100, 100, 100);
     quad.setColor(192, 192, 192);
-    logger.info("Quad created!");
+    
+    Font font("Roboto-Regular.ttf", 16, &window);
+    TextGroup debug(font, {1, 1, 1}, 10);
 
     auto render = [&](Matrix4f screen)
     {
         window.clear(16, 16, 16);
 
         quad.render(screen);
+
+        debug.add("JEngine v0.5b");
+        debug.add("FPS: " + std::to_string(window.getFPS()));
+        debug.render(10, 10);
+        debug.reset();
     };
 
     auto update = [&](float delta)
@@ -38,6 +44,5 @@ int main(int argc, char** argv) {
     };
 
     window.run(render, update);
-    logger.info("Finished!");
     return 0;
 }
