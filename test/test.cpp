@@ -23,6 +23,8 @@ int main(int argc, char** argv) {
     Font font("Roboto-Regular.ttf", 16, &window);
     TextGroup debug(font, {1, 1, 1}, 10);
 
+    window.setCursorImage("cursor.png", 32);
+
     auto render = [&](Matrix4f screen)
     {
         window.clear(16, 16, 16);

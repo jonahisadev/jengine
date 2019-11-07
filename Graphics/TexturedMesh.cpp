@@ -12,11 +12,17 @@ namespace JEngine {
         unsigned char* pixel_data = SOIL_load_image(path, &width, &height, &channels, SOIL_LOAD_AUTO);
         _img_width = width;
         _img_height = height;
+        
+        JINFO("Loading texture [%d, %d] (%d channels)", width, height, channels);
 
+        GLint format = GL_RGB;
+        if (channels == 4)
+            format = GL_RGBA;
+        
         // Generate texture
         glGenTextures(1, &_tex);
         glBindTexture(GL_TEXTURE_2D, _tex);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, pixel_data);
+        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, pixel_data);
         glBindBuffer(GL_TEXTURE_2D, 0);
 
         // Bind buffers
