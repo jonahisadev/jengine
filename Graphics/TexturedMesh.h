@@ -8,6 +8,8 @@
 
 namespace JEngine {
 
+    class Light;
+    
     class TexturedMesh : public Mesh {
     protected:
         int _img_width;
@@ -25,6 +27,8 @@ namespace JEngine {
         
         inline int getImageWidth() const { return _img_width; }
         inline int getImageHeight() const { return _img_height; }
+        
+        friend class Light;
     };
     
     typedef std::shared_ptr<TexturedMesh> TexturedMeshPtr;

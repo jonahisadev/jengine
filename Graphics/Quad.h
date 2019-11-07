@@ -14,7 +14,12 @@ namespace JEngine {
         Vector3f _color;
         MeshPtr _mesh;
         
+        Vector2f _points[4];
+        
         float _angle;
+        bool _blocks_light;
+        
+        void update_vertices();
         
     public:
         Quad(float x, float y, float width, float height);
@@ -31,6 +36,7 @@ namespace JEngine {
         void setColor(const Vector3i& rgb);
         void setColor(const Vector3f& rgb);
         void setCenter(Vector2f center);
+        void setBlocksLight(bool state) { _blocks_light = state; }
 
         bool intersects(const Quad& other) const;
         bool intersects(const Vector2f& vec) const;
@@ -44,6 +50,10 @@ namespace JEngine {
         inline float width() const { return _size.x(); }
         inline float height() const { return _size.y(); }
         inline float angle() const { return _angle; }
+        inline bool blocksLight() const { return _blocks_light; }
+        
+        inline Vector2f& getPoint(int index) { return _points[index]; }
+        inline Vector2f* getPoints() { return _points; }
     };
     
     typedef std::shared_ptr<Quad> QuadPtr;

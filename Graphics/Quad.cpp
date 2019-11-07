@@ -26,15 +26,28 @@ namespace JEngine {
         
         setPosition(_pos);
         setColor(_color);
+        update_vertices();
     }
 
     Quad::~Quad() {
         _mesh.reset();
     }
 
+    void Quad::update_vertices() {
+        _pos.translate(-_size.x() / 2, -_size.y() / 2);
+        
+        _points[0] = {_pos.x(), _pos.y()};
+        _points[1] = {_pos.x() + _size.x(), _pos.y()};
+        _points[2] = {_pos.x() + _size.x(), _pos.y() + _size.y()};
+        _points[3] = {_pos.x(), _pos.y() + _size.y()};
+
+        _pos.translate(_size.x() / 2, _size.y() / 2);
+    }
+
     void Quad::translate(float dx, float dy) {
         _pos.translate(dx, dy);
         _mesh->setPosition(_pos);
+        update_vertices();
     }
 
     void Quad::translate(const Vector2f &vec) {
@@ -50,6 +63,7 @@ namespace JEngine {
         _pos.setX(x + (width() / 2));
         _pos.setY(y + (height() / 2));
         _mesh->setPosition(_pos);
+        update_vertices();
     }
 
     void Quad::setPosition(const Vector2f &pos) {

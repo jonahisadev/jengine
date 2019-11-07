@@ -10,6 +10,8 @@
 
 namespace JEngine {
 
+    class Light;
+    
     class Mesh {
     protected:
         int _vertex_count;
@@ -32,6 +34,7 @@ namespace JEngine {
         void rotate(float dr);
 
         virtual void render(Matrix4f screen);
+        friend class Light;
     };
     
     typedef std::shared_ptr<Mesh> MeshPtr;

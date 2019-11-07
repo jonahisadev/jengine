@@ -13,6 +13,8 @@ namespace JEngine {
         static const char* DefaultQuadFragmentShader;
         static const char* DefaultTextureVertexShader;
         static const char* DefaultTextureFragmentShader;
+        static const char* DefaultLightVertexShader;
+        static const char* DefaultLightFragmentShader;
         
     private:
         GLuint _program;

@@ -12,7 +12,16 @@ namespace JEngine {
         _items.push_back(item);
     }
 
+    void Scene::add(Light &light) {
+        _lights.push_back(light);
+    }
+
     void Scene::render() {
+        for (auto& light : _lights) {
+            light.prepare(_items);
+            light.render(_projection * _view);
+        }
+        
         for (auto& item : _items) {
             item.render(_projection * _view);
         }

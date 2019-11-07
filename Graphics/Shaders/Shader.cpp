@@ -155,4 +155,33 @@ namespace JEngine {
             "    FragColor = texture(tex, v_coords) * v_color;\n"
             "}\n";
 
+    const char* Shader::DefaultLightVertexShader =
+            "#version 330 core\n"
+            "layout (location = 0) in vec2 aPos;\n"
+            "layout (location = 1) in vec2 aCoords;\n"
+            "out vec4 v_color;\n"
+            "out vec2 v_coords;\n"
+            "out vec2 v_pos;\n"
+            "uniform vec3 color;\n"
+            "uniform mat4 model;\n"
+            "uniform mat4 screen;\n"
+            "void main() {\n"
+            "    gl_Position = screen * model * vec4(aPos, 0.0f, 1.0f);\n"
+            "    v_color = vec4(color, 1);\n"
+            "    v_coords = aCoords;\n"
+            "    v_pos = aPos;\n"
+            "}\n";
+
+    const char* Shader::DefaultLightFragmentShader =
+            "#version 330 core\n"
+            "in vec4 v_color;\n"
+            "in vec2 v_coords;\n"
+            "in vec2 v_pos;\n"
+            "out vec4 FragColor;\n"
+            "uniform sampler2D tex;\n"
+            "void main() {\n"
+            "    FragColor = texture(tex, v_coords) * v_color;\n"
+//            "    FragColor = v_color;\n"
+            "}\n";
+
 }

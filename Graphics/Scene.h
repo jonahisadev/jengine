@@ -5,12 +5,15 @@
 
 #include "Quad.h"
 #include "Display.h"
+#include "Light.h"
 
 namespace JEngine {
 
     class Scene {
     private:
         std::vector<Quad> _items;
+        std::vector<Light> _lights;
+        
         const glm::mat4& _projection;
         glm::mat4 _view;
         
@@ -19,6 +22,7 @@ namespace JEngine {
         ~Scene();
         
         void add(Quad& item);
+        void add(Light& light);
         void render();
         
         void translate(const Vector2f& vec);
