@@ -15,6 +15,17 @@ Graphics:
   ☐ Scenes
   ☐ Cameras (related to Scenes)
   ☐ Lighting
+  ☐ Group of text (mutli-line)
+
+Game:
+  ☐ Resource Loader
+  This is useful for abstracting loads across platforms
+  ☐ Some sort of utility to generate things
+  Create a tool to generate projects, executables, builds, etc.
+  ✔ Better application logging @done(19-11-06 19:07)
+  ☐ Maybe have the Game class be a wrapper
+  This could handle some default things like a default font, scene,
+  logger, window, etc.
 
 Audio:
   ☐ Looping

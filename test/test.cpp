@@ -11,38 +11,33 @@ int main(int argc, char** argv) {
 
     Game::flags() << Game::EnableFonts;
 
+    Logger logger("Test");
+
     Display window(800, 600, "JEngine Test v0.5", true);
     window.center();
     window.vsync(true);
+    logger.info("Window created!");
 
-    Font text("Roboto-Regular.ttf", 24, &window);
+    Quad quad(100, 100, 100, 100);
+    quad.setColor(192, 192, 192);
+    logger.info("Quad created!");
 
-    Scene scene(&window);
+    auto render = [&](Matrix4f screen)
+    {
+        window.clear(16, 16, 16);
 
-    Quad a(100, 100, 64, 64);
-    a.setColor(0, 255, 128);
-    scene.add(a);
-
-    Quad b(200, 200, 128, 128);
-    b.setColor(128, 0, 255);
-    scene.add(b);
-
-    auto render = [&](Matrix4f screen) {
-        window.clear(0, 128, 128);
-
-        scene.render();
-
-        std::string fps = "FPS: " + std::to_string(window.getFPS());
-        text.render(5, text.height(fps) + 5, fps, {1, 1, 1});
+        quad.render(screen);
     };
 
-    auto update = [&](float delta) {
-        if (window.key('D'))
-            scene.translateCamera({10 * delta, 0});
-        if (window.key('A'))
-            scene.translateCamera({-10 * delta, 0});
+    auto update = [&](float delta)
+    {
+        if (quad.intersects(window.mousePosition()))
+            quad.setColor(255, 128, 128);
+        else
+            quad.setColor(192, 192, 192);
     };
 
     window.run(render, update);
+    logger.info("Finished!");
     return 0;
 }
