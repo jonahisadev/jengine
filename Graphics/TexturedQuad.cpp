@@ -25,7 +25,6 @@ namespace JEngine {
         _mesh = std::make_shared<TexturedMesh>(buffer, color, els, 4, 6, path);
         
         setPosition(_pos);
-        translate(-ox, -oy);
         setColor(_color);
     }
 
