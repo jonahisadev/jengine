@@ -3,8 +3,10 @@
 
 #include "../Graphics/Display.h"
 #include "../Graphics/Font.h"
-#include "../Graphics/Scene.h"
 #include "../Graphics/Quad.h"
+#include "../Graphics/TextGroup.h"
+
+#include <string>
 
 int main(int argc, char** argv) {
     using namespace JEngine;
@@ -15,32 +17,32 @@ int main(int argc, char** argv) {
     window.center();
     window.vsync(true);
 
-    Font text("Roboto-Regular.ttf", 24, &window);
+    Quad quad(100, 100, 100, 100);
+    quad.setColor(192, 192, 192);
+    
+    Font font("Roboto-Regular.ttf", 16, &window);
+    TextGroup debug(font, {1, 1, 1}, 10);
 
-    Scene scene(&window);
+    window.setCursorImage("cursor.png", 32);
 
-    Quad a(100, 100, 64, 64);
-    a.setColor(0, 255, 128);
-    scene.add(a);
+    auto render = [&](Matrix4f screen)
+    {
+        window.clear(16, 16, 16);
 
-    Quad b(200, 200, 128, 128);
-    b.setColor(128, 0, 255);
-    scene.add(b);
+        quad.render(screen);
 
-    auto render = [&](Matrix4f screen) {
-        window.clear(0, 128, 128);
-
-        scene.render();
-
-        std::string fps = "FPS: " + std::to_string(window.getFPS());
-        text.render(5, text.height(fps) + 5, fps, {1, 1, 1});
+        debug.add("JEngine v0.5b");
+        debug.add("FPS: " + std::to_string(window.getFPS()));
+        debug.render(10, 10);
+        debug.reset();
     };
 
-    auto update = [&](float delta) {
-        if (window.key('D'))
-            scene.translateCamera({10 * delta, 0});
-        if (window.key('A'))
-            scene.translateCamera({-10 * delta, 0});
+    auto update = [&](float delta)
+    {
+        if (quad.intersects(window.mousePosition()))
+            quad.setColor(255, 128, 128);
+        else
+            quad.setColor(192, 192, 192);
     };
 
     window.run(render, update);

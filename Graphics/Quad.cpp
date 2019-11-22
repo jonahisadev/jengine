@@ -47,9 +47,8 @@ namespace JEngine {
     }
 
     void Quad::setPosition(float x, float y) {
-        _pos.setX(x + (width() / 2));
-        _pos.setY(y + (height() / 2));
-        _mesh->setPosition(_pos);
+        _pos = {x, y};
+        _mesh->setPosition({_pos.x() + width() / 2, _pos.y() + height() / 2});
     }
 
     void Quad::setPosition(const Vector2f &pos) {
