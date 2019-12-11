@@ -2,14 +2,17 @@
 
 namespace JEngine {
 
-    Controller::Controller(Type type) {
+    Controller::Controller(Type type) : _controller(-1) {
         for (int i = 0; i < GLFW_JOYSTICK_LAST; i++) {
             if (glfwJoystickPresent(i)) {
                 _controller = i;
+                _type = type;
                 break;
             }
         }
-        _type = type;
+        
+        if (_controller < 0)
+            throw;
     }
 
     bool Controller::isButtonDown(int button) {
@@ -29,32 +32,32 @@ namespace JEngine {
         return axes;
     }
 
-    const Controller::Axis& XboxController::leftStick() {
+    const Controller::Axis* XboxController::leftStick() {
         const float* axes = getAllAxes();
-        return {
-            axes[1] < 0 ? -axes[1] : 0,
-            axes[1] > 0 ?  axes[1] : 0,
-            axes[0] < 0 ? -axes[0] : 0,
-            axes[0] > 0 ?  axes[0] : 0
+        return new Axis {
+            axes[XBOX_LS_V] < 0 ? -axes[XBOX_LS_V] : 0,
+            axes[XBOX_LS_V] > 0 ?  axes[XBOX_LS_V] : 0,
+            axes[XBOX_LS_H] < 0 ? -axes[XBOX_LS_H] : 0,
+            axes[XBOX_LS_H] > 0 ?  axes[XBOX_LS_H] : 0
         };
     }
 
-    const Controller::Axis &XboxController::rightStick() {
+    const Controller::Axis* XboxController::rightStick() {
         const float* axes = getAllAxes();
-        return {
-                axes[3] > 0 ?  axes[3] : 0,
-                axes[3] < 0 ?  axes[3] : 0,
-                axes[2] < 0 ? -axes[2] : 0,
-                axes[2] > 0 ? -axes[2] : 0
+        return new Axis {
+            axes[XBOX_RS_V] > 0 ?  axes[XBOX_RS_V] : 0,
+            axes[XBOX_RS_V] < 0 ?  axes[XBOX_RS_V] : 0,
+            axes[XBOX_RS_H] < 0 ? -axes[XBOX_RS_H] : 0,
+            axes[XBOX_RS_H] > 0 ? -axes[XBOX_RS_H] : 0
         };
     }
 
     float XboxController::leftTrigger() {
-        return getAxis(4);
+        return getAxis(XBOX_LT);
     }
 
     float XboxController::rightTrigger() {
-        return getAxis(5);
+        return getAxis(XBOX_RT);
     }
 
 }
