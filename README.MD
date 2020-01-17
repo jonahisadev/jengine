@@ -20,6 +20,6 @@ At the moment, this is mostly for me so I can write games more easily
 * [SOIL](https://www.lonesock.net/soil.html) (Public Domain)
 * [GLEW](http://glew.sourceforge.net/) (BSD, MIT)
 * [GLFW](https://glfw.org) (Zlib)
-* [FreeType](https://www.freetype.org) (GPLv2)
+* [FreeType](https://www.freetype.org) (FTL)
 * [OpenAL Soft](https://github.com/kcat/openal-soft) (LGPL)
 * [GLM](https://glm.g-truc.net/0.9.9/index.html) (MIT / Happy Bunny)
