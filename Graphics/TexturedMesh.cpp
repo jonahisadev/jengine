@@ -12,8 +12,6 @@ namespace JEngine {
         unsigned char* pixel_data = SOIL_load_image(path, &width, &height, &channels, SOIL_LOAD_AUTO);
         _img_width = width;
         _img_height = height;
-        
-        JINFO("Loading texture [%d, %d] (%d channels)", width, height, channels);
 
         GLint format = GL_RGB;
         if (channels == 4)

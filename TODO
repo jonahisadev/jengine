@@ -42,3 +42,5 @@ Other:
   ✔ Mouse and key press once checking @done(19-10-08 18:10)
   ☐ Some sort of base UI system?
   We at least need some sort of text input
+  ☐ Font in TextGroup should be a const reference
+  ☐ TexturedQuad position is wrong
