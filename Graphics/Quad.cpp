@@ -34,7 +34,8 @@ namespace JEngine {
 
     void Quad::translate(float dx, float dy) {
         _pos.translate(dx, dy);
-        _mesh->setPosition(_pos);
+        _mesh->translate({dx, dy});
+//        _mesh->setPosition(_pos);
     }
 
     void Quad::translate(const Vector2f &vec) {

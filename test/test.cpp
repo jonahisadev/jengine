@@ -24,36 +24,29 @@ int main(int argc, char** argv) {
     Font font("Roboto-Regular.ttf", 18, &window);
     bool debug = false;
 
-    XboxController controller;
-
     auto render = [&](Matrix4f screen)
     {
         window.clear(16, 16, 16);
         quad.render(screen);
 
         if (debug) {
-            int count;
-            const float* buttons = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &count);
-            std::string btns = "(" + std::to_string(count) + "): ";
-            for (int i = 0; i < count; i++) {
-                btns += std::to_string(buttons[i]) + " ";
-            }
-
-            font.render(5, 25, btns, {1, 1, 1});
+            std::string fps = "FPS: " + std::to_string(window.getFPS());
+            font.render(5, 25, fps, {1, 1, 1});
         }
     };
 
     auto update = [&](float delta)
     {
-        quad.translate(speed * delta * controller.leftStick()->right, 0);
-        quad.translate(-speed * delta * controller.leftStick()->left, 0);
-        quad.translate(0, speed * delta * controller.leftStick()->down);
-        quad.translate(0, -speed * delta * controller.leftStick()->up);
+        if (window.key('D'))
+            quad.translate(20 * delta, 0);
+        if (window.key('A'))
+            quad.translate(-20 * delta, 0);
+        if (window.key('S'))
+            quad.translate(0, 20 * delta);
+        if (window.key('W'))
+            quad.translate(0, -20 * delta);
 
-        quad.rotate(controller.rightTrigger() * delta * 25.0f);
-        quad.rotate(-controller.leftTrigger() * delta * 25.0f);
-
-        debug = controller.isButtonDown(XboxController::RB);
+        debug = window.key(Key::KeyF4);
     };
 
     window.run(render, update);
