@@ -15,7 +15,7 @@ namespace JEngine {
         unsigned char* _data;
         
     public:
-        WaveData(const char* path);
+        WaveData(const std::string& path);
         ~WaveData();
         
         ALenum alFormat();

@@ -16,7 +16,7 @@ namespace JEngine {
         GLuint _tex;
         
     public:
-        TexturedMesh(float* pos, const Vector3f& color, int* els, int vCount, int lCount, const char* path);
+        TexturedMesh(float* pos, const Vector3f& color, int* els, int vCount, int lCount, const std::string& path);
         virtual ~TexturedMesh();
         
         void linearInterp(bool state);

@@ -15,21 +15,17 @@ int main(int argc, char** argv) {
     using namespace JEngine;
 
     Game::flags() << Game::EnableFonts;
+    Game::setResourceLocation("res");
 
     Display window(800, 600, "JEngine Test v0.5", true);
     window.center();
     window.vsync(true);
 
-    TexturedQuad quad(100, 100, 128, 128, "coyote.png");
+    TexturedQuad quad(100, 100, 128, 128, Game::resource("coyote.png"));
     float speed = 35.0f;
 
-    Font font("Roboto-Regular.ttf", 18, &window);
+    Font font(Game::resource("Roboto-Regular.ttf"), 18, &window);
     bool debug = false;
-
-    Audio::initialize();
-
-    Sound music("music.wav");
-    Audio::playSound(music, 50, false);
 
     auto render = [&](Matrix4f screen)
     {
@@ -58,19 +54,8 @@ int main(int argc, char** argv) {
         if (window.key('R'))
             quad.rotate(25 * delta);
 
-        if (window.keyOnce(' '))
-            music.togglePlayback();
-        if (window.keyOnce(KeyEscape))
-            music.stop();
-        if (window.keyOnce('P'))
-            music.applyFilter((filter = !filter));
-
-        if (quad.intersects(window.mousePosition()))
-            quad.setColor(255, 0, 0);
-        else
-            quad.setColor(255, 255, 255);
-
-        debug = window.key(Key::KeyF4);
+        if (window.keyOnce(KeyF4))
+            debug = !debug;
     };
 
     window.run(render, update);

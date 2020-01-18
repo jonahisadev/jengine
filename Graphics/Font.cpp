@@ -84,7 +84,7 @@ namespace JEngine {
         _color = color;
     }
 
-    Font::Font(const char* path, int size, Display* d)
+    Font::Font(const std::string& path, int size, Display* d)
     : _projection(d->screen())
     {
         if (!_lib) {
@@ -94,7 +94,7 @@ namespace JEngine {
             }
         }
         
-        if (FT_New_Face(_lib, path, 0, &_face)) {
+        if (FT_New_Face(_lib, path.c_str(), 0, &_face)) {
             std::cerr << "Failed to load font '" << path << "'" << std::endl;
             throw;
         }

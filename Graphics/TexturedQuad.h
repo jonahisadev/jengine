@@ -9,7 +9,7 @@ namespace JEngine {
 
     class TexturedQuad : public Quad {
     public:
-        TexturedQuad(float x, float y, float width, float height, const char* path);
+        TexturedQuad(float x, float y, float width, float height, const std::string& path);
         virtual ~TexturedQuad();
 
         void linearInterp(bool state) {

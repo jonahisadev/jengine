@@ -54,7 +54,7 @@ namespace JEngine {
         CharMap _chars;
         FontMesh _mesh;
     public:
-        Font(const char* path, int size, Display* d);
+        Font(const std::string& path, int size, Display* d);
         virtual ~Font();
         
         void render(float x, float y, const char* str, Vector3f color);

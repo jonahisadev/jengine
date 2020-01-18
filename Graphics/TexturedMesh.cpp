@@ -2,14 +2,14 @@
 
 namespace JEngine {
 
-    TexturedMesh::TexturedMesh(float *buffer, const Vector3f &color, int *els, int vCount, int lCount, const char *path)
+    TexturedMesh::TexturedMesh(float *buffer, const Vector3f &color, int *els, int vCount, int lCount, const std::string& path)
     : Mesh(buffer, {1, 1, 1}, els, vCount, lCount), _tex(0)
     {
         delete _shader;
         _shader = new Shader(Shader::DefaultTextureVertexShader, Shader::DefaultTextureFragmentShader);
 
         int width, height, channels;
-        unsigned char* pixel_data = SOIL_load_image(path, &width, &height, &channels, SOIL_LOAD_AUTO);
+        unsigned char* pixel_data = SOIL_load_image(path.c_str(), &width, &height, &channels, SOIL_LOAD_AUTO);
         _img_width = width;
         _img_height = height;
 

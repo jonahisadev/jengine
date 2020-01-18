@@ -2,10 +2,10 @@
 
 namespace JEngine {
 
-    unsigned char* File::readBinary(const char *path) {
-        FILE* file = fopen(path, "rb");
+    unsigned char* File::readBinary(const std::string& path) {
+        FILE* file = fopen(path.c_str(), "rb");
         if (!file) {
-            JERROR("(File) Could not load binary file '%s'", path);
+            JERROR("(File) Could not load binary file '%s'", path.c_str());
             return nullptr;
         }
         

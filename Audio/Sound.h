@@ -11,7 +11,7 @@ namespace JEngine {
         ALuint _al_source;
         
     public:
-        Sound(const char* path);
+        Sound(const std::string& path);
         ~Sound();
         
         void pause();

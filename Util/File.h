@@ -9,7 +9,7 @@ namespace JEngine {
     
     class File {
     public:
-        static unsigned char* readBinary(const char* path);
+        static unsigned char* readBinary(const std::string& path);
     };
     
 }

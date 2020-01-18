@@ -15,12 +15,16 @@ namespace JEngine {
         
     private:
         static Bitmask _flags;
+        static std::string _res;
         
     public:
         static inline Bitmask& flags() { return _flags; }
         
         static void init();
         static void cleanup();
+        
+        static void setResourceLocation(const std::string& path);
+        static std::string resource(const std::string& path);
     };
 
 }

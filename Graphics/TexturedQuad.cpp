@@ -2,7 +2,7 @@
 
 namespace JEngine {
 
-    TexturedQuad::TexturedQuad(float x, float y, float width, float height, const char *path) 
+    TexturedQuad::TexturedQuad(float x, float y, float width, float height, const std::string& path) 
     : Quad(x, y, width, height)
     {
         float ox = (width / 2);

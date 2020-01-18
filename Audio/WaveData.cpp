@@ -2,7 +2,7 @@
 
 namespace JEngine {
 
-    WaveData::WaveData(const char *path) {
+    WaveData::WaveData(const std::string& path) {
         unsigned char* data = File::readBinary(path);
         
         // ChunkID
