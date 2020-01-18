@@ -46,7 +46,7 @@ endif()
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     add_definitions(-DJENGINE_LINUX)
-    
+    set(ENV{PKG_CONFIG_PATH}  "/usr/local/lib/pkgconfig")
     find_package(PkgConfig REQUIRED)
     pkg_check_modules(GLFW REQUIRED glfw3)
 

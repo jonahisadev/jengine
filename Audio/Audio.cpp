@@ -22,7 +22,7 @@ namespace JEngine {
         JINFO("(OpenAL) Context created");
     }
 
-    void Audio::playSound(Sound &sound, int vol) {
+    void Audio::playSound(Sound &sound, int vol, bool loop) {
         ALuint source;
         alGenSources((ALuint)1, &source);
         sound.setALSource(source);
@@ -30,9 +30,10 @@ namespace JEngine {
         
         alSourcef(source, AL_PITCH, 1);
         alSourcef(source, AL_GAIN, vol / 100.0f);
-        alSourcei(source, AL_LOOPING, AL_FALSE);
+        alSourcei(source, AL_LOOPING, loop ? AL_TRUE : AL_FALSE);
         alSourcei(source, AL_BUFFER, sound.getALBuffer());
         
+        JINFO("(OpenAL) Playing sound");
         alSourcePlay(source);
     }
 
@@ -42,6 +43,7 @@ namespace JEngine {
             ALint source_state;
             alGetSourcei(sound->getSource(), AL_SOURCE_STATE, &source_state);
             if (source_state != AL_PLAYING) {
+                JINFO("(OpenAL) Cleaning up sound");
                 ALuint source = sound->getSource();
                 alDeleteSources(1, &source);
                 _sounds.erase(_sounds.begin() + i);

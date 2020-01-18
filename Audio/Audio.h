@@ -23,7 +23,7 @@ namespace JEngine {
         static void audioLoop();
         static void cleanup();
         
-        static void playSound(Sound& sound, int vol = 100);
+        static void playSound(Sound& sound, int vol = 100, bool loop = false);
     };
 
 }
