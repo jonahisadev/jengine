@@ -30,7 +30,10 @@ Game:
 
 Audio:
   ✔ Looping @done(20-01-18 09:42)
-  ☐ Pause, play, stop
+  ✔ Pause, play, stop @done(20-01-18 10:57)
+  ✔ Basic lowpass @done(20-01-18 10:57)
+  ☐ More control over filters
+  ☐ Playlists
 
 Math:
   ☐ More vector operations

@@ -8,6 +8,7 @@
 #include "../Input/Controller.h"
 #include "../Audio/Sound.h"
 
+#include <iostream>
 #include <string>
 
 int main(int argc, char** argv) {
@@ -28,7 +29,7 @@ int main(int argc, char** argv) {
     Audio::initialize();
 
     Sound music("music.wav");
-    Audio::playSound(music, 50, true);
+    Audio::playSound(music, 50, false);
 
     auto render = [&](Matrix4f screen)
     {
@@ -40,6 +41,8 @@ int main(int argc, char** argv) {
             font.render(5, 25, fps, {1, 1, 1});
         }
     };
+
+    bool filter = false;
 
     auto update = [&](float delta)
     {
@@ -54,6 +57,13 @@ int main(int argc, char** argv) {
 
         if (window.key('R'))
             quad.rotate(25 * delta);
+
+        if (window.keyOnce(' '))
+            music.togglePlayback();
+        if (window.keyOnce(KeyEscape))
+            music.stop();
+        if (window.keyOnce('P'))
+            music.applyFilter((filter = !filter));
 
         if (quad.intersects(window.mousePosition()))
             quad.setColor(255, 0, 0);

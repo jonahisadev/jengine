@@ -14,6 +14,13 @@ namespace JEngine {
         Sound(const char* path);
         ~Sound();
         
+        void pause();
+        void play();
+        void togglePlayback();
+        void stop();
+        
+        void applyFilter(bool filter);
+        
         inline ALuint getALBuffer() const { return _al_buffer; }
         
         void setALSource(ALuint source) { _al_source = source; }

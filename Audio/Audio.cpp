@@ -5,6 +5,8 @@ namespace JEngine {
     ALCdevice* Audio::_device = nullptr;
     ALCcontext* Audio::_context = nullptr;
     std::vector<Sound*> Audio::_sounds = std::vector<Sound*>();
+    bool Audio::_filters = false;
+    ALuint Audio::_test_filter;
     
     void Audio::initialize() {
         _device = alcOpenDevice(nullptr);
@@ -12,12 +14,33 @@ namespace JEngine {
             JERROR("(OpenAL) Could not initialize device");
             throw;
         }
+
+        ALint attribs[4] = {0};
+        if (alcIsExtensionPresent(_device, "ALC_EXT_EFX") == AL_TRUE) {
+            _filters = true;
+            attribs[0] = ALC_MAX_AUXILIARY_SENDS;
+            attribs[1] = 4;
+        }
         
-        _context = alcCreateContext(_device, nullptr);
+        _context = alcCreateContext(_device, attribs);
         if (!alcMakeContextCurrent(_context)) {
             JERROR("(OpenAL) Could not make audio context current");
             throw;
         }
+        
+        // Generate test lowpass filter
+        alGenFilters(1, &_test_filter);
+        if (alGetError() == AL_NO_ERROR)
+            JINFO("(OpenAL) Generated filter");
+        else
+            JERROR("(OpenAL) Filter generation failed");
+        
+        alFilteri(_test_filter, AL_FILTER_TYPE, AL_FILTER_LOWPASS);
+        if (alGetError() != AL_NO_ERROR)
+            JERROR("(OpenAL) Lowpass not supported");
+        
+        alFilterf(_test_filter, AL_LOWPASS_GAIN, 1.0f);
+        alFilterf(_test_filter, AL_LOWPASS_GAINHF, 0.005f);
 
         JINFO("(OpenAL) Context created");
     }
@@ -42,7 +65,7 @@ namespace JEngine {
             const Sound* sound = _sounds[i];
             ALint source_state;
             alGetSourcei(sound->getSource(), AL_SOURCE_STATE, &source_state);
-            if (source_state != AL_PLAYING) {
+            if (source_state == AL_STOPPED) {
                 JINFO("(OpenAL) Cleaning up sound");
                 ALuint source = sound->getSource();
                 alDeleteSources(1, &source);
