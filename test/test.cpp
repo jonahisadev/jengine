@@ -6,6 +6,7 @@
 #include "../Graphics/Quad.h"
 #include "../Graphics/TextGroup.h"
 #include "../Input/Controller.h"
+#include "../Audio/Sound.h"
 
 #include <string>
 
@@ -23,6 +24,11 @@ int main(int argc, char** argv) {
 
     Font font("Roboto-Regular.ttf", 18, &window);
     bool debug = false;
+
+    Audio::initialize();
+
+    Sound music("music.wav");
+    Audio::playSound(music, 50, true);
 
     auto render = [&](Matrix4f screen)
     {
