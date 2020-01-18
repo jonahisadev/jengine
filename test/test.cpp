@@ -46,6 +46,14 @@ int main(int argc, char** argv) {
         if (window.key('W'))
             quad.translate(0, -20 * delta);
 
+        if (window.key('R'))
+            quad.rotate(25 * delta);
+
+        if (quad.intersects(window.mousePosition()))
+            quad.setColor(255, 0, 0);
+        else
+            quad.setColor(255, 255, 255);
+
         debug = window.key(Key::KeyF4);
     };
 
