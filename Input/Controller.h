@@ -9,7 +9,7 @@
 #define XBOX_RS_V   3
 #define XBOX_LT     4
 #define XBOX_RT     5
-#elif defined(JENGINE_LINUX)
+#elif defined(JENGINE_LINUX) || defined(JENGINE_MACOS)
 #define XBOX_LS_H   0
 #define XBOX_LS_V   1
 #define XBOX_LT     2
@@ -65,7 +65,7 @@ namespace JEngine {
             DPADRight = 11,
             DPADDown = 12,
             DPADLeft = 13,
-#elif defined(JENGINE_LINUX)
+#elif defined(JENGINE_LINUX) || defined(JENGINE_MACOS)
             Xbox = 8,
             LeftStick = 9,
             RightStick = 10,

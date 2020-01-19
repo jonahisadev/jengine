@@ -27,6 +27,10 @@ int main(int argc, char** argv) {
     Font font(Game::resource("Roboto-Regular.ttf"), 18, &window);
     bool debug = false;
 
+    Audio::initialize();
+    Sound sound(Game::resource("daniel.wav"));
+    Audio::playSound(sound, 50, true);
+
     auto render = [&](Matrix4f screen)
     {
         window.clear(16, 16, 16);
@@ -53,6 +57,9 @@ int main(int argc, char** argv) {
 
         if (window.key('R'))
             quad.rotate(25 * delta);
+
+        if (window.keyOnce(KeyEscape))
+            sound.applyFilter((filter = !filter));
 
         if (window.keyOnce(KeyF4))
             debug = !debug;
