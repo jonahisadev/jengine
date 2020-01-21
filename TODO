@@ -19,8 +19,9 @@ Graphics:
   ☐ Animations
     ✔ Linear animations @done(20-01-21 08:06)
     ☐ Absolute & relative animations
-    ☐ Single var animations
+    ✔ Single var animations @done(20-01-21 11:34)
     ☐ Curved animations
+    ☐ List of animations
   ☐ Scaling option
   This is useful for scaling all the graphics when the window is resized
 
@@ -40,6 +41,7 @@ Audio:
   ✔ Basic lowpass @done(20-01-18 10:57)
   ☐ More control over filters
   ☐ Playlists
+  ☐ MP3, OGG support
 
 Math:
   ☐ More vector operations
@@ -51,6 +53,7 @@ Other:
   ✔ Mouse and key press once checking @done(19-10-08 18:10)
   ☐ Some sort of base UI system?
   We at least need some sort of text input
-  ☐ Font in TextGroup should be a const reference
-  ✔ TexturedQuad position is wrong @done(20-01-18 12:36)
   ☐ Implement plenty of overloads
+
+Bugs:
+  ☐ [Mac](Audio): OpenAL errors on close

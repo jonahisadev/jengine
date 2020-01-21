@@ -10,6 +10,7 @@ namespace JEngine {
     
     // Definitions
     typedef std::function<void(const Vector2f&)> translate_func;
+    typedef std::function<void(float)> single_func;
 
     // Base Animation
     class Animate;
@@ -28,7 +29,7 @@ namespace JEngine {
         Vector2f _from;
         Vector2f _to;
         float _ms;
-        Vector2f _ppms;
+        Vector2f _dpms;
         translate_func _translate;
 
     protected:
@@ -36,6 +37,21 @@ namespace JEngine {
 
     public:
         LinearAnimation(const Vector2f& from, const Vector2f& to, int ms, translate_func translate);
+    };
+
+    class SingleVarAnimation : public Animation {
+    private:
+        float _from;
+        float _to;
+        float _ms;
+        float _dpms;
+        single_func _translate;
+
+    protected:
+        void go(float delta) override;
+
+    public:
+        SingleVarAnimation(float from, float to, int ms, single_func translate);
     };
 
     // "Factory"
@@ -46,6 +62,7 @@ namespace JEngine {
     public:
         static void run(float delta);
         static void linear(const Vector2f& from, const Vector2f& to, int ms, translate_func translate);
+        static void singleVar(float from, float to, int ms, single_func translate);
     };
 
 }

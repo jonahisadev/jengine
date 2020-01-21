@@ -44,14 +44,18 @@ int main(int argc, char** argv) {
         quad.render(screen);
 
         if (debug) {
+            std::string fps = "FPS: " + std::to_string(window.getFPS());
+            font.render(5, 20, fps, {0, 0, 0});
             std::string d = "Delta: " + std::to_string(_delta);
-            font.render(5, 25, d, {0, 0, 0});
+            font.render(5, 40, d, {0, 0, 0});
             std::string pos = "(" + std::to_string(quad.x()) + ", " + std::to_string(quad.y()) + ")";
-            font.render(5, 50, pos, {0, 0, 0});
+            font.render(5, 60, pos, {0, 0, 0});
         }
     };
 
     bool filter = false;
+
+    auto quad_move = [&](const Vector2f& dv) { quad.translate(dv); };
 
     auto update = [&](float delta)
     {
@@ -71,30 +75,22 @@ int main(int argc, char** argv) {
 
         // Animations
         if (window.keyOnce(KeyRight)) {
-            Animate::linear({quad.x(), quad.y()}, {quad.x() + 100, quad.y()}, 250, [&](const Vector2f& dv) {
-                quad.translate(dv);
-            });
+            Animate::linear({quad.x(), quad.y()}, {quad.x() + 100, quad.y()}, 250, quad_move);
         }
         if (window.keyOnce(KeyLeft)) {
-            Animate::linear({quad.x(), quad.y()}, {quad.x() - 100, quad.y()}, 250, [&](const Vector2f& dv) {
-                quad.translate(dv);
-            });
+            Animate::linear({quad.x(), quad.y()}, {quad.x() - 100, quad.y()}, 250, quad_move);
         }
         if (window.keyOnce(KeyDown)) {
-            Animate::linear({quad.x(), quad.y()}, {quad.x(), quad.y() + 100}, 250, [&](const Vector2f& dv) {
-                quad.translate(dv);
-            });
+            Animate::linear({quad.x(), quad.y()}, {quad.x(), quad.y() + 100}, 250, quad_move);
         }
         if (window.keyOnce(KeyUp)) {
-            Animate::linear({quad.x(), quad.y()}, {quad.x(), quad.y() - 100}, 250, [&](const Vector2f& dv) {
-                quad.translate(dv);
-            });
+            Animate::linear({quad.x(), quad.y()}, {quad.x(), quad.y() - 100}, 250, quad_move);
         }
 
         // Rotation example
         if (window.keyOnce('R')) {
-            Animate::linear({0, 0}, {360, 0}, 2000, [&](const Vector2f& dr) {
-                quad.rotate(dr.x());
+            Animate::singleVar(0, 360, 1000, [&](float dr) {
+                quad.rotate(dr);
             });
         }
 
