@@ -6,10 +6,14 @@ namespace JEngine {
 
     std::vector<Animation*> Animate::_animations;
 
-    LinearAnimation::LinearAnimation(const Vector2f &from, const Vector2f &to, int ms, translate_func translate)
-        : _from(from), _to(to), _ms(ms), _translate(std::move(translate))
+    LinearAnimation::LinearAnimation(const Vector2f &from, const Vector2f &to, int ms, Animation::Type type, translate_func translate)
+        : Animation(ms), _from(from), _to(to), _translate(std::move(translate))
     {
-        Vector2f diff = {to.x() - from.x(), to.y() - from.y()};
+        if (type == Relative) {
+            _to = { from.x() + to.x(), from.y() + to.y()};
+        }
+
+        Vector2f diff = {_to.x() - _from.x(), _to.y() - _from.y()};
         _dpms = {diff.x() / float(ms), diff.y() / float(ms) };
     }
 
@@ -26,9 +30,13 @@ namespace JEngine {
         _translate({_dpms.x() * current_ms, _dpms.y() * current_ms });
     }
 
-    SingleVarAnimation::SingleVarAnimation(float from, float to, int ms, single_func translate)
-            : _from(from), _to(to), _ms(ms), _translate(std::move(translate))
+    SingleVarAnimation::SingleVarAnimation(float from, float to, int ms, Animation::Type type, single_func translate)
+            : Animation(ms), _from(from), _to(to), _translate(std::move(translate))
     {
+        if (type == Relative) {
+            _to = _from + _to;
+        }
+
         _dpms = (to - from) / float(ms);
     }
 
@@ -58,12 +66,12 @@ namespace JEngine {
         }
     }
 
-    void Animate::linear(const Vector2f &from, const Vector2f &to, int ms, translate_func translate) {
-        _animations.push_back(new LinearAnimation(from, to, ms, translate));
+    void Animate::linear(const Vector2f &from, const Vector2f &to, int ms, Animation::Type type, translate_func translate) {
+        _animations.push_back(new LinearAnimation(from, to, ms, type, translate));
     }
 
-    void Animate::singleVar(float from, float to, int ms, single_func translate) {
-        _animations.push_back(new SingleVarAnimation(from, to, ms, translate));
+    void Animate::singleVar(float from, float to, int ms, Animation::Type type, single_func translate) {
+        _animations.push_back(new SingleVarAnimation(from, to, ms, type, translate));
     }
 
 }

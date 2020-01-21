@@ -18,7 +18,7 @@ Graphics:
   ✔ Group of text (mutli-line) @done(19-11-06 19:32)
   ☐ Animations
     ✔ Linear animations @done(20-01-21 08:06)
-    ☐ Absolute & relative animations
+    ✔ Absolute & relative animations @done(20-01-21 14:18)
     ✔ Single var animations @done(20-01-21 11:34)
     ☐ Curved animations
     ☐ List of animations

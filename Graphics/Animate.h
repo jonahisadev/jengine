@@ -15,8 +15,18 @@ namespace JEngine {
     // Base Animation
     class Animate;
     class Animation {
+    public:
+        enum Type {
+            Absolute,
+            Relative
+        };
+
     protected:
+        float _ms;
+        Type _type;
         bool _finished = false;
+
+        Animation(int ms) : _ms(ms) {}
 
         virtual void go(float delta) = 0;
         bool finished() { return _finished; }
@@ -28,7 +38,6 @@ namespace JEngine {
     private:
         Vector2f _from;
         Vector2f _to;
-        float _ms;
         Vector2f _dpms;
         translate_func _translate;
 
@@ -36,14 +45,13 @@ namespace JEngine {
         void go(float delta) override;
 
     public:
-        LinearAnimation(const Vector2f& from, const Vector2f& to, int ms, translate_func translate);
+        LinearAnimation(const Vector2f& from, const Vector2f& to, int ms, Animation::Type type, translate_func translate);
     };
 
     class SingleVarAnimation : public Animation {
     private:
         float _from;
         float _to;
-        float _ms;
         float _dpms;
         single_func _translate;
 
@@ -51,7 +59,7 @@ namespace JEngine {
         void go(float delta) override;
 
     public:
-        SingleVarAnimation(float from, float to, int ms, single_func translate);
+        SingleVarAnimation(float from, float to, int ms, Animation::Type type, single_func translate);
     };
 
     // "Factory"
@@ -61,8 +69,8 @@ namespace JEngine {
 
     public:
         static void run(float delta);
-        static void linear(const Vector2f& from, const Vector2f& to, int ms, translate_func translate);
-        static void singleVar(float from, float to, int ms, single_func translate);
+        static void linear(const Vector2f& from, const Vector2f& to, int ms, Animation::Type type, translate_func translate);
+        static void singleVar(float from, float to, int ms, Animation::Type type, single_func translate);
     };
 
 }

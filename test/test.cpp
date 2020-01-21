@@ -75,21 +75,21 @@ int main(int argc, char** argv) {
 
         // Animations
         if (window.keyOnce(KeyRight)) {
-            Animate::linear({quad.x(), quad.y()}, {quad.x() + 100, quad.y()}, 250, quad_move);
+            Animate::linear({quad.x(), quad.y()}, {100, 0}, 250, Animation::Relative, quad_move);
         }
         if (window.keyOnce(KeyLeft)) {
-            Animate::linear({quad.x(), quad.y()}, {quad.x() - 100, quad.y()}, 250, quad_move);
+            Animate::linear({quad.x(), quad.y()}, {-100, 0}, 250, Animation::Relative, quad_move);
         }
         if (window.keyOnce(KeyDown)) {
-            Animate::linear({quad.x(), quad.y()}, {quad.x(), quad.y() + 100}, 250, quad_move);
+            Animate::linear({quad.x(), quad.y()}, {0, 100}, 250, Animation::Relative, quad_move);
         }
         if (window.keyOnce(KeyUp)) {
-            Animate::linear({quad.x(), quad.y()}, {quad.x(), quad.y() - 100}, 250, quad_move);
+            Animate::linear({quad.x(), quad.y()}, {0, -100}, 250, Animation::Relative, quad_move);
         }
 
         // Rotation example
         if (window.keyOnce('R')) {
-            Animate::singleVar(0, 360, 1000, [&](float dr) {
+            Animate::singleVar(0, 360, 1000, Animation::Absolute, [&](float dr) {
                 quad.rotate(dr);
             });
         }
