@@ -9,26 +9,33 @@ namespace JEngine {
     LinearAnimation::LinearAnimation(const Vector2f &from, const Vector2f &to, int ms, translate_func translate)
         : _from(from), _to(to), _ms(ms), _translate(std::move(translate))
     {
-        _dist = { to.x() - from.x(), to.y() - from.y() };
-        _current_ms = _ms;
+        Vector2f diff = {to.x() - from.x(), to.y() - from.y()};
+        _ppms = { diff.x() / float(ms), diff.y() / float(ms) };
     }
 
     void LinearAnimation::go(float delta) {
-        _current_ms -= (delta * 100);
+        float current_ms = (delta * 100);
+        _ms -= current_ms;
 
-        // TODO: movement
-
-        if (_current_ms <= 0)
+        if (_ms <= 0) {
+            float last = std::abs(_ms);
+            _translate({_ppms.x() * -last, _ppms.y() * -last});
             _finished = true;
+        }
+
+        _translate({ _ppms.x() * current_ms, _ppms.y() * current_ms });
     }
 
     void Animate::run(float delta) {
-        for (auto* a : _animations) {
-            if (a->finished()) {
-                // TODO: remove from list
-                continue;
+        auto it = _animations.begin();
+        while (it != _animations.end()) {
+            if ((*it)->finished()) {
+                delete(*it);
+                it = _animations.erase(it);
+            } else {
+                (*it)->go(delta);
+                ++it;
             }
-            a->go(delta);
         }
     }
 

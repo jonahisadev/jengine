@@ -2,10 +2,12 @@
 
 #include <vector>
 #include <functional>
+#include <cmath>
 #include "../Math/Vector.h"
+#include "../Util/Logger.h"
 
 namespace JEngine {
-
+    
     // Definitions
     typedef std::function<void(const Vector2f&)> translate_func;
 
@@ -26,9 +28,8 @@ namespace JEngine {
         Vector2f _from;
         Vector2f _to;
         float _ms;
+        Vector2f _ppms;
         translate_func _translate;
-        Vector2f _dist;
-        float _current_ms;
 
     protected:
         void go(float delta) override;

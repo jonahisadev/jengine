@@ -11,6 +11,9 @@
 
 #include <iostream>
 #include <string>
+#include <cmath>
+
+#define PI 3.14159265
 
 int main(int argc, char** argv) {
     using namespace JEngine;
@@ -22,7 +25,8 @@ int main(int argc, char** argv) {
     window.center();
     window.vsync(true);
 
-    TexturedQuad quad(100, 100, 128, 128, Game::resource("coyote.png"));
+    TexturedQuad quad(100, 100, 100, 100, Game::resource("coyote.png"));
+    TexturedQuad grid(0, 0, 800, 600, Game::resource("grid.png"));
     float speed = 35.0f;
 
     Font font(Game::resource("Roboto-Regular.ttf"), 18, &window);
@@ -36,13 +40,14 @@ int main(int argc, char** argv) {
     auto render = [&](Matrix4f screen)
     {
         window.clear(16, 16, 16);
+        grid.render(screen);
         quad.render(screen);
 
         if (debug) {
             std::string d = "Delta: " + std::to_string(_delta);
-            font.render(5, 25, d, {1, 1, 1});
+            font.render(5, 25, d, {0, 0, 0});
             std::string pos = "(" + std::to_string(quad.x()) + ", " + std::to_string(quad.y()) + ")";
-            font.render(5, 50, pos, {1, 1, 1});
+            font.render(5, 50, pos, {0, 0, 0});
         }
     };
 
@@ -61,15 +66,35 @@ int main(int argc, char** argv) {
         if (window.key('W'))
             quad.translate(0, -20 * delta);
 
-        if (window.key('R'))
-            quad.rotate(25 * delta);
-
         if (window.keyOnce(KeyEscape))
             sound.applyFilter((filter = !filter));
 
-        if (window.keyOnce(KeyRightShift)) {
-            Animate::linear({quad.x(), quad.y()}, {300, 100}, 2000, [&](const Vector2f& dv) {
+        // Animations
+        if (window.keyOnce(KeyRight)) {
+            Animate::linear({quad.x(), quad.y()}, {quad.x() + 100, quad.y()}, 250, [&](const Vector2f& dv) {
                 quad.translate(dv);
+            });
+        }
+        if (window.keyOnce(KeyLeft)) {
+            Animate::linear({quad.x(), quad.y()}, {quad.x() - 100, quad.y()}, 250, [&](const Vector2f& dv) {
+                quad.translate(dv);
+            });
+        }
+        if (window.keyOnce(KeyDown)) {
+            Animate::linear({quad.x(), quad.y()}, {quad.x(), quad.y() + 100}, 250, [&](const Vector2f& dv) {
+                quad.translate(dv);
+            });
+        }
+        if (window.keyOnce(KeyUp)) {
+            Animate::linear({quad.x(), quad.y()}, {quad.x(), quad.y() - 100}, 250, [&](const Vector2f& dv) {
+                quad.translate(dv);
+            });
+        }
+
+        // Rotation example
+        if (window.keyOnce('R')) {
+            Animate::linear({0, 0}, {360, 0}, 2000, [&](const Vector2f& dr) {
+                quad.rotate(dr.x());
             });
         }
 
