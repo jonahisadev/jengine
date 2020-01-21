@@ -13,6 +13,7 @@
 #include "../Util/Logger.h"
 #include "../Math/Vector.h"
 #include "TexturedQuad.h"
+#include "Animate.h"
 
 namespace JEngine {
 

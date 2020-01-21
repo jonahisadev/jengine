@@ -21,7 +21,7 @@ namespace JEngine {
         virtual ~Quad();
         
         void translate(float dx, float dy);
-        inline void translate(const Vector2f& vec);
+        void translate(const Vector2f& vec);
         void rotate(float dr);
         
         void setPosition(float x, float y);

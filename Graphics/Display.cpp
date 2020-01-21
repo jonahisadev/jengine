@@ -147,7 +147,9 @@ namespace JEngine {
         
         while (!glfwWindowShouldClose(_window)) {
             double last = glfwGetTime();
-            
+
+            Animate::run(delta);
+
             updatefn(delta);
             renderfn(_projection * glm::mat4(1.0f));
             

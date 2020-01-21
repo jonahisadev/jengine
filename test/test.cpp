@@ -7,6 +7,7 @@
 #include "../Graphics/TextGroup.h"
 #include "../Input/Controller.h"
 #include "../Audio/Sound.h"
+#include "../Graphics/Animate.h"
 
 #include <iostream>
 #include <string>
@@ -30,6 +31,7 @@ int main(int argc, char** argv) {
     Audio::initialize();
     Sound sound(Game::resource("daniel.wav"));
     Audio::playSound(sound, 50, true);
+    float _delta;
 
     auto render = [&](Matrix4f screen)
     {
@@ -37,8 +39,10 @@ int main(int argc, char** argv) {
         quad.render(screen);
 
         if (debug) {
-            std::string fps = "FPS: " + std::to_string(window.getFPS());
-            font.render(5, 25, fps, {1, 1, 1});
+            std::string d = "Delta: " + std::to_string(_delta);
+            font.render(5, 25, d, {1, 1, 1});
+            std::string pos = "(" + std::to_string(quad.x()) + ", " + std::to_string(quad.y()) + ")";
+            font.render(5, 50, pos, {1, 1, 1});
         }
     };
 
@@ -46,6 +50,8 @@ int main(int argc, char** argv) {
 
     auto update = [&](float delta)
     {
+        _delta = delta;
+
         if (window.key('D'))
             quad.translate(20 * delta, 0);
         if (window.key('A'))
@@ -60,6 +66,12 @@ int main(int argc, char** argv) {
 
         if (window.keyOnce(KeyEscape))
             sound.applyFilter((filter = !filter));
+
+        if (window.keyOnce(KeyRightShift)) {
+            Animate::linear({quad.x(), quad.y()}, {300, 100}, 2000, [&](const Vector2f& dv) {
+                quad.translate(dv);
+            });
+        }
 
         if (window.keyOnce(KeyF4))
             debug = !debug;
