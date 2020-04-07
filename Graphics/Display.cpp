@@ -7,7 +7,7 @@
 namespace JEngine {
 
     Display::Display(int width, int height, const char *title, bool resizable) 
-    : _size({width, height}), _fps(0)
+    : _size({width, height}), _fps(0), _title(title)
     {
         if (!glfwInit()) {
             JERROR("Could not initialize GLFW");
@@ -23,7 +23,7 @@ namespace JEngine {
         glfwWindowHint(GLFW_RESIZABLE, resizable);
         glfwWindowHint(GLFW_SAMPLES, 4);
         
-        _window = glfwCreateWindow(width, height, title, nullptr, nullptr);
+        _window = glfwCreateWindow(width, height, "Loading...", nullptr, nullptr);
         if (!_window) {
             glfwTerminate();
             JERROR("Could not create GLFW window");
@@ -144,6 +144,8 @@ namespace JEngine {
         float delta = 1.0f;
         int frames = 0;
         double fps_time = glfwGetTime();
+        
+        glfwSetWindowTitle(_window, _title.c_str());
         
         while (!glfwWindowShouldClose(_window)) {
             double last = glfwGetTime();

@@ -27,6 +27,8 @@ int main(int argc, char** argv) {
 
     TexturedQuad quad(100, 100, 100, 100, Game::resource("coyote.png"));
     TexturedQuad grid(0, 0, 800, 600, Game::resource("grid.png"));
+    Quad block(400, 300, 100, 100);
+    block.setColor(0, 128, 255);
     float speed = 35.0f;
 
     Font font(Game::resource("Roboto-Regular.ttf"), 18, &window);
@@ -41,6 +43,7 @@ int main(int argc, char** argv) {
     {
         window.clear(16, 16, 16);
         grid.render(screen);
+        block.render(screen);
         quad.render(screen);
 
         if (debug) {
@@ -92,6 +95,12 @@ int main(int argc, char** argv) {
             Animate::singleVar(0, 360, 1000, Animation::Absolute, [&](float dr) {
                 quad.rotate(dr);
             });
+        }
+
+        if (block.intersects(quad)) {
+            block.setColor(0, 0, 0);
+        } else {
+            block.setColor(0, 128, 255);
         }
 
         if (window.keyOnce(KeyF4))

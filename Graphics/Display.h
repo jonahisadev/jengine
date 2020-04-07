@@ -20,6 +20,7 @@ namespace JEngine {
     class Display {
     private:
         GLFWwindow* _window;
+        std::string _title;
         Vector2i _size;
         Vector2i _last_size;
         Vector2i _pos;

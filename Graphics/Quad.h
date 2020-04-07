@@ -39,6 +39,7 @@ namespace JEngine {
         
         void render(Matrix4f screen);
 
+        inline const Vector2f& position() const { return _pos; }
         inline float x() const { return _pos.x(); }
         inline float y() const { return _pos.y(); }
         inline float width() const { return _size.x(); }
