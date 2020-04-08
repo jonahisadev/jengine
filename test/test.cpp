@@ -8,6 +8,7 @@
 #include "../Input/Controller.h"
 #include "../Audio/Sound.h"
 #include "../Graphics/Animate.h"
+#include "../Graphics/Spritesheet.h"
 
 #include <iostream>
 #include <string>
@@ -25,7 +26,7 @@ int main(int argc, char** argv) {
     window.center();
     window.vsync(true);
 
-    TexturedQuad quad(100, 100, 100, 100, Game::resource("coyote.png"));
+    Spritesheet quad(0, 0, 100, 100, Game::resource("spritesheet.png"), 32);
     TexturedQuad grid(0, 0, 800, 600, Game::resource("grid.png"));
     Quad block(400, 300, 100, 100);
     block.setColor(0, 128, 255);
@@ -36,7 +37,7 @@ int main(int argc, char** argv) {
 
     Audio::initialize();
     Sound sound(Game::resource("daniel.wav"));
-    Audio::playSound(sound, 50, true);
+    // Audio::playSound(sound, 50, true);
     float _delta;
 
     auto render = [&](Matrix4f screen)
@@ -76,6 +77,10 @@ int main(int argc, char** argv) {
         if (window.keyOnce(KeyEscape))
             sound.applyFilter((filter = !filter));
 
+        //@test
+        if (window.keyOnce(' '))
+            quad.prev();
+
         // Animations
         if (window.keyOnce(KeyRight)) {
             Animate::linear({quad.x(), quad.y()}, {100, 0}, 250, Animation::Relative, quad_move);
@@ -103,7 +108,7 @@ int main(int argc, char** argv) {
             block.setColor(0, 128, 255);
         }
 
-        if (window.keyOnce(KeyF4))
+        if (window.keyOnce(KeyF3))
             debug = !debug;
     };
 
