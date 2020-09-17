@@ -84,6 +84,7 @@ namespace JEngine {
         KeyRightControl =   345,
         KeyRightAlt =       346,
         KeyRightSuper =     347,
+        KeySpace =          32,
         
         KeyF1 =             290,
         KeyF2 =             291,
