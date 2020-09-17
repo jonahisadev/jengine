@@ -12,7 +12,7 @@ namespace JEngine {
         Vector2f _pos;
         Vector2f _size;
         Vector3f _color;
-        MeshPtr _mesh;
+        Mesh* _mesh;
         
         float _angle;
         
@@ -46,7 +46,5 @@ namespace JEngine {
         inline float height() const { return _size.y(); }
         inline float angle() const { return _angle; }
     };
-    
-    typedef std::shared_ptr<Quad> QuadPtr;
 
 }

@@ -239,10 +239,10 @@ namespace JEngine {
 
     void Display::setCursorImage(const char *path, int size) {
         if (!path || size == 0) {
-            _mouse_tex.reset();
+            delete _mouse_tex;
             showCursor(true);
         } else {
-            _mouse_tex = std::make_shared<TexturedQuad>(0, 0, size, size, path);
+            _mouse_tex = new TexturedQuad(0, 0, size, size, path);
             _mouse_tex->setCenter(_mouse_pos);
             showCursor(false);
         }

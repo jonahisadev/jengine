@@ -27,7 +27,7 @@ namespace JEngine {
         Vector2i _pos;
         int _fps;
         Vector2f _mouse_pos;
-        TexturedQuadPtr _mouse_tex;
+        TexturedQuad* _mouse_tex;
         unsigned char _keys[350];
         unsigned char _mouse[32];
         Matrix4f _projection;

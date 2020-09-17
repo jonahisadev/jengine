@@ -21,29 +21,29 @@ namespace JEngine {
             0, 3, 2
         };
         
-        _mesh.reset();
-        _mesh = std::make_shared<TexturedMesh>(buffer, color, els, 4, 6, path);
+        delete _mesh;
+        _mesh = new TexturedMesh(buffer, color, els, 4, 6, path);
         
         setPosition(_pos);
         setColor(_color);
     }
 
     TexturedQuad::~TexturedQuad() {
-        _mesh.reset();
+        delete _mesh;
     }
 
     void TexturedQuad::setUV(float *uv) {
-        auto mesh = dynamic_cast<TexturedMesh*>(_mesh.get());
+        auto mesh = dynamic_cast<TexturedMesh*>(_mesh);
         mesh->setUV(uv);
     }
 
     int TexturedQuad::getImageWidth() const {
-        auto mesh = dynamic_cast<TexturedMesh*>(_mesh.get());
+        auto mesh = dynamic_cast<TexturedMesh*>(_mesh);
         return mesh->getImageWidth();
     }
 
     int TexturedQuad::getImageHeight() const {
-        auto mesh = dynamic_cast<TexturedMesh*>(_mesh.get());
+        auto mesh = dynamic_cast<TexturedMesh*>(_mesh);
         return mesh->getImageHeight();
     }
 

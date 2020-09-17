@@ -23,14 +23,14 @@ namespace JEngine {
         
         _pos.translate(-ox, -oy);
         _angle = 0;
-        _mesh = std::make_shared<Mesh>(buffer, color, els, 4, 6);
+        _mesh = new Mesh(buffer, color, els, 4, 6);
         
         setPosition(_pos.x() + (width / 2), _pos.y() + (height / 2));
         setColor(_color);
     }
 
     Quad::~Quad() {
-        _mesh.reset();
+        delete _mesh;
     }
 
     void Quad::translate(float dx, float dy) {

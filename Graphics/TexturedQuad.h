@@ -13,7 +13,7 @@ namespace JEngine {
         virtual ~TexturedQuad();
 
         void linearInterp(bool state) {
-            dynamic_cast<TexturedMesh*>(_mesh.get())->linearInterp(state);
+            dynamic_cast<TexturedMesh*>(_mesh)->linearInterp(state);
         }
         
     protected:
@@ -22,7 +22,5 @@ namespace JEngine {
         int getImageWidth() const;
         int getImageHeight() const;
     };
-    
-    typedef std::shared_ptr<TexturedQuad> TexturedQuadPtr;
 
 }

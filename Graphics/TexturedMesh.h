@@ -27,6 +27,4 @@ namespace JEngine {
         inline int getImageHeight() const { return _img_height; }
     };
     
-    typedef std::shared_ptr<TexturedMesh> TexturedMeshPtr;
-    
 }

@@ -34,6 +34,4 @@ namespace JEngine {
         virtual void render(Matrix4f screen);
     };
     
-    typedef std::shared_ptr<Mesh> MeshPtr;
-    
 }
