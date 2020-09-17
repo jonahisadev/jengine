@@ -9,13 +9,14 @@
 #include <functional>
 #include <cmath>
 
-#include "../Game/Game.h"
 #include "../Util/Logger.h"
 #include "../Math/Vector.h"
 #include "TexturedQuad.h"
 #include "Animate.h"
 
 namespace JEngine {
+
+    class BaseGame;
 
     class Display {
     private:
@@ -45,7 +46,7 @@ namespace JEngine {
         bool mousePressedOnce(int button);
         inline int getFPS() const { return _fps; }
         
-        void run(std::function<void(Matrix4f)> renderfn, std::function<void(float)> updatefn);
+        void run(BaseGame* game, std::function<void(Matrix4f)> renderfn, std::function<void(float)> updatefn);
         void clear(int r, int g, int b);
         void clear(const Vector3i& vec);
         void close();

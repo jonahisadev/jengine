@@ -8,6 +8,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <queue>
 
 #include "Sound.h"
 #include "../Util/Logger.h"
@@ -16,11 +17,20 @@ namespace JEngine {
 
     class Audio {
     private:
+        struct AudioQueueItem
+        {
+            Sound& sound;
+            int volume;
+            bool loop;
+        };
+
         static ALCdevice *_device;
         static ALCcontext* _context;
-        static std::vector<Sound*> _sounds;
+        static std::queue<AudioQueueItem> _sound_queue;
+        static std::vector<Sound> _sounds;
         static bool _filters;
         static ALuint _test_filter;
+        static bool _initialized;
         
     public:
         static void initialize();

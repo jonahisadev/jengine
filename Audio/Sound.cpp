@@ -6,10 +6,7 @@ namespace JEngine {
     Sound::Sound(const std::string& path)
     {
         _data = new WaveData(path);
-        JINFO("(OpenAL) Sound buffer size: %d", _data->getDataSize());        
-
-        alGenBuffers((ALuint)1, &_al_buffer);
-        alBufferData(_al_buffer, _data->alFormat(), _data->getData(), _data->getDataSize(), _data->getSampleRate());
+        JINFO("(OpenAL) Sound buffer size: %d", _data->getDataSize());
     }
 
     Sound::~Sound() {

@@ -25,6 +25,8 @@ namespace JEngine {
         
         void setALSource(ALuint source) { _al_source = source; }
         inline ALuint getSource() const { return _al_source; }
+
+        friend class Audio;
     };
 
 }

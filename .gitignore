@@ -1,5 +1,7 @@
 .idea/**
 cmake-build-debug*/**
+build/**
+test/test
 *.o
 .vscode/**
 .DS_Store

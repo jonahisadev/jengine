@@ -1,11 +1,21 @@
+For Ludum Dare:
+  ☐ Large refactorizations
+    ✔ Instead of std::function, have a BaseGame class to inherit from @done(20-09-17 17:37)
+    ☐ Remove bad usage of smart pointers
+    ☐ Unify syntax
+    ☐ Default constructors for things that may not immediately be initialized
+    ☐ Abstract Quad and things better
+    Perhaps do this in conjunction with Spritesheets
+  ☐ Better Spritesheet support
+  ☐ Playlists
+  ☐ MP3, OGG support
+  ☐ Controller + Keyboard abstraction
+
 Graphics:
   ☐ Specify mesh rotation point
   ☐ Fonts are blurry when scaled, try and fix this
   ✔ Allow textures to be displayed without GL_NEAREST @done(19-10-12 12:43)
   ✔ Quads should translate to a vector in addition to coordinates @done(19-10-12 17:35)
-  ☐ Better spritesheet support
-  Do we maybe want to have a Sprite class where we have multiple
-  sprites that all inherit from the same spritesheet?
   ✔ Eventually move to OpenGL 3 @done(19-11-02 14:01)
   ✔ Allow cursor replacement @done(19-10-03 00:43)
   ✔ Anti-aliasing? @done(19-10-03 00:02)
@@ -40,8 +50,6 @@ Audio:
   ✔ Pause, play, stop @done(20-01-18 10:57)
   ✔ Basic lowpass @done(20-01-18 10:57)
   ☐ More control over filters
-  ☐ Playlists
-  ☐ MP3, OGG support
 
 Math:
   ☐ More vector operations

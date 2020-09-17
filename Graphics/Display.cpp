@@ -4,6 +4,8 @@
 //#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
+#include "../Game/BaseGame.h"
+
 namespace JEngine {
 
     Display::Display(int width, int height, const char *title, bool resizable) 
@@ -138,8 +140,8 @@ namespace JEngine {
         return false;
     }
 
-    void Display::run(std::function<void(Matrix4f)> renderfn, std::function<void(float)> updatefn) {
-        Game::init();
+    void Display::run(BaseGame* game, std::function<void(Matrix4f)> renderfn, std::function<void(float)> updatefn) {
+        game->init();
         
         float delta = 1.0f;
         int frames = 0;
@@ -174,8 +176,6 @@ namespace JEngine {
                 fps_time = now;
             }
         }
-        
-        Game::cleanup();
     }
 
     void Display::clear(int r, int g, int b) {
