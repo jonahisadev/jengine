@@ -4,7 +4,8 @@
 
 namespace JEngine {
 
-    class Spritesheet : public TexturedQuad {
+    class Spritesheet : public TexturedQuad
+    {
     private:
         float _cell_size;
         float _grid_size;

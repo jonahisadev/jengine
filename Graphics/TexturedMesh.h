@@ -8,7 +8,8 @@
 
 namespace JEngine {
 
-    class TexturedMesh : public Mesh {
+    class TexturedMesh : public Mesh
+    {
     protected:
         int _img_width;
         int _img_height;

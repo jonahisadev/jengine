@@ -8,7 +8,8 @@ namespace JEngine {
     template <class T> class Vector3;
 
     template <class T>
-    class Vector3 {
+    class Vector3
+    {
     public:
         typedef std::shared_ptr< Vector3<T> > Ptr;
 
@@ -51,7 +52,8 @@ namespace JEngine {
     typedef Vector3<float> Vector3f;
 
     template<class T>
-    T Vector3<T>::distance(const Vector3 &other) const {
+    T Vector3<T>::distance(const Vector3 &other) const
+    {
         T x = other.x() - _x;
         T y = other.y() - _y;
         T z = other.z() - _z;
@@ -59,24 +61,28 @@ namespace JEngine {
     }
 
     template<class T>
-    T Vector3<T>::distance(const Vector3 &a, const Vector3 &b) {
+    T Vector3<T>::distance(const Vector3 &a, const Vector3 &b)
+    {
         return a.distance(b);
     }
 
     template<class T>
-    void Vector3<T>::translate(T dx, T dy, T dz) {
+    void Vector3<T>::translate(T dx, T dy, T dz)
+    {
         _x += dx;
         _y += dy;
         _z += dz;
     }
 
     template<class T>
-    void Vector3<T>::translate(const Vector3<T> &vec) {
+    void Vector3<T>::translate(const Vector3<T> &vec)
+    {
         translate(vec.x(), vec.y(), vec.z());
     }
 
     template<class T>
-    const Vector3<T>& Vector3<T>::normalize(T max) {
+    const Vector3<T>& Vector3<T>::normalize(T max)
+    {
         setX(_x / max);
         setY(_y / max);
         setZ(_z / max);
@@ -84,7 +90,8 @@ namespace JEngine {
     }
 
     template<class T>
-    const Vector3<T>& Vector3<T>::operator+(const Vector3 &other) {
+    const Vector3<T>& Vector3<T>::operator+(const Vector3 &other)
+    {
         _x += other.x();
         _y += other.y();
         _z += other.z();
@@ -92,12 +99,14 @@ namespace JEngine {
     }
 
     template<class T>
-    const Vector3<T>& Vector3<T>::operator+=(const Vector3 &other) {
+    const Vector3<T>& Vector3<T>::operator+=(const Vector3 &other)
+    {
         return *this + other;
     }
 
     template<class T>
-    Vector3<T>& Vector3<T>::operator=(Vector3 other) {
+    Vector3<T>& Vector3<T>::operator=(Vector3 other)
+    {
         _x = other.x();
         _y = other.y();
         _z = other.z();

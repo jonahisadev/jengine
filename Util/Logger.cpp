@@ -1,12 +1,13 @@
 #include "Logger.h"
 
-namespace JEngine  {
+namespace JEngine {
 
-    Logger::Logger(const std::string &name)
-    : _name(name)
+    Logger::Logger(const std::string& name)
+            : _name(name)
     {}
 
-    void Logger::printf(const char *str, va_list args) {
+    void Logger::printf(const char* str, va_list args)
+    {
         while (*str != '\0') {
             if (*str != '%')
                 std::cout << *str;
@@ -43,7 +44,8 @@ namespace JEngine  {
         std::cout << std::endl;
     }
 
-    void Logger::info(const char* msg, ...) {
+    void Logger::info(const char* msg, ...)
+    {
         va_list args;
         va_start(args, msg);
         std::cout << "[INFO] (" << _name << ") ";
@@ -51,7 +53,8 @@ namespace JEngine  {
         va_end(args);
     }
 
-    void Logger::warn(const char *msg, ...) {
+    void Logger::warn(const char* msg, ...)
+    {
         va_list args;
         va_start(args, msg);
         std::cout << "[WARN] (" << _name << ") ";
@@ -59,7 +62,8 @@ namespace JEngine  {
         va_end(args);
     }
 
-    void Logger::error(const char *msg, ...) {
+    void Logger::error(const char* msg, ...)
+    {
         va_list args;
         va_start(args, msg);
         std::cout << "[ERROR] (" << _name << ") ";
@@ -67,14 +71,15 @@ namespace JEngine  {
         va_end(args);
     }
 
-    void Logger::critical(const char *msg, ...) {
+    void Logger::critical(const char* msg, ...)
+    {
         va_list args;
         va_start(args, msg);
         std::cout << "[CRITICAL] (" << _name << ") ";
         printf(msg, args);
         va_end(args);
     }
-    
+
     // TODO: move this
     Logger* Logger::engine = new Logger("JEngine");
 

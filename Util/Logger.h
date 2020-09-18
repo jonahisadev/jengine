@@ -6,16 +6,17 @@
 
 namespace JEngine {
 
-    class Logger {
+    class Logger
+    {
     private:
         std::string _name;
         static void printf(const char* str, va_list args);
 
     public:
         static Logger* engine;
-        
+
         Logger(const std::string& name);
-        
+
         void info(const char* msg, ...);
         void warn(const char* msg, ...);
         void error(const char* msg, ...);

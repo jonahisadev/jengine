@@ -18,7 +18,8 @@ namespace JEngine {
 
     class Display;
     
-    class FontMesh {
+    class FontMesh
+    {
     protected:
         Shader* _shader;
         Vector3f _color;
@@ -37,7 +38,8 @@ namespace JEngine {
         void setColor(const Vector3f& color);
     };
     
-    class Font {
+    class Font
+    {
     public:
         struct Character {
             GLuint tex_id;

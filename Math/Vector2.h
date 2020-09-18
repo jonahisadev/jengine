@@ -8,7 +8,8 @@ namespace JEngine {
     template <class T> class Vector2;
 
     template <class T>
-    class Vector2 {
+    class Vector2
+    {
     public:
         typedef std::shared_ptr< Vector2<T> > Ptr;
 
@@ -52,85 +53,99 @@ namespace JEngine {
     typedef Vector2<float> Vector2f;
 
     template<class T>
-    T Vector2<T>::distance(const Vector2 &other) const {
+    T Vector2<T>::distance(const Vector2 &other) const
+    {
         T x = other.x() - _x;
         T y = other.y() - _y;
         return (T) sqrt((x * x) + (y * y));
     }
 
     template<class T>
-    T Vector2<T>::distance(const Vector2 &a, const Vector2 &b) {
+    T Vector2<T>::distance(const Vector2 &a, const Vector2 &b)
+    {
         return a.distance(b);
     }
 
     template<class T>
-    void Vector2<T>::translate(T dx, T dy) {
+    void Vector2<T>::translate(T dx, T dy)
+    {
         _x += dx;
         _y += dy;
     }
 
     template<class T>
-    void Vector2<T>::translate(const Vector2<T> &vec) {
+    void Vector2<T>::translate(const Vector2<T> &vec)
+    {
         translate(vec.x(), vec.y());
     }
 
     template<class T>
-    const Vector2<T>& Vector2<T>::normalize(T max) {
+    const Vector2<T>& Vector2<T>::normalize(T max)
+    {
         setX(_x / max);
         setY(_y / max);
         return *this;
     }
 
     template<class T>
-    const Vector2<T>& Vector2<T>::operator+(const Vector2 &other) {
+    const Vector2<T>& Vector2<T>::operator+(const Vector2 &other)
+    {
         _x += other.x();
         _y += other.y();
         return *this;
     }
 
     template<class T>
-    const Vector2<T>& Vector2<T>::operator+=(const Vector2 &other) {
+    const Vector2<T>& Vector2<T>::operator+=(const Vector2 &other)
+    {
         return *this + other;
     }
 
     template<class T>
-    const Vector2<T>& Vector2<T>::operator-(const Vector2 &other) {
+    const Vector2<T>& Vector2<T>::operator-(const Vector2 &other)
+    {
         _x -= other.x();
         _y -= other.y();
         return *this;
     }
 
     template<class T>
-    const Vector2<T>& Vector2<T>::operator-=(const Vector2 &other) {
+    const Vector2<T>& Vector2<T>::operator-=(const Vector2 &other)
+    {
         return *this - other;
     }
 
     template<class T>
-    const Vector2<T>& Vector2<T>::operator*(const Vector2 &other) {
+    const Vector2<T>& Vector2<T>::operator*(const Vector2 &other)
+    {
         _x *= other.x();
         _y *= other.y();
         return *this;
     }
 
     template<class T>
-    const Vector2<T>& Vector2<T>::operator*=(const Vector2 &other) {
+    const Vector2<T>& Vector2<T>::operator*=(const Vector2 &other)
+    {
         return *this * other;
     }
 
     template<class T>
-    const Vector2<T>& Vector2<T>::operator*(T scalar) {
+    const Vector2<T>& Vector2<T>::operator*(T scalar)
+    {
         _x *= scalar;
         _y *= scalar;
         return *this;
     }
 
     template<class T>
-    const Vector2<T>& Vector2<T>::operator*=(T scalar) {
+    const Vector2<T>& Vector2<T>::operator*=(T scalar)
+    {
         return *this * scalar;
     }
 
     template<class T>
-    Vector2<T>& Vector2<T>::operator=(Vector2 other) {
+    Vector2<T>& Vector2<T>::operator=(Vector2 other)
+    {
         _x = other.x();
         _y = other.y();
         return *this;

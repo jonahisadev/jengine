@@ -7,7 +7,8 @@
 
 namespace JEngine {
 
-    class TexturedQuad : public Quad {
+    class TexturedQuad : public Quad
+    {
     public:
         TexturedQuad(float x, float y, float width, float height, const std::string& path);
         virtual ~TexturedQuad();

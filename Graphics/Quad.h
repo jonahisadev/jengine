@@ -7,7 +7,8 @@
 
 namespace JEngine {
 
-    class Quad {
+    class Quad
+    {
     protected:
         Vector2f _pos;
         Vector2f _size;

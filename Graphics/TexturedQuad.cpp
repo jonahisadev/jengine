@@ -2,47 +2,49 @@
 
 namespace JEngine {
 
-    TexturedQuad::TexturedQuad(float x, float y, float width, float height, const std::string& path) 
-    : Quad(x, y, width, height)
+    TexturedQuad::TexturedQuad(float x, float y, float width, float height, const std::string& path)
+            : Quad(x, y, width, height)
     {
         float ox = (width / 2);
         float oy = (height / 2);
         float buffer[] = {
-            -ox, -oy, 0, 0,
-            ox, -oy, 1, 0,
-            ox, oy, 1, 1,
-            -ox, oy, 0, 1
+                -ox, -oy, 0, 0,
+                ox, -oy, 1, 0,
+                ox, oy, 1, 1,
+                -ox, oy, 0, 1
         };
-        
+
         Vector3f color = {1, 1, 1};
-        
+
         int els[] = {
-            0, 1, 2,
-            0, 3, 2
+                0, 1, 2,
+                0, 3, 2
         };
-        
+
         delete _mesh;
         _mesh = new TexturedMesh(buffer, color, els, 4, 6, path);
-        
+
         setPosition(_pos);
         setColor(_color);
     }
 
-    TexturedQuad::~TexturedQuad() {
-        delete _mesh;
-    }
+    TexturedQuad::~TexturedQuad()
+    {}
 
-    void TexturedQuad::setUV(float *uv) {
+    void TexturedQuad::setUV(float* uv)
+    {
         auto mesh = dynamic_cast<TexturedMesh*>(_mesh);
         mesh->setUV(uv);
     }
 
-    int TexturedQuad::getImageWidth() const {
+    int TexturedQuad::getImageWidth() const
+    {
         auto mesh = dynamic_cast<TexturedMesh*>(_mesh);
         return mesh->getImageWidth();
     }
 
-    int TexturedQuad::getImageHeight() const {
+    int TexturedQuad::getImageHeight() const
+    {
         auto mesh = dynamic_cast<TexturedMesh*>(_mesh);
         return mesh->getImageHeight();
     }

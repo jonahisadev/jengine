@@ -8,23 +8,23 @@
 
 namespace JEngine {
 
-    Display::Display(int width, int height, const char *title, bool resizable) 
-    : _size({width, height}), _fps(0), _title(title)
+    Display::Display(int width, int height, const char* title, bool resizable)
+            : _size({width, height}), _fps(0), _title(title)
     {
         if (!glfwInit()) {
             JERROR("Could not initialize GLFW");
             throw;
         }
-        
+
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-#ifdef JENGINE_MACOS
+        #ifdef JENGINE_MACOS
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-#endif
+        #endif
         glfwWindowHint(GLFW_RESIZABLE, resizable);
         glfwWindowHint(GLFW_SAMPLES, 4);
-        
+
         _window = glfwCreateWindow(width, height, "Loading...", nullptr, nullptr);
         if (!_window) {
             glfwTerminate();
@@ -34,7 +34,7 @@ namespace JEngine {
 
         glfwMakeContextCurrent(_window);
         glfwSetWindowUserPointer(_window, this);
-        
+
         JINFO("OpenGL Version: %s", glGetString(GL_VERSION));
 
         // Resize callback
@@ -42,7 +42,7 @@ namespace JEngine {
             static_cast<Display*>(glfwGetWindowUserPointer(w))->resize_callback(w, width, height);
         };
         glfwSetWindowSizeCallback(_window, resize);
-        
+
         // Mouse position callback
         auto mouse_pos = [](GLFWwindow* w, double x, double y) {
             auto d = static_cast<Display*>(glfwGetWindowUserPointer(w));
@@ -59,31 +59,33 @@ namespace JEngine {
         };
         glfwSetWindowPosCallback(_window, window_pos);
 
-#ifdef JENGINE_WINDOWS
+        #ifdef JENGINE_WINDOWS
         if (glewInit() != GLEW_OK) {
             JERROR("Could not initialize GLEW");
             throw;
-        }  
-#endif
+        }
+        #endif
         resize_callback(_window, width, height);
 
         // Save position
         int x, y;
         glfwGetWindowPos(_window, &x, &y);
         _pos = {x, y};
-        
+
         glEnable(GL_TEXTURE_2D);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_BLEND);
         glEnable(GL_MULTISAMPLE);
     }
 
-    Display::~Display() {
+    Display::~Display()
+    {
         glfwDestroyWindow(_window);
         glfwTerminate();
     }
 
-    void Display::resize_callback(GLFWwindow *window, int width, int height) {
+    void Display::resize_callback(GLFWwindow* window, int width, int height)
+    {
         _size = {width, height};
         int fb_width, fb_height;
         glfwGetFramebufferSize(window, &fb_width, &fb_height);
@@ -91,7 +93,8 @@ namespace JEngine {
         _projection = glm::ortho(0.0f, float(width), float(height), 0.0f, -1.0f, 1.0f);
     }
 
-    GLFWmonitor *Display::getMonitorByIndex(int monitor) {
+    GLFWmonitor* Display::getMonitorByIndex(int monitor)
+    {
         GLFWmonitor* mtr;
         if (monitor < 0)
             mtr = glfwGetPrimaryMonitor();
@@ -108,11 +111,13 @@ namespace JEngine {
         return mtr;
     }
 
-    bool Display::key(int code) {
+    bool Display::key(int code)
+    {
         return glfwGetKey(_window, code) == GLFW_PRESS;
     }
 
-    bool Display::keyOnce(int code) {
+    bool Display::keyOnce(int code)
+    {
         if (key(code) && !_keys[code]) {
             _keys[code] = true;
             return true;
@@ -122,33 +127,37 @@ namespace JEngine {
         return false;
     }
 
-    const Vector2f& Display::mousePosition() {
+    const Vector2f& Display::mousePosition()
+    {
         return _mouse_pos;
     }
 
-    bool Display::mousePressed(int button) {
+    bool Display::mousePressed(int button)
+    {
         return glfwGetMouseButton(_window, button) == GLFW_PRESS;
     }
 
-    bool Display::mousePressedOnce(int button) {
+    bool Display::mousePressedOnce(int button)
+    {
         if (mousePressed(button) && !_mouse[button]) {
             _mouse[button] = true;
             return true;
         }
-        
+
         if (!mousePressed(button)) { _mouse[button] = false; }
         return false;
     }
 
-    void Display::run(BaseGame* game, std::function<void(Matrix4f)> renderfn, std::function<void(float)> updatefn) {
+    void Display::run(BaseGame* game, std::function<void(Matrix4f)> renderfn, std::function<void(float)> updatefn)
+    {
         game->init();
-        
+
         float delta = 1.0f;
         int frames = 0;
         double fps_time = glfwGetTime();
-        
+
         glfwSetWindowTitle(_window, _title.c_str());
-        
+
         while (!glfwWindowShouldClose(_window)) {
             double last = glfwGetTime();
 
@@ -156,15 +165,15 @@ namespace JEngine {
 
             updatefn(delta);
             renderfn(_projection * glm::mat4(1.0f));
-            
+
             if (_mouse_tex)
                 _mouse_tex->render(_projection * glm::mat4(1.0f));
-            
+
             glfwSwapBuffers(_window);
             glfwPollEvents();
 
             Audio::audioLoop();
-            
+
             double now = glfwGetTime();
             delta = float(now - last) * 10.0f;
 
@@ -178,26 +187,31 @@ namespace JEngine {
         }
     }
 
-    void Display::clear(int r, int g, int b) {
-        glClearColor(r/255.0f, g/255.0f, b/255.0f, 1);
+    void Display::clear(int r, int g, int b)
+    {
+        glClearColor(r / 255.0f, g / 255.0f, b / 255.0f, 1);
         glClear(GL_COLOR_BUFFER_BIT);
     }
 
-    void Display::clear(const Vector3i& vec) {
+    void Display::clear(const Vector3i& vec)
+    {
         clear(vec.r(), vec.g(), vec.b());
     }
 
-    void Display::close() {
+    void Display::close()
+    {
         glfwSetWindowShouldClose(_window, true);
     }
 
-    void Display::vsync(bool state) {
+    void Display::vsync(bool state)
+    {
         glfwSwapInterval(state);
     }
 
-    void Display::fullscreen(bool state) {
+    void Display::fullscreen(bool state)
+    {
         if (state) {
-            const GLFWvidmode *mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+            const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
             Vector2i last_pos = _pos;
             _last_size = _size;
             glfwSetWindowMonitor(_window, glfwGetPrimaryMonitor(), 0, 0, mode->width, mode->height, GLFW_DONT_CARE);
@@ -207,37 +221,42 @@ namespace JEngine {
         }
     }
 
-    void Display::setPosition(int x, int y, int monitor) {
+    void Display::setPosition(int x, int y, int monitor)
+    {
         GLFWmonitor* mtr = getMonitorByIndex(monitor);
         if (!mtr) return;
-        
+
         int vx, vy;
         glfwGetMonitorPos(mtr, &vx, &vy);
         glfwSetWindowPos(_window, x + vx, y + vy);
     }
 
-    void Display::setPosition(const Vector2i &pos, int monitor) {
+    void Display::setPosition(const Vector2i& pos, int monitor)
+    {
         setPosition(pos.x(), pos.y(), monitor);
     }
 
-    void Display::center(int monitor) {
+    void Display::center(int monitor)
+    {
         GLFWmonitor* mtr = getMonitorByIndex(monitor);
         if (!mtr) return;
-        
+
         const GLFWvidmode* vidmode = glfwGetVideoMode(mtr);
         setPosition((vidmode->width / 2) - (width() / 2), (vidmode->height / 2) - (height() / 2), monitor);
     }
 
-    void Display::resize(int width, int height) {
+    void Display::resize(int width, int height)
+    {
         glfwSetWindowSize(_window, width, height);
     }
 
-    void Display::showCursor(bool state) {
-        glfwSetInputMode(_window, GLFW_CURSOR,
-                state ? GLFW_CURSOR_NORMAL : GLFW_CURSOR_HIDDEN);
+    void Display::showCursor(bool state)
+    {
+        glfwSetInputMode(_window, GLFW_CURSOR, state ? GLFW_CURSOR_NORMAL : GLFW_CURSOR_HIDDEN);
     }
 
-    void Display::setCursorImage(const char *path, int size) {
+    void Display::setCursorImage(const char* path, int size)
+    {
         if (!path || size == 0) {
             delete _mouse_tex;
             showCursor(true);

@@ -2,8 +2,9 @@
 
 namespace JEngine {
 
-    TexturedMesh::TexturedMesh(float *buffer, const Vector3f &color, int *els, int vCount, int lCount, const std::string& path)
-    : Mesh(buffer, {1, 1, 1}, els, vCount, lCount), _tex(0)
+    TexturedMesh::TexturedMesh(float* buffer, const Vector3f& color, int* els, int vCount, int lCount,
+                               const std::string& path)
+            : Mesh(buffer, {1, 1, 1}, els, vCount, lCount), _tex(0)
     {
         delete _shader;
         _shader = new Shader(Shader::DefaultTextureVertexShader, Shader::DefaultTextureFragmentShader);
@@ -16,7 +17,7 @@ namespace JEngine {
         GLint format = GL_RGB;
         if (channels == 4)
             format = GL_RGBA;
-        
+
         // Generate texture
         glGenTextures(1, &_tex);
         glBindTexture(GL_TEXTURE_2D, _tex);
@@ -38,20 +39,22 @@ namespace JEngine {
         linearInterp(false);
 
         // Enable UV coords
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*) (2 * sizeof(float)));
         glEnableVertexAttribArray(1);
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
     }
 
-    TexturedMesh::~TexturedMesh() {
+    TexturedMesh::~TexturedMesh()
+    {
         glDeleteBuffers(1, &_vbo);
         glDeleteBuffers(1, &_ebo);
         glDeleteVertexArrays(1, &_vao);
     }
-    
-    void TexturedMesh::linearInterp(bool state) {
+
+    void TexturedMesh::linearInterp(bool state)
+    {
         if (state) {
             glBindTexture(GL_TEXTURE_2D, _tex);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -65,7 +68,8 @@ namespace JEngine {
         }
     }
 
-    void TexturedMesh::render(Matrix4f screen) {
+    void TexturedMesh::render(Matrix4f screen)
+    {
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, _tex);
 
@@ -74,14 +78,15 @@ namespace JEngine {
         _shader->setMat4("screen", screen);
         _shader->setVec3("color", _color);
         _shader->setInt("tex", 0);
-        
+
         glBindVertexArray(_vao);
         glDrawElements(GL_TRIANGLES, _list_count, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
         _shader->stop();
     }
 
-    void TexturedMesh::setUV(const float *uv) {
+    void TexturedMesh::setUV(const float* uv)
+    {
         glBindVertexArray(_vao);
         glBindBuffer(GL_ARRAY_BUFFER, _vbo);
         for (int i = 0; i < _vertex_count; i++) {

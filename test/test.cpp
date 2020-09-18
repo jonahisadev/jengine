@@ -29,10 +29,12 @@ public:
         font = new Font(res("Roboto-Regular.ttf"), 18, &window());
 
         sound = new Sound(res("daniel.wav"));
-        Audio::playSound(*sound, 50, true);
+        // Audio::playSound(*sound, 50, true);
     }
 
     virtual ~MyGame() {
+        delete font;
+        delete sound;
         delete block;
     }
 

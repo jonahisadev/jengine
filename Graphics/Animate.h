@@ -14,7 +14,8 @@ namespace JEngine {
 
     // Base Animation
     class Animate;
-    class Animation {
+    class Animation
+    {
     public:
         enum Type {
             Absolute,
@@ -34,7 +35,8 @@ namespace JEngine {
     };
 
     // LinearAnimation
-    class LinearAnimation : public Animation {
+    class LinearAnimation : public Animation
+    {
     private:
         Vector2f _from;
         Vector2f _to;
@@ -48,7 +50,8 @@ namespace JEngine {
         LinearAnimation(const Vector2f& from, const Vector2f& to, int ms, Animation::Type type, translate_func translate);
     };
 
-    class SingleVarAnimation : public Animation {
+    class SingleVarAnimation : public Animation
+    {
     private:
         float _from;
         float _to;
@@ -63,7 +66,8 @@ namespace JEngine {
     };
 
     // "Factory"
-    class Animate {
+    class Animate
+    {
     private:
         static std::vector<Animation*> _animations;
 

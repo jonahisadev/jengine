@@ -20,7 +20,8 @@
 
 namespace JEngine {
 
-    class Controller {
+    class Controller
+    {
     public:
         enum Type {
             Generic,
@@ -47,7 +48,8 @@ namespace JEngine {
         const float* getAllAxes();
     };
     
-    class XboxController : public Controller {
+    class XboxController : public Controller
+    {
     public:
         enum Buttons {
             A = 0,
@@ -58,14 +60,14 @@ namespace JEngine {
             RB = 5,
             Select = 6,
             Start = 7,
-#if defined(JENGINE_WINDOWS)
+            #if defined(JENGINE_WINDOWS)
             LeftStick = 8,
             RightStick = 9,
             DPADUp = 10,
             DPADRight = 11,
             DPADDown = 12,
             DPADLeft = 13,
-#elif defined(JENGINE_LINUX) || defined(JENGINE_MACOS)
+            #elif defined(JENGINE_LINUX) || defined(JENGINE_MACOS)
             Xbox = 8,
             LeftStick = 9,
             RightStick = 10,
@@ -73,7 +75,7 @@ namespace JEngine {
             DPADRight = 12,
             DPADDown = 13,
             DPADLeft = 14,
-#endif
+            #endif
         };
         
         explicit XboxController() : Controller(Type::Xbox) {}

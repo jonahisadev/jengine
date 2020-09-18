@@ -10,7 +10,8 @@
 
 namespace JEngine {
 
-    class Mesh {
+    class Mesh
+    {
     protected:
         int _vertex_count;
         int _list_count;

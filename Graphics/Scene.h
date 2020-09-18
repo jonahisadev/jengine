@@ -8,7 +8,8 @@
 
 namespace JEngine {
 
-    class Scene {
+    class Scene
+    {
     private:
         std::vector<Quad> _items;
         const glm::mat4& _projection;

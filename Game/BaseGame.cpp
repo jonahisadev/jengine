@@ -5,32 +5,37 @@
 namespace JEngine {
 
     BaseGame::BaseGame(int width, int height, const std::string& title, bool resize)
-        : _display(width, height, title.c_str(), resize)
+            : _display(width, height, title.c_str(), resize)
     {}
 
-    BaseGame::~BaseGame() {
+    BaseGame::~BaseGame()
+    {
         if (_flags[EnableAudio])
             Audio::cleanup();
         if (_flags[EnableFonts])
             Font::cleanup();
     }
 
-    void BaseGame::init() {
+    void BaseGame::init()
+    {
         if (_flags[EnableAudio])
             Audio::initialize();
     }
 
-    void BaseGame::setResourceLocation(const std::string &path) {
+    void BaseGame::setResourceLocation(const std::string& path)
+    {
         _res = path;
         if (_res.substr(_res.length() - 1) != "/")
             _res += "/";
     }
 
-    std::string BaseGame::res(const std::string &path) {
+    std::string BaseGame::res(const std::string& path)
+    {
         return std::string(_res + path);
     }
 
-    void BaseGame::start() {
+    void BaseGame::start()
+    {
         auto update_fn = [this](float delta) {
             this->update(delta);
         };

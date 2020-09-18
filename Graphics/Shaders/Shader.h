@@ -7,7 +7,8 @@
 
 namespace JEngine {
 
-    class Shader {
+    class Shader
+    {
     public:
         static const char* DefaultQuadVertexShader;
         static const char* DefaultQuadFragmentShader;

@@ -9,20 +9,24 @@ namespace JEngine {
         JINFO("(OpenAL) Sound buffer size: %d", _data->getDataSize());
     }
 
-    Sound::~Sound() {
-        alDeleteBuffers((ALuint)1, &_al_buffer);
+    Sound::~Sound()
+    {
+        alDeleteBuffers((ALuint) 1, &_al_buffer);
         delete _data;
     }
 
-    void Sound::pause() {
+    void Sound::pause()
+    {
         alSourcePause(_al_source);
     }
 
-    void Sound::play() {
+    void Sound::play()
+    {
         alSourcePlay(_al_source);
     }
 
-    void Sound::togglePlayback() {
+    void Sound::togglePlayback()
+    {
         ALint source_state;
         alGetSourcei(_al_source, AL_SOURCE_STATE, &source_state);
         if (source_state == AL_PLAYING)
@@ -31,11 +35,13 @@ namespace JEngine {
             play();
     }
 
-    void Sound::stop() {
+    void Sound::stop()
+    {
         alSourceStop(_al_source);
     }
 
-    void Sound::applyFilter(bool filter) {
+    void Sound::applyFilter(bool filter)
+    {
         if (Audio::contextHasFilters()) {
             alSourcei(_al_source, AL_DIRECT_FILTER, filter ? Audio::getFilter() : AL_FILTER_NULL);
             if (alGetError() == AL_NO_ERROR)

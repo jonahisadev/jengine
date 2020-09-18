@@ -6,7 +6,8 @@
 
 namespace JEngine {
 
-    class TextGroup {
+    class TextGroup
+    {
     private:
         Font& _font;
         std::vector<std::string> _text;

@@ -18,7 +18,8 @@ namespace JEngine {
 
     class BaseGame;
 
-    class Display {
+    class Display
+    {
     private:
         GLFWwindow* _window;
         std::string _title;

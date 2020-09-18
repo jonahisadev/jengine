@@ -6,7 +6,8 @@
 
 namespace JEngine {
 
-    class WaveData {
+    class WaveData
+    {
     private:
         unsigned int _channels;
         unsigned int _bitrate;

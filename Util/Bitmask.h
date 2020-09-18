@@ -2,7 +2,8 @@
 
 namespace JEngine {
 
-    class Bitmask {
+    class Bitmask
+    {
     private:
         unsigned int _flags;
         
