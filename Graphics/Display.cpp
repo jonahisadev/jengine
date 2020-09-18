@@ -8,7 +8,7 @@
 
 namespace JEngine {
 
-    Display::Display(int width, int height, const char* title, bool resizable)
+    Display::Display(int width, int height, const std::string& title, bool resizable)
             : _size({width, height}), _fps(0), _title(title)
     {
         if (!glfwInit()) {
@@ -36,6 +36,7 @@ namespace JEngine {
         glfwSetWindowUserPointer(_window, this);
 
         JINFO("OpenGL Version: %s", glGetString(GL_VERSION));
+        JINFO("Graphics Card: %s", glGetString(GL_RENDERER));
 
         // Resize callback
         auto resize = [](GLFWwindow* w, int width, int height) {

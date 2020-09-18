@@ -37,7 +37,7 @@ namespace JEngine {
         GLFWmonitor* getMonitorByIndex(int monitor);
         
     public:
-        Display(int width, int height, const char* title, bool resizable);
+        Display(int width, int height, const std::string& title, bool resizable);
         virtual ~Display();
         
         bool key(int code);

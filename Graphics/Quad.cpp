@@ -3,7 +3,7 @@
 namespace JEngine {
 
     Quad::Quad(float x, float y, float width, float height)
-            : _pos(x, y), _size(width, height), _color(1, 1, 1)
+        : _pos(x, y), _size(width, height), _color(1, 1, 1), _angle(0)
     {
         float ox = (width / 2);
         float oy = (height / 2);
@@ -14,8 +14,6 @@ namespace JEngine {
                 -ox, oy, 0, 0
         };
 
-        Vector3f color = {1, 1, 1};
-
         int els[] = {
                 0, 1, 2,
                 0, 3, 2
@@ -23,7 +21,7 @@ namespace JEngine {
 
         _pos.translate(-ox, -oy);
         _angle = 0;
-        _mesh = new Mesh(buffer, color, els, 4, 6);
+        _mesh = new Mesh(buffer, _color, els, 4, 6);
 
         setPosition(_pos.x() + (width / 2), _pos.y() + (height / 2));
         setColor(_color);

@@ -21,7 +21,6 @@ namespace JEngine {
                 0, 3, 2
         };
 
-        delete _mesh;
         _mesh = new TexturedMesh(buffer, color, els, 4, 6, path);
 
         setPosition(_pos);
@@ -29,7 +28,8 @@ namespace JEngine {
     }
 
     TexturedQuad::~TexturedQuad()
-    {}
+    {
+    }
 
     void TexturedQuad::setUV(float* uv)
     {

@@ -3,13 +3,14 @@ For Ludum Dare:
     ✔ Instead of std::function, have a BaseGame class to inherit from @done(20-09-17 17:37)
     ✔ Remove bad usage of smart pointers @done(20-09-17 18:41)
     ✔ Unify syntax @done(20-09-17 19:31)
-    ☐ Default constructors for things that may not immediately be initialized
+    ✘ Default constructors for things that may not immediately be initialized @cancelled(20-09-18 11:53)
     ☐ Abstract Quad and things better
     Perhaps do this in conjunction with Spritesheets
   ☐ Better Spritesheet support
   ☐ Playlists
   ☐ MP3, OGG support
   ☐ Controller + Keyboard abstraction
+  ☐ Get Windows working reliably
 
 Graphics:
   ☐ Specify mesh rotation point

@@ -10,7 +10,12 @@ namespace JEngine {
         _shader = new Shader(Shader::DefaultTextureVertexShader, Shader::DefaultTextureFragmentShader);
 
         int width, height, channels;
+        // TODO: add error if image isn't found
         unsigned char* pixel_data = SOIL_load_image(path.c_str(), &width, &height, &channels, SOIL_LOAD_AUTO);
+        if (!pixel_data) {
+            JERROR("Couldn't load image from '%s'", path.c_str());
+            throw;
+        }
         _img_width = width;
         _img_height = height;
 

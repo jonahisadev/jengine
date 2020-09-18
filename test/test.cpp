@@ -1,18 +1,16 @@
 #include "../JEngine.h"
 #include "../Game/BaseGame.h"
 #include "../Graphics/Quad.h"
+#include "../Util/Ref.h"
 #include "../Graphics/Font.h"
-#include "../Audio/Audio.h"
 
 using namespace JEngine;
 
 class MyGame : public JEngine::BaseGame
 {
 private:
-    TexturedQuad* block;
-    Font* font;
-    Sound* sound;
-
+    Ref<TexturedQuad> block;
+    Ref<Font> font;
     const float speed = 25.0f;
 
 public:
@@ -25,17 +23,14 @@ public:
         window().center();
         window().vsync(true);
 
-        block = new TexturedQuad(100, 100, 100, 100, res("coyote.png"));
-        font = new Font(res("Roboto-Regular.ttf"), 18, &window());
+        block = make_ref<TexturedQuad>(100, 100, 100, 100, res("coyote.png"));
+        block->linearInterp(true);
 
-        sound = new Sound(res("daniel.wav"));
-        // Audio::playSound(*sound, 50, true);
+        font = make_ref<Font>(res("Roboto-Regular.ttf"), 18, &window());
     }
 
     virtual ~MyGame() {
-        delete font;
-        delete sound;
-        delete block;
+
     }
 
     virtual void update(float delta)
@@ -59,7 +54,7 @@ public:
         block->render(screen);
 
         std::string fps = "FPS: " + std::to_string(window().getFPS());
-        font->render(5, 20, fps, {1, 1, 1});
+        font->render(5, font->height(fps) + 5, fps, {1, 1, 1});
     }
 };
 
