@@ -5,8 +5,16 @@ namespace JEngine {
 
     Sound::Sound(const std::string& path)
     {
-        _data = new WaveData(path);
-        JINFO("(OpenAL) Sound buffer size: %d", _data->getDataSize());
+        const std::string end = path.substr(path.length() - 4, 4);
+        if (end == ".wav")
+            _data = new WaveData(path);
+        else if (end == ".mp3")
+            _data = new MP3Data(path);
+        else {
+            JERROR("(OpenAL) Invalid file format");
+            throw;
+        }
+        JINFO("(OpenAL) Sound buffer size: %d", _data->getBufferSize());
     }
 
     Sound::~Sound()

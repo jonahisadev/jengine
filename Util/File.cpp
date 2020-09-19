@@ -2,7 +2,7 @@
 
 namespace JEngine {
 
-    unsigned char* File::readBinary(const std::string& path)
+    unsigned char* File::readBinary(const std::string& path, int* out_size)
     {
         FILE* file = fopen(path.c_str(), "rb");
         if (!file) {
@@ -19,6 +19,8 @@ namespace JEngine {
         fclose(file);
 
         data[size] = '\0';
+        if (out_size)
+            *out_size = size;
         return data;
     }
 

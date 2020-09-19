@@ -70,9 +70,9 @@ namespace JEngine {
         sound.setALSource(source);
 
         // Set data in AL buffer
-        alGenBuffers((ALuint) 1, &sound._al_buffer);
-        alBufferData(sound._al_buffer, sound._data->alFormat(), sound._data->getData(),
-                     sound._data->getDataSize(), sound._data->getSampleRate());
+        alGenBuffers((ALuint) 1, sound.getALBufferPtr());
+        alBufferData(sound.getALBuffer(), sound.data()->alFormat(), sound.data()->getBuffer(),
+                     sound.data()->getBufferSize(), sound.data()->getSampleRate());
 
         // Push into list of currently playing sounds
         _sounds.push_back(sound);

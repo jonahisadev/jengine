@@ -1,13 +1,15 @@
 #pragma once
 
+#include "AudioData.h"
 #include "WaveData.h"
+#include "Mp3Data.h"
 
 namespace JEngine {
 
     class Sound
     {
     private:
-        WaveData* _data;
+        AudioData* _data;
         ALuint _al_buffer;
         ALuint _al_source;
 
@@ -23,11 +25,10 @@ namespace JEngine {
         void applyFilter(bool filter);
 
         inline ALuint getALBuffer() const { return _al_buffer; }
-
+        inline ALuint* getALBufferPtr() { return &_al_buffer; }
         void setALSource(ALuint source) { _al_source = source; }
         inline ALuint getSource() const { return _al_source; }
-
-        friend class Audio;
+        inline AudioData* data() const { return _data; }
     };
 
 }

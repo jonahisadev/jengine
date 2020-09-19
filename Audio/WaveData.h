@@ -1,12 +1,13 @@
 #pragma once
 
 #include <AL/al.h>
+#include "AudioData.h"
 #include "../Util/File.h"
 #include "../Util/Logger.h"
 
 namespace JEngine {
 
-    class WaveData
+    class WaveData : public AudioData
     {
     private:
         unsigned int _channels;
@@ -19,13 +20,13 @@ namespace JEngine {
         WaveData(const std::string& path);
         ~WaveData();
         
-        ALenum alFormat();
+        ALenum alFormat() override;
         
-        inline unsigned int getChannels() const { return _channels; }
-        inline unsigned int getBitrate() const { return _bitrate; }
-        inline unsigned int getSampleRate() const { return _sample_rate; }
-        inline unsigned char* getData() const { return _data; }
-        inline unsigned int getDataSize() const { return _raw_size; }
+        unsigned int getChannels() override { return _channels; }
+        unsigned int getBitrate() override { return _bitrate; }
+        unsigned int getSampleRate() override { return _sample_rate; }
+        void* getBuffer() override { return _data; }
+        unsigned int getBufferSize() override { return _raw_size; }
     };
     
 }

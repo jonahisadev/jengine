@@ -3,6 +3,7 @@
 #include "../Graphics/Quad.h"
 #include "../Util/Ref.h"
 #include "../Graphics/Font.h"
+#include "../Audio/Audio.h"
 
 using namespace JEngine;
 
@@ -11,6 +12,7 @@ class MyGame : public JEngine::BaseGame
 private:
     Ref<TexturedQuad> block;
     Ref<Font> font;
+    Ref<Sound> sound;
     const float speed = 25.0f;
 
 public:
@@ -27,6 +29,9 @@ public:
         block->linearInterp(true);
 
         font = make_ref<Font>(res("Roboto-Regular.ttf"), 18, &window());
+
+        sound = make_ref<Sound>(res("Oblivious.mp3"));
+        // Audio::playSound(*sound, 50, false);
     }
 
     virtual ~MyGame() {

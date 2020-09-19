@@ -24,3 +24,4 @@ At the moment, this is mostly for me so I can write games more easily
 * [FreeType](https://www.freetype.org) (FTL)
 * [OpenAL Soft](https://github.com/kcat/openal-soft) (LGPL)
 * [GLM](https://glm.g-truc.net/0.9.9/index.html) (MIT / Happy Bunny)
+* [minimp3](https://github.com/lieff/minimp3) (CC0-1.0)

@@ -37,7 +37,7 @@ namespace JEngine {
         }
 
         delete[] data;
-        JINFO("(WaveData) WAV file loaded");
+        JINFO("(WAV) Loaded data");
     }
 
     WaveData::~WaveData()
