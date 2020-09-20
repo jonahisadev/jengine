@@ -8,7 +8,7 @@ For Ludum Dare:
     Perhaps do this in conjunction with Spritesheets
   ☐ Better Spritesheet support
   ☐ Playlists
-  ☐ MP3, OGG support
+  ✔ MP3 support @done(20-09-19 19:28)
   ☐ Controller + Keyboard abstraction
   ☐ Get Windows working reliably
 
@@ -51,6 +51,7 @@ Audio:
   ✔ Pause, play, stop @done(20-01-18 10:57)
   ✔ Basic lowpass @done(20-01-18 10:57)
   ☐ More control over filters
+  ☐ OGG support
 
 Math:
   ☐ More vector operations
