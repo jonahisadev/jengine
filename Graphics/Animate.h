@@ -28,9 +28,10 @@ namespace JEngine {
         bool _finished = false;
 
         Animation(int ms) : _ms(ms) {}
+        virtual ~Animation() = default;
 
         virtual void go(float delta) = 0;
-        bool finished() { return _finished; }
+        bool finished() const { return _finished; }
         friend class Animate;
     };
 
