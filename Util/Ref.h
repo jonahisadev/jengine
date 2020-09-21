@@ -1,5 +1,7 @@
 #pragma once
 
+#include <type_traits>
+
 namespace JEngine {
 
     template <typename T>
@@ -16,12 +18,17 @@ namespace JEngine {
         ~Ref();
 
         Ref<T>& operator=(const Ref<T>& other);
+        template <typename U>
+        Ref<T>& operator=(const Ref<U>& other);
         T* operator->();
         T& operator*();
         T* get();
 
         bool operator==(const Ref<T>& other);
         bool operator!=(const Ref<T>& other);
+
+        template <typename U>
+        friend class Ref;
     };
 
     template <typename T>
@@ -60,6 +67,18 @@ namespace JEngine {
             _ref = other._ref;
             *_ref += 1;
         }
+
+        return *this;
+    }
+
+    template <typename T> template <typename U>
+    Ref<T>& Ref<T>::operator=(const Ref<U>& other)
+    {
+        static_assert(std::is_base_of<T, U>::value, "Invalid polymorphic Ref<> assignment");
+
+        _data = other._data;
+        _ref = other._ref;
+        *_ref += 1;
 
         return *this;
     }

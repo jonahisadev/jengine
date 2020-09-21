@@ -28,7 +28,8 @@ namespace JEngine {
         
         void setPosition(const Vector2f& pos);
         void setColor(const Vector3f& color);
-        
+        void setRotation(float angle);
+
         void translate(const Vector2f& pos);
         void rotate(float dr);
 

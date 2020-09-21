@@ -9,7 +9,7 @@
 namespace JEngine {
 
     Display::Display(int width, int height, const std::string& title, bool resizable)
-            : _size({width, height}), _fps(0), _title(title)
+            : _size({width, height}), _fps(0), _title(title), _mouse_tex(nullptr)
     {
         if (!glfwInit()) {
             JERROR("Could not initialize GLFW");

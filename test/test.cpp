@@ -49,8 +49,14 @@ public:
         if (window().key('W'))
             block->translate(0, -speed * delta);
 
-        if (window().key('R'))
-            block->rotate(speed * delta);
+        if (window().keyOnce('R')) {
+            Animate::singleVar(0, 90, 250, Animation::Absolute, [&](float dx) {
+                block->rotate(dx);
+            });
+        }
+
+        if (window().keyOnce(KeySpace))
+            block->setAngle(0);
     }
 
     virtual void render(Matrix4f screen)

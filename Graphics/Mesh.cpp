@@ -55,6 +55,14 @@ namespace JEngine {
         _model = glm::rotate(_model, glm::radians(dr), glm::vec3(0, 0, 1));
     }
 
+    void Mesh::setRotation(float angle)
+    {
+        float angle_rad = glm::radians(angle);
+        float current_angle = glm::atan(_model[0][1], _model[0][0]);
+
+        _model = glm::rotate(_model, (angle_rad - current_angle), glm::vec3(0, 0, 1));
+    }
+
     void Mesh::render(Matrix4f screen)
     {
         _shader->use();

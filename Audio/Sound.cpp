@@ -1,26 +1,27 @@
 #include "Sound.h"
 #include "Audio.h"
 
+#include <memory>
+
 namespace JEngine {
 
     Sound::Sound(const std::string& path)
     {
         const std::string end = path.substr(path.length() - 4, 4);
         if (end == ".wav")
-            _data = new WaveData(path);
+            _data = make_ref<WaveData>(path);
         else if (end == ".mp3")
-            _data = new MP3Data(path);
+            _data = make_ref<MP3Data>(path);
         else {
             JERROR("(OpenAL) Invalid file format");
             throw;
         }
-        JINFO("(OpenAL) Sound buffer size: %d", _data->getBufferSize());
+        JINFO("(OpenAL) Sound buffer size: %d bytes", _data->getBufferSize());
     }
 
     Sound::~Sound()
     {
         alDeleteBuffers((ALuint) 1, &_al_buffer);
-        delete _data;
     }
 
     void Sound::pause()

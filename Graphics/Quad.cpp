@@ -63,6 +63,7 @@ namespace JEngine {
     void Quad::setAngle(float angle)
     {
         _angle = angle;
+        _mesh->setRotation(_angle);
     }
 
     void Quad::setColor(int r, int g, int b)
