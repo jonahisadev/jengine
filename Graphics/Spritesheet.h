@@ -11,12 +11,14 @@ namespace JEngine {
     private:
         struct Cycle
         {
+            std::string name;
             Vector2i start_pos;
             int start;
             int end;
 
-            Cycle(const Vector2i _start_pos, int _start, int _end)
+            Cycle(const std::string& _name, const Vector2i _start_pos, int _start, int _end)
             {
+                name = _name;
                 start_pos = _start_pos;
                 start = _start;
                 end = _end;
@@ -43,6 +45,7 @@ namespace JEngine {
         void addCycle(const std::string& name, const Vector2i& start, const Vector2i& end);
         void setActiveCycle(const std::string& name);
         void clearActiveCycle();
+        const std::string& getActiveCycleName();
 
         inline Vector2i getGridPosition() const { return _grid_pos; }
         inline float getCellSize() const { return _cell_size; }

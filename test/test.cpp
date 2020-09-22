@@ -5,6 +5,7 @@
 #include "../Graphics/Font.h"
 #include "../Audio/Audio.h"
 #include "../Graphics/Spritesheet.h"
+#include "../Util/Timer.h"
 
 using namespace JEngine;
 
@@ -14,6 +15,7 @@ private:
     Ref<Spritesheet> block;
     Ref<Font> font;
     Ref<Sound> sound;
+    Ref<Timer> timer;
     const float speed = 25.0f;
 
 public:
@@ -31,6 +33,10 @@ public:
         block->addCycle("walking", {0, 0}, {1, 0});
         block->addCycle("running", {0, 1}, {1, 1});
         block->setActiveCycle("running");
+
+        timer = make_ref<Timer>(250, [&]() {
+            block->next();
+        }, true);
 
         font = make_ref<Font>(res("Roboto-Regular.ttf"), 18, &window());
 
@@ -54,7 +60,7 @@ public:
             block->translate(0, -speed * delta);
 
         if (window().keyOnce('R')) {
-            Animate::singleVar(0, 90, 250, Animation::Absolute, [&](float dx) {
+            Animate::singleVar(0, 90, 750, Animation::Absolute, [&](float dx) {
                 block->rotate(dx);
             });
         }
@@ -62,8 +68,12 @@ public:
         if (window().keyOnce(KeySpace))
             block->setAngle(0);
 
-        if (window().keyOnce(KeyTab))
-            block->next();
+        if (window().keyOnce(KeyTab)) {
+            if (block->getActiveCycleName() == "running")
+                block->setActiveCycle("walking");
+            else
+                block->setActiveCycle("running");
+        }
     }
 
     virtual void render(Matrix4f screen)

@@ -71,7 +71,7 @@ namespace JEngine {
     {
         int start_idx = start.y() * _grid_size + start.x();
         int end_idx = end.y() * _grid_size + end.x();
-        _cycles[name] = new Cycle(start, start_idx, end_idx);
+        _cycles[name] = new Cycle(name, start, start_idx, end_idx);
     }
 
     void Spritesheet::setActiveCycle(const std::string& name)
@@ -83,6 +83,11 @@ namespace JEngine {
     void Spritesheet::clearActiveCycle()
     {
         _current_cycle = nullptr;
+    }
+
+    const std::string& Spritesheet::getActiveCycleName()
+    {
+        return _current_cycle->name;
     }
 
     void Spritesheet::validateCycle()
