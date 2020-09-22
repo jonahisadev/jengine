@@ -6,14 +6,13 @@ For Ludum Dare:
     ✘ Default constructors for things that may not immediately be initialized @cancelled(20-09-18 11:53)
     ☐ Abstract Quad and things better
     Perhaps do this in conjunction with Spritesheets
-  ☐ Better Spritesheet support
-    ✔ Cycles @done(20-09-21 19:38)
-    ☐ Loops
+  ✔ Cycles @done(20-09-21 19:38)
+  ✔ Timer / Interval @done(20-09-21 20:08)
+  ✔ Cycle loops @done(20-09-21 20:08)
   ☐ Playlists
   ✔ MP3 support @done(20-09-19 19:28)
   ☐ Controller + Keyboard abstraction
   ☐ Get Windows working reliably
-  ☐ Animation loops
 
 Graphics:
   ☐ Specify mesh rotation point

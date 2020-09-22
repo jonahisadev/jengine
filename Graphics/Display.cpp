@@ -5,11 +5,12 @@
 #include <GLFW/glfw3.h>
 
 #include "../Game/BaseGame.h"
+#include "../Util/Timer.h"
 
 namespace JEngine {
 
     Display::Display(int width, int height, const std::string& title, bool resizable)
-            : _size({width, height}), _fps(0), _title(title), _mouse_tex(nullptr)
+            : _size({width, height}), _fps(0), _title(title), _mouse_tex(nullptr), _projection(1.0f)
     {
         if (!glfwInit()) {
             JERROR("Could not initialize GLFW");
@@ -163,6 +164,7 @@ namespace JEngine {
             double last = glfwGetTime();
 
             Animate::run(delta);
+            Timer::run(delta);
 
             updatefn(delta);
             renderfn(_projection * glm::mat4(1.0f));
