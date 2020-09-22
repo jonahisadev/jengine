@@ -4,13 +4,14 @@
 #include "../Util/Ref.h"
 #include "../Graphics/Font.h"
 #include "../Audio/Audio.h"
+#include "../Graphics/Spritesheet.h"
 
 using namespace JEngine;
 
 class MyGame : public JEngine::BaseGame
 {
 private:
-    Ref<TexturedQuad> block;
+    Ref<Spritesheet> block;
     Ref<Font> font;
     Ref<Sound> sound;
     const float speed = 25.0f;
@@ -25,8 +26,11 @@ public:
         window().center();
         window().vsync(true);
 
-        block = make_ref<TexturedQuad>(100, 100, 100, 100, res("coyote.png"));
+        block = make_ref<Spritesheet>(100, 100, 100, 100, res("spritesheet.png"), 32);
         block->linearInterp(true);
+        block->addCycle("walking", {0, 0}, {1, 0});
+        block->addCycle("running", {0, 1}, {1, 1});
+        block->setActiveCycle("running");
 
         font = make_ref<Font>(res("Roboto-Regular.ttf"), 18, &window());
 
@@ -57,6 +61,9 @@ public:
 
         if (window().keyOnce(KeySpace))
             block->setAngle(0);
+
+        if (window().keyOnce(KeyTab))
+            block->next();
     }
 
     virtual void render(Matrix4f screen)

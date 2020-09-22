@@ -7,10 +7,13 @@ For Ludum Dare:
     ☐ Abstract Quad and things better
     Perhaps do this in conjunction with Spritesheets
   ☐ Better Spritesheet support
+    ✔ Cycles @done(20-09-21 19:38)
+    ☐ Loops
   ☐ Playlists
   ✔ MP3 support @done(20-09-19 19:28)
   ☐ Controller + Keyboard abstraction
   ☐ Get Windows working reliably
+  ☐ Animation loops
 
 Graphics:
   ☐ Specify mesh rotation point
