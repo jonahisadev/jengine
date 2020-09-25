@@ -76,7 +76,8 @@ namespace JEngine {
 
     void Spritesheet::setActiveCycle(const std::string& name)
     {
-        _current_cycle = _cycles[name];
+        if (auto* cycle = _cycles[name]; cycle != _current_cycle)
+            _current_cycle = cycle;
         setGridPosition(_current_cycle->start_pos);
     }
 

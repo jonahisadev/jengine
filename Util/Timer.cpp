@@ -49,7 +49,8 @@ namespace JEngine {
             (*it)->elapse(ms);
             if ((*it)->isFinished())
                 it = g_timers.erase(it);
-            ++it;
+            else
+                ++it;
         }
     }
 
