@@ -4,6 +4,7 @@
 
 #include "Audio.h"
 #include "Sound.h"
+#include "../Util/Ref.h"
 
 namespace JEngine {
 
@@ -34,6 +35,9 @@ namespace JEngine {
         void prev();
         void play();
         void pause();
+
+        void addSound(Sound& sound);
+        void addSound(Ref<Sound> sound);
     };
 
 }

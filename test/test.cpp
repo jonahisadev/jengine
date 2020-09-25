@@ -6,6 +6,7 @@
 #include "../Audio/Audio.h"
 #include "../Graphics/Spritesheet.h"
 #include "../Util/Timer.h"
+#include "../Audio/Playlist.h"
 
 using namespace JEngine;
 
@@ -14,7 +15,7 @@ class MyGame : public JEngine::BaseGame
 private:
     Ref<Spritesheet> block;
     Ref<Font> font;
-    Ref<Sound> sound;
+    Ref<Playlist> playlist;
     Ref<Timer> timer;
     const float speed = 25.0f;
 
@@ -30,18 +31,14 @@ public:
 
         block = make_ref<Spritesheet>(100, 100, 100, 100, res("spritesheet.png"), 32);
         block->linearInterp(true);
-        block->addCycle("walking", {0, 0}, {1, 0});
-        block->addCycle("running", {0, 1}, {1, 1});
-        block->setActiveCycle("running");
-
-        timer = make_ref<Timer>(250, [&]() {
-            block->next();
-        }, true);
 
         font = make_ref<Font>(res("Roboto-Regular.ttf"), 18, &window());
 
-        sound = make_ref<Sound>(res("Oblivious.mp3"));
-        // Audio::playSound(*sound, 50, false);
+        playlist = make_ref<Playlist>();
+        playlist->addSound(make_ref<Sound>(res("daniel.wav")));
+        playlist->addSound(make_ref<Sound>(res("Oblivious.mp3")));
+        playlist->setLoopState(Playlist::LoopPlaylist);
+        playlist->start();
     }
 
     virtual ~MyGame() {
@@ -74,6 +71,9 @@ public:
             else
                 block->setActiveCycle("running");
         }
+
+        if (window().keyOnce(KeyRight))
+            playlist->next();
     }
 
     virtual void render(Matrix4f screen)

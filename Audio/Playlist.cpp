@@ -92,4 +92,14 @@ namespace JEngine {
         _sounds[_index].pause();
     }
 
+    void Playlist::addSound(Sound& sound)
+    {
+        _sounds.push_back(sound);
+    }
+
+    void Playlist::addSound(Ref<Sound> sound)
+    {
+        _sounds.push_back(*sound);
+    }
+
 }
