@@ -9,15 +9,15 @@ namespace JEngine {
     Scene::~Scene()
     {}
 
-    void Scene::add(Quad& item)
+    void Scene::add(Quad* item)
     {
         _items.push_back(item);
     }
 
     void Scene::render()
     {
-        for (auto& item : _items) {
-            item.render(_projection * _view);
+        for (auto* item : _items) {
+            item->render(_projection * _view);
         }
     }
 

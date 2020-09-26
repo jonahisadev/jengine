@@ -11,7 +11,7 @@ namespace JEngine {
     class Scene
     {
     private:
-        std::vector<Quad> _items;
+        std::vector<Quad*> _items;
         const glm::mat4& _projection;
         glm::mat4 _view;
         
@@ -19,7 +19,7 @@ namespace JEngine {
         Scene(Display* d);
         ~Scene();
         
-        void add(Quad& item);
+        void add(Quad* item);
         void render();
         
         void translate(const Vector2f& vec);

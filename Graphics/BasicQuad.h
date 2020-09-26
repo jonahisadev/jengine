@@ -1,20 +1,18 @@
 #pragma once
 
-#include <memory>
-
 #include "Quad.h"
-#include "TexturedMesh.h"
+#include "Mesh.h"
 
 namespace JEngine {
 
-    class TexturedQuad : public Quad
+    class BasicQuad : public Quad
     {
     private:
-        TexturedMesh* _mesh;
+        Mesh* _mesh;
 
     public:
-        TexturedQuad(float x, float y, float width, float height, const std::string& path);
-        virtual ~TexturedQuad();
+        BasicQuad(float x, float y, float width, float height);
+        virtual ~BasicQuad();
 
         void translate(float dx, float dy) override;
         void translate(const Vector2f& vec) override;
@@ -28,16 +26,6 @@ namespace JEngine {
         void setColor(const Vector3f& rgb) override;
 
         void render(Matrix4f screen) override;
-
-        void linearInterp(bool state) {
-            _mesh->linearInterp(state);
-        }
-        
-    protected:
-        void setUV(float* uv);
-
-        int getImageWidth() const;
-        int getImageHeight() const;
     };
 
 }

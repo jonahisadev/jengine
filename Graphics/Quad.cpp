@@ -4,33 +4,10 @@ namespace JEngine {
 
     Quad::Quad(float x, float y, float width, float height)
         : _pos(x, y), _size(width, height), _color(1, 1, 1), _angle(0)
-    {
-        float ox = (width / 2);
-        float oy = (height / 2);
-        float buffer[] = {
-                -ox, -oy, 0, 0,
-                ox, -oy, 0, 0,
-                ox, oy, 0, 0,
-                -ox, oy, 0, 0
-        };
-
-        int els[] = {
-                0, 1, 2,
-                0, 3, 2
-        };
-
-        _pos.translate(-ox, -oy);
-        _angle = 0;
-        _mesh = new Mesh(buffer, _color, els, 4, 6);
-
-        setPosition(_pos.x() + (width / 2), _pos.y() + (height / 2));
-        setColor(_color);
-    }
+    {}
 
     Quad::~Quad()
-    {
-        delete _mesh;
-    }
+    {}
 
     void Quad::translate(float dx, float dy)
     {
@@ -46,24 +23,22 @@ namespace JEngine {
     void Quad::rotate(float dr)
     {
         _angle += dr;
-        _mesh->rotate(dr);
+        setRotation(_angle);
     }
 
     void Quad::setPosition(float x, float y)
     {
         _pos = {x, y};
-        _mesh->setPosition({_pos.x() + width() / 2, _pos.y() + height() / 2});
     }
 
     void Quad::setPosition(const Vector2f& pos)
     {
-        setPosition(pos.x(), pos.y());
+        _pos = pos;
     }
 
-    void Quad::setAngle(float angle)
+    void Quad::setRotation(float angle)
     {
         _angle = angle;
-        _mesh->setRotation(_angle);
     }
 
     void Quad::setColor(int r, int g, int b)
@@ -72,7 +47,6 @@ namespace JEngine {
         _color.setG(g);
         _color.setB(b);
         _color.normalize(255);
-        _mesh->setColor(_color);
     }
 
     void Quad::setColor(const Vector3i& rgb)
@@ -83,7 +57,6 @@ namespace JEngine {
     void Quad::setColor(const Vector3f& rgb)
     {
         _color = rgb;
-        _mesh->setColor(_color);
     }
 
     void Quad::setCenter(Vector2f center)
@@ -111,11 +84,6 @@ namespace JEngine {
     bool Quad::intersects(const Quad& quad, const Vector2f& vec)
     {
         return quad.intersects(vec);
-    }
-
-    void Quad::render(Matrix4f screen)
-    {
-        _mesh->render(screen);
     }
 
 }

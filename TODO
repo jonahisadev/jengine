@@ -4,13 +4,14 @@ For Ludum Dare:
     ✔ Remove bad usage of smart pointers @done(20-09-17 18:41)
     ✔ Unify syntax @done(20-09-17 19:31)
     ✘ Default constructors for things that may not immediately be initialized @cancelled(20-09-18 11:53)
-    ☐ Abstract Quad and things better
+    ✔ Abstract Quad and things better @done(20-09-25 20:51)
     Perhaps do this in conjunction with Spritesheets
   ✔ Cycles @done(20-09-21 19:38)
   ✔ Timer / Interval @done(20-09-21 20:08)
   ✔ Cycle loops @done(20-09-21 20:08)
   ✔ Playlists @done(20-09-25 16:36)
   ✔ MP3 support @done(20-09-19 19:28)
+  ☐ "Batch" rendering from Spritesheets
   ☐ Controller + Keyboard abstraction
   ☐ Get Windows working reliably
 
@@ -37,6 +38,7 @@ Graphics:
     ☐ List of animations
   ☐ Scaling option
   This is useful for scaling all the graphics when the window is resized
+  ☐ Fix the mesh +(w/2) offset, it's too hacky
 
 Game:
   ✔ Resource Loader @done(20-01-18 12:33)

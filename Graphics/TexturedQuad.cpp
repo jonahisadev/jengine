@@ -21,8 +21,11 @@ namespace JEngine {
                 0, 3, 2
         };
 
-        _mesh = new TexturedMesh(buffer, color, els, 4, 6, path);
+//        _pos.translate(-ox, -oy);
+        _angle = 0;
+        _mesh = new TexturedMesh(buffer, _color, els, 4, 6, path);
 
+//        setPosition(_pos.x() + (width / 2), _pos.y() + (height / 2));
         setPosition(_pos);
         setColor(_color);
     }
@@ -31,22 +34,78 @@ namespace JEngine {
     {
     }
 
+    void TexturedQuad::translate(float dx, float dy)
+    {
+        Quad::translate(dx, dy);
+        setPosition(_pos);
+    }
+
+    void TexturedQuad::translate(const Vector2f& vec)
+    {
+        Quad::translate(vec);
+        setPosition(_pos);
+    }
+
+    void TexturedQuad::rotate(float dr)
+    {
+        Quad::rotate(dr);
+        setRotation(_angle);
+    }
+
+    void TexturedQuad::setPosition(float x, float y)
+    {
+        Quad::setPosition(x, y);
+        _mesh->setPosition({_pos.x() + width() / 2, _pos.y() + height() / 2});
+    }
+
+    void TexturedQuad::setPosition(const Vector2f& pos)
+    {
+        Quad::setPosition(pos);
+        _mesh->setPosition({_pos.x() + width() / 2, _pos.y() + height() / 2});
+    }
+
+    void TexturedQuad::setRotation(float angle)
+    {
+        Quad::setRotation(angle);
+        _mesh->setRotation(_angle);
+    }
+
+    void TexturedQuad::setColor(int r, int g, int b)
+    {
+        Quad::setColor(r, g, b);
+        _mesh->setColor(_color);
+    }
+
+    void TexturedQuad::setColor(const Vector3i& rgb)
+    {
+        Quad::setColor(rgb);
+        _mesh->setColor(_color);
+    }
+
+    void TexturedQuad::setColor(const Vector3f& rgb)
+    {
+        Quad::setColor(rgb);
+        _mesh->setColor(_color);
+    }
+
     void TexturedQuad::setUV(float* uv)
     {
-        auto mesh = dynamic_cast<TexturedMesh*>(_mesh);
-        mesh->setUV(uv);
+        _mesh->setUV(uv);
     }
 
     int TexturedQuad::getImageWidth() const
     {
-        auto mesh = dynamic_cast<TexturedMesh*>(_mesh);
-        return mesh->getImageWidth();
+        return _mesh->getImageWidth();
     }
 
     int TexturedQuad::getImageHeight() const
     {
-        auto mesh = dynamic_cast<TexturedMesh*>(_mesh);
-        return mesh->getImageHeight();
+        return _mesh->getImageHeight();
+    }
+
+    void TexturedQuad::render(Matrix4f screen)
+    {
+        _mesh->render(screen);
     }
 
 }

@@ -13,7 +13,7 @@ using namespace JEngine;
 class MyGame : public JEngine::BaseGame
 {
 private:
-    Ref<Spritesheet> block;
+    Ref<TexturedQuad> block;
     Ref<Font> font;
     Ref<Playlist> playlist;
     Ref<Timer> timer;
@@ -29,7 +29,10 @@ public:
         window().center();
         window().vsync(true);
 
-        block = make_ref<Spritesheet>(100, 100, 100, 100, res("spritesheet.png"), 32);
+        // block = make_ref<Spritesheet>(100, 100, 100, 100, res("spritesheet.png"), 32);
+        // block->linearInterp(true);
+
+        block = make_ref<TexturedQuad>(100, 100, 100, 100, res("coyote.png"));
         block->linearInterp(true);
 
         font = make_ref<Font>(res("Roboto-Regular.ttf"), 18, &window());
@@ -63,14 +66,14 @@ public:
         }
 
         if (window().keyOnce(KeySpace))
-            block->setAngle(0);
+            block->setRotation(0);
 
-        if (window().keyOnce(KeyTab)) {
-            if (block->getActiveCycleName() == "running")
-                block->setActiveCycle("walking");
-            else
-                block->setActiveCycle("running");
-        }
+        // if (window().keyOnce(KeyTab)) {
+        //     if (block->getActiveCycleName() == "running")
+        //         block->setActiveCycle("walking");
+        //     else
+        //         block->setActiveCycle("running");
+        // }
 
         if (window().keyOnce(KeyRight))
             playlist->next();
@@ -83,6 +86,9 @@ public:
 
         std::string fps = "FPS: " + std::to_string(window().getFPS());
         font->render(5, font->height(fps) + 5, fps, {1, 1, 1});
+        std::string coords = "X: " + std::to_string((int)block->x()) 
+            + ", Y: " + std::to_string((int)block->y());
+        font->render(5, 40, coords, {1, 1, 1});
     }
 };
 
