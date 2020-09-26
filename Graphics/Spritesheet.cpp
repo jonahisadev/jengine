@@ -1,4 +1,7 @@
 #include "Spritesheet.h"
+#include "Sprite.h"
+
+#include <iostream>
 
 namespace JEngine {
 
@@ -89,6 +92,23 @@ namespace JEngine {
     const std::string& Spritesheet::getActiveCycleName()
     {
         return _current_cycle->name;
+    }
+
+    Ref<Sprite> Spritesheet::createSprite(float x, float y, float width, float height, Vector2i grid_pos)
+    {
+        return make_ref<Sprite>(*this, x, y, width, height, grid_pos);
+    }
+
+    void Spritesheet::renderSubSprite(Matrix4f screen, Sprite& sprite)
+    {
+        // Set state
+        setSize(sprite.width(), sprite.height());
+        setPosition(sprite.x(), sprite.y());
+        setRotation(sprite.angle());
+        setGridPosition(sprite._grid_pos);
+
+        // render
+        render(screen);
     }
 
     void Spritesheet::validateCycle()

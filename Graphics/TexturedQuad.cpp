@@ -21,11 +21,9 @@ namespace JEngine {
                 0, 3, 2
         };
 
-//        _pos.translate(-ox, -oy);
         _angle = 0;
         _mesh = new TexturedMesh(buffer, _color, els, 4, 6, path);
 
-//        setPosition(_pos.x() + (width / 2), _pos.y() + (height / 2));
         setPosition(_pos);
         setColor(_color);
     }
@@ -62,6 +60,27 @@ namespace JEngine {
     {
         Quad::setPosition(pos);
         _mesh->setPosition({_pos.x() + width() / 2, _pos.y() + height() / 2});
+    }
+
+    void TexturedQuad::setSize(float width, float height)
+    {
+        Quad::setSize(width, height);
+
+        float ox = (width / 2);
+        float oy = (height / 2);
+        float buffer[] = {
+            -ox, -oy, 0, 0,
+             ox, -oy, 1, 0,
+             ox,  oy, 1, 1,
+            -ox,  oy, 0, 1
+        };
+        _mesh->updateBufferData(buffer);
+    }
+
+    void TexturedQuad::setSize(Vector2f size)
+    {
+        Quad::setSize(size);
+        setSize(size.x(), size.y());
     }
 
     void TexturedQuad::setRotation(float angle)

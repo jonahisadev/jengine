@@ -63,6 +63,15 @@ namespace JEngine {
         _model = glm::rotate(_model, (angle_rad - current_angle), glm::vec3(0, 0, 1));
     }
 
+    void Mesh::updateBufferData(float* data)
+    {
+        glBindVertexArray(_vao);
+        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, _vertex_count * 4 * sizeof(float), data);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
+    }
+
     void Mesh::render(Matrix4f screen)
     {
         _shader->use();

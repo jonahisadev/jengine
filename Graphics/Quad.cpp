@@ -36,6 +36,16 @@ namespace JEngine {
         _pos = pos;
     }
 
+    void Quad::setSize(float width, float height)
+    {
+        _size = {width, height};
+    }
+
+    void Quad::setSize(Vector2f size)
+    {
+        _size = size;
+    }
+
     void Quad::setRotation(float angle)
     {
         _angle = angle;

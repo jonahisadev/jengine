@@ -3,9 +3,11 @@
 #include <map>
 #include <string>
 #include "TexturedQuad.h"
+#include "../Util/Ref.h"
 
 namespace JEngine {
 
+    class Sprite;
     class Spritesheet : public TexturedQuad
     {
     private:
@@ -46,6 +48,9 @@ namespace JEngine {
         void setActiveCycle(const std::string& name);
         void clearActiveCycle();
         const std::string& getActiveCycleName();
+
+        Ref<Sprite> createSprite(float x, float y, float width, float height, Vector2i grid_pos);
+        void renderSubSprite(Matrix4f screen, Sprite& sprite);
 
         inline Vector2i getGridPosition() const { return _grid_pos; }
         inline float getCellSize() const { return _cell_size; }

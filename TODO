@@ -11,9 +11,9 @@ For Ludum Dare:
   ✔ Cycle loops @done(20-09-21 20:08)
   ✔ Playlists @done(20-09-25 16:36)
   ✔ MP3 support @done(20-09-19 19:28)
-  ☐ "Batch" rendering from Spritesheets
-  ☐ Controller + Keyboard abstraction
+  ✔ "Batch" rendering from Spritesheets @done(20-09-25 21:48)
   ☐ Get Windows working reliably
+  ☐ Input (Controller + Keyboard) abstraction
 
 Graphics:
   ☐ Specify mesh rotation point

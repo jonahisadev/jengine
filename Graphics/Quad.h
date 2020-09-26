@@ -25,6 +25,8 @@ namespace JEngine {
 
         virtual void setPosition(float x, float y);
         virtual void setPosition(const Vector2f& pos);
+        virtual void setSize(float width, float height);
+        virtual void setSize(Vector2f size);
         virtual void setRotation(float angle);
         virtual void setColor(int r, int g, int b);
         virtual void setColor(const Vector3i& rgb);

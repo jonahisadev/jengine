@@ -20,6 +20,8 @@ namespace JEngine {
 
         void setPosition(float x, float y) override;
         void setPosition(const Vector2f& pos) override;
+        void setSize(float width, float height) override;
+        void setSize(Vector2f size) override;
         void setRotation(float angle) override;
         void setColor(int r, int g, int b) override;
         void setColor(const Vector3i& rgb) override;
