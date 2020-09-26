@@ -64,6 +64,9 @@ namespace JEngine {
 
     void TexturedQuad::setSize(float width, float height)
     {
+        if (_size == Vector2f{width, height})
+            return;
+
         Quad::setSize(width, height);
 
         float ox = (width / 2);

@@ -37,6 +37,7 @@ namespace JEngine {
         const Vector2& operator*(T scalar);
         const Vector2& operator*=(T scalar);
         Vector2& operator=(Vector2 other);
+        bool operator==(const Vector2& other);
 
         inline void setX(T x) { _x = x; }
         inline void setY(T y) { _y = y; }
@@ -149,5 +150,11 @@ namespace JEngine {
         _x = other.x();
         _y = other.y();
         return *this;
+    }
+
+    template<class T>
+    bool Vector2<T>::operator==(const Vector2& other)
+    {
+        return (_x == other.x() && _y == other.y());
     }
 }
