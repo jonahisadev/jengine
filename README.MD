@@ -13,7 +13,7 @@ At the moment, this is mostly for me so I can write games more easily
 * Modern OpenGL
 * Spritesheets
 * Font loading and rendering (TTF)
-* WAV loading and playback (+Lowpass filter)
+* Audio (WAV/MP3) loading and playback (+Lowpass filter)
 * Basic animation
 
 ### Open Source Libraries
