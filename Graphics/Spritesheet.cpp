@@ -105,6 +105,7 @@ namespace JEngine {
         setSize(sprite.width(), sprite.height());
         setPosition(sprite.x(), sprite.y());
         setRotation(sprite.angle());
+        setColor(sprite.color());
         setGridPosition(sprite._grid_pos);
 
         // render

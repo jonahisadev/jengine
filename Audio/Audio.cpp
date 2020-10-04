@@ -4,7 +4,7 @@ namespace JEngine {
 
     ALCdevice* Audio::_device = nullptr;
     ALCcontext* Audio::_context = nullptr;
-    std::vector<Sound> Audio::_sounds = std::vector<Sound>();
+    std::vector<Sound*> Audio::_sounds = std::vector<Sound*>();
     std::queue<Audio::AudioQueueItem> Audio::_sound_queue = std::queue<Audio::AudioQueueItem>();
     bool Audio::_filters = false;
     ALuint Audio::_test_filter;
@@ -56,7 +56,7 @@ namespace JEngine {
         }
     }
 
-    void Audio::playSound(Sound& sound, int vol, bool loop)
+    void Audio::playSound(Sound* sound, int vol, bool loop)
     {
         if (!_initialized) {
             JINFO("(OpenAL) Queueing sound for playback");
@@ -67,12 +67,12 @@ namespace JEngine {
         // Set audio source
         ALuint source;
         alGenSources((ALuint) 1, &source);
-        sound.setALSource(source);
+        sound->setALSource(source);
 
         // Set data in AL buffer
-        alGenBuffers((ALuint) 1, sound.getALBufferPtr());
-        alBufferData(sound.getALBuffer(), sound.data()->alFormat(), sound.data()->getBuffer(),
-                     sound.data()->getBufferSize(), sound.data()->getSampleRate());
+        alGenBuffers((ALuint) 1, sound->getALBufferPtr());
+        alBufferData(sound->getALBuffer(), sound->data()->alFormat(), sound->data()->getBuffer(),
+                     sound->data()->getBufferSize(), sound->data()->getSampleRate());
 
         // Push into list of currently playing sounds
         _sounds.push_back(sound);
@@ -80,7 +80,7 @@ namespace JEngine {
         alSourcef(source, AL_PITCH, 1);
         alSourcef(source, AL_GAIN, vol / 100.0f);
         alSourcei(source, AL_LOOPING, loop ? AL_TRUE : AL_FALSE);
-        alSourcei(source, AL_BUFFER, sound.getALBuffer());
+        alSourcei(source, AL_BUFFER, sound->getALBuffer());
 
         JINFO("(OpenAL) Playing sound");
         alSourcePlay(source);
@@ -89,7 +89,7 @@ namespace JEngine {
     void Audio::audioLoop()
     {
         for (int i = 0; i < _sounds.size(); i++) {
-            const Sound& sound = _sounds[i];
+            const Sound& sound = *_sounds[i];
             ALint source_state;
             alGetSourcei(sound.getSource(), AL_SOURCE_STATE, &source_state);
             if (source_state == AL_STOPPED) {

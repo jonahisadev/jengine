@@ -18,6 +18,7 @@ namespace JEngine {
         virtual ~Sprite();
 
         void render(Matrix4f screen) override;
+        void setGridPosition(Vector2i grid_pos);
     };
 
 }

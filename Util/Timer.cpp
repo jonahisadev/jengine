@@ -7,11 +7,11 @@ namespace JEngine {
     std::vector<Timer*> Timer::g_timers = std::vector<Timer*>();
 
     Timer::Timer()
-        : _ms(0), _callback(), _loop(false), _finished(false)
+        : _ms(0), _passed_ms(0), _callback(), _loop(false), _finished(false)
     {}
 
     Timer::Timer(int ms, std::function<void()> callback, bool loop)
-        : _ms(ms), _callback(callback), _loop(loop), _finished(false)
+        : _ms(ms), _passed_ms(0), _callback(callback), _loop(loop), _finished(false)
     {
         g_timers.push_back(this);
     }
@@ -30,7 +30,6 @@ namespace JEngine {
     void Timer::elapse(int ms)
     {
         _passed_ms += ms;
-//        std::cout << _passed_ms << ", " << _ms << std::endl;
         if (_passed_ms >= _ms) {
             _callback();
             if (_loop)

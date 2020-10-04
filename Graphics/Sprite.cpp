@@ -14,4 +14,9 @@ namespace JEngine {
         _parent.renderSubSprite(screen, *this);
     }
 
+    void Sprite::setGridPosition(Vector2i grid_pos)
+    {
+        _grid_pos = grid_pos;
+    }
+
 }

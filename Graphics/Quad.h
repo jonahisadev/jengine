@@ -46,6 +46,7 @@ namespace JEngine {
         inline float width() const { return _size.x(); }
         inline float height() const { return _size.y(); }
         inline float angle() const { return _angle; }
+        inline Vector3f color() const { return _color; }
     };
 
 }

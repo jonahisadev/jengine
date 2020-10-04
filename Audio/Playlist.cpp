@@ -21,7 +21,7 @@ namespace JEngine {
 
     void Playlist::start()
     {
-        Audio::playSound(_sounds.at(_index), _volume);
+        Audio::playSound(&_sounds.at(_index), _volume);
     }
 
     void Playlist::next()
@@ -31,7 +31,7 @@ namespace JEngine {
 
         // If we're looping the sound, start over
         if (_loop == LoopSound) {
-            Audio::playSound(_sounds.at(_index), _volume);
+            Audio::playSound(&_sounds.at(_index), _volume);
             _sounds[_index].play();
             return;
         }
@@ -42,7 +42,7 @@ namespace JEngine {
             // Start over playlist
             if (_loop == LoopPlaylist) {
                 _index = 0;
-                Audio::playSound(_sounds.at(_index), _volume);
+                Audio::playSound(&_sounds.at(_index), _volume);
             }
 
             // Otherwise, get out
@@ -50,7 +50,7 @@ namespace JEngine {
         }
 
         // Play the sound that's next
-        Audio::playSound(_sounds.at(++_index), _volume);
+        Audio::playSound(&_sounds.at(++_index), _volume);
     }
 
     void Playlist::prev()
@@ -60,7 +60,7 @@ namespace JEngine {
 
         // If we're looping the sound, start over
         if (_loop == LoopSound) {
-            Audio::playSound(_sounds.at(_index), _volume);
+            Audio::playSound(&_sounds.at(_index), _volume);
             _sounds[_index].play();
             return;
         }
@@ -71,7 +71,7 @@ namespace JEngine {
             // Go to end of playlist
             if (_loop == LoopPlaylist) {
                 _index = _sounds.size() - 1;
-                Audio::playSound(_sounds.at(_index), _volume);
+                Audio::playSound(&_sounds.at(_index), _volume);
             }
 
             // Otherwise, get out
@@ -79,7 +79,7 @@ namespace JEngine {
         }
 
         // Play the sound that's next
-        Audio::playSound(_sounds.at(--_index), _volume);
+        Audio::playSound(&_sounds.at(--_index), _volume);
     }
 
     void Playlist::play()
